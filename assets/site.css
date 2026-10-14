@@ -147,4 +147,21 @@ details .ans p { margin: 0 0 0.6rem; }
 .bottom nav { display: flex; gap: 1rem; flex-wrap: wrap; }
 .bottom .notes { flex-basis: 100%; margin: 0; }
 
+/* Phones only: keep the headline the hero, tighten the intro, slim the cards */
+@media (max-width: 600px) {
+  .intro { padding-block: 2.5rem 1.5rem; }
+  .intro .eyebrow { margin-bottom: 1.1rem; }
+  .intro h1 { font-size: 2.65rem; line-height: 1.06; }
+  .intro p { font-size: 1rem; line-height: 1.55; margin-top: 0.9rem; }
+  .apps { gap: 0.7rem; padding-block: 0.5rem 3rem; }
+  .card { padding: 1rem 1.05rem 0.95rem; gap: 0.5rem; border-top-width: 3px; }
+  .card .row { gap: 0.7rem; }
+  .card .tile { width: 38px; height: 38px; border-radius: 9px; font-size: 1.1rem; }
+  .card h2 { font-size: 1.25rem; }
+  .card .cat { margin-top: 0.2rem; font-size: 0.66rem; }
+  .card p { font-size: 0.93rem; line-height: 1.5; }
+  .card .foot { padding-top: 0.25rem; }
+  .chip { padding: 0.32rem 0.5rem; font-size: 0.68rem; }
+}
+
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
