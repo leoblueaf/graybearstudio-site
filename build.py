@@ -4,6 +4,7 @@
   python3 build.py            production build (clean URLs: /hitherto/privacy/)
   python3 build.py --preview  preview build (links end in index.html, for file/artifact previews)
 """
+import hashlib
 import html
 import os
 import re
@@ -67,6 +68,8 @@ def accent_css(app):
 
 def page(here, title, body, app=None, description=""):
     css = href(here, "assets").replace("index.html", "") + "site.css"
+    with open(os.path.join(ROOT, "assets", "site.css"), "rb") as f:
+        css += "?v=" + hashlib.sha1(f.read()).hexdigest()[:10]
     home = href(here, "")
     crumbs = ""
     if app:
