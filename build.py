@@ -29,6 +29,16 @@ BEAR = ('<svg viewBox="0 0 32 32" aria-hidden="true" fill="none" stroke="current
         '<circle cx="20" cy="17" r="1.3" fill="currentColor" stroke="none"/>'
         '<path d="M14 22.5c1.2 1 2.8 1 4 0"/></svg>')
 
+HERO_BEAR = ('<svg viewBox="-4 -4 40 40" fill="none" stroke="currentColor" stroke-width="0.9" stroke-linecap="round">'
+             '<circle class="halo" cx="16" cy="18" r="13.5" stroke-width="0.35"/>'
+             '<circle class="halo halo2" cx="16" cy="18" r="13.5" stroke-width="0.35"/>'
+             '<g class="body">'
+             '<circle class="ear ear-l" cx="8.5" cy="8.5" r="4"/><circle class="ear ear-r" cx="23.5" cy="8.5" r="4"/>'
+             '<path class="face" d="M5 18a11 10 0 0 1 22 0c0 6-5 10-11 10S5 24 5 18Z" fill="var(--paper)"/>'
+             '<g class="eyes"><circle cx="12" cy="17" r="1.3" fill="currentColor" stroke="none"/>'
+             '<circle cx="20" cy="17" r="1.3" fill="currentColor" stroke="none"/></g>'
+             '<path d="M14 22.5c1.2 1 2.8 1 4 0"/></g></svg>')
+
 
 def href(frm, to):
     """Relative link from directory `frm` to directory `to` (both '' = site root)."""
@@ -166,7 +176,7 @@ def build_home():
 <h1>Small apps, each built to do one job carefully.</h1>
 <p>GrayBear Studio makes focused apps for prayer, home upkeep, everyday eating, exam prep, new parents and the decisions in between. Each one says plainly what it does with your information.</p>
 </div>
-<div class="intro-bear">{BEAR.replace('stroke-width="2"', 'stroke-width="0.9"')}</div>
+<div class="intro-bear" aria-hidden="true">{HERO_BEAR}</div>
 </section>
 <section class="wrap" aria-label="Apps">
 <div class="apps">

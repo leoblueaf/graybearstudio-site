@@ -56,7 +56,25 @@ h1, h2, h3 { font-family: var(--display); font-weight: 500; text-wrap: balance; 
 .intro h1 { font-size: clamp(2.3rem, 5.5vw, 3.6rem); max-width: 18ch; letter-spacing: -0.01em; }
 .intro { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 2rem; }
 .intro-bear { display: none; }
-.intro-bear svg { width: clamp(200px, 24vw, 320px); height: auto; color: var(--studio); opacity: 0.9; }
+.intro-bear { --bear: #3B4A8C; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .intro-bear { --bear: #A7B3EA; } }
+:root[data-theme="dark"] .intro-bear { --bear: #A7B3EA; }
+.intro-bear svg { width: clamp(220px, 26vw, 340px); height: auto; color: var(--bear); overflow: visible; }
+.intro-bear .body { transform-box: view-box; transform-origin: 16px 28px; animation: bear-breathe 4.8s ease-in-out infinite; }
+.intro-bear .ear { transform-box: view-box; transform-origin: 16px 18px; }
+.intro-bear .ear-l { animation: ear-l 9s ease-in-out infinite; }
+.intro-bear .ear-r { animation: ear-r 9s ease-in-out infinite; }
+.intro-bear .eyes { transform-box: view-box; transform-origin: 16px 17px; animation: bear-blink 6s infinite; }
+.intro-bear .halo { transform-box: view-box; transform-origin: 16px 18px; opacity: 0; animation: bear-halo 4.8s ease-out infinite; }
+.intro-bear .halo2 { animation-delay: 2.4s; }
+.intro-bear svg { filter: drop-shadow(0 0 0 transparent); animation: bear-glow 4.8s ease-in-out infinite; }
+@keyframes bear-breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.035); } }
+@keyframes ear-l { 0%, 86%, 100% { transform: rotate(0); } 90% { transform: rotate(-7deg); } 94% { transform: rotate(2deg); } }
+@keyframes ear-r { 0%, 40%, 54%, 100% { transform: rotate(0); } 45% { transform: rotate(7deg); } 50% { transform: rotate(-2deg); } }
+@keyframes bear-blink { 0%, 92%, 100% { transform: scaleY(1); } 94% { transform: scaleY(0.1); } 96% { transform: scaleY(1); } }
+@keyframes bear-halo { 0% { transform: scale(0.92); opacity: 0.55; } 100% { transform: scale(1.32); opacity: 0; } }
+@keyframes bear-glow { 0%, 100% { filter: drop-shadow(0 0 0 transparent); } 50% { filter: drop-shadow(0 0 14px color-mix(in srgb, var(--bear) 45%, transparent)); } }
+@media (prefers-reduced-motion: reduce) { .intro-bear *, .intro-bear svg { animation: none !important; } .intro-bear .halo { opacity: 0; } }
 @media (min-width: 820px) { .intro-bear { display: block; } }
 .intro p { color: var(--muted); max-width: 46ch; margin: 1.1rem 0 0; font-size: 1.125rem; }
 
