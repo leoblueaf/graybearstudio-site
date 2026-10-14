@@ -1,0 +1,32 @@
+Last updated: October 14, 2026
+
+This notice covers the GrayBear Studio website, graybearstudio.com. Each app has its own privacy policy, linked from that app's page.
+
+## The short version
+
+This website does not use cookies, analytics, advertising or tracking of any kind. We do not ask for your name or email address, and there is no sign-in.
+
+## What happens when you visit
+
+Like every website, pages are delivered by servers that see basic technical information about the request, such as your IP address, browser type and the page asked for.
+
+- **Hosting.** The site is hosted on GitHub Pages. GitHub may record visitors' IP addresses for security and to keep the service running, as described in the GitHub Privacy Statement.
+- **Fonts.** The site's fonts load from Google Fonts, so your browser contacts Google's servers, which receive your IP address and browser details. Google's handling of this is described in the Google Privacy Policy.
+
+We do not receive or keep these records ourselves.
+
+## If you email us
+
+If you write to one of our addresses, we receive your email address and whatever you include in the message. We use it only to reply and to help with your question, and we do not add you to any mailing list.
+
+## Children
+
+This website is not directed to children under 13.
+
+## Changes
+
+If this notice changes, we will update this page and the date above. If we ever add visitor statistics, this page will say so before they are turned on.
+
+## Contact
+
+[privacy@graybearstudio.com](mailto:privacy@graybearstudio.com)

@@ -92,7 +92,7 @@ def page(here, title, body, app=None, description=""):
 </main>
 <footer class="bottom"><div class="wrap">
 <span>GrayBear Studio · <a href="mailto:hello@graybearstudio.com">hello@graybearstudio.com</a></span>
-<nav aria-label="Footer">{app_links}<a href="{home}">All apps</a></nav>
+<nav aria-label="Footer">{app_links}<a href="{home}">All apps</a><a href="{href(here, 'privacy')}">Site privacy</a></nav>
 {notes}
 </div></footer>
 </body>
@@ -263,6 +263,15 @@ def build_app(a):
     write(here, page(here, f'{a["name"]} Terms', body, a, f'Terms of use for {a["name"]}.'))
 
 
+def build_studio_privacy():
+    here = "privacy"
+    body = f"""<article class="doc"><div class="wrap col">
+<h1>Website Privacy Notice</h1><p class="sub">GrayBear Studio</p>
+{md(os.path.join(ROOT, "content", "studio-privacy.md"))}
+</div></article>"""
+    write(here, page(here, "GrayBear Studio Privacy", body, None, "How the GrayBear Studio website handles your information."))
+
+
 def build_404():
     body = """<section class="wrap intro"><p class="eyebrow">404</p><h1>That page isn't here.</h1>
 <p>It may have moved. Every GrayBear Studio app is listed on the home page.</p>
@@ -277,6 +286,7 @@ def main():
     os.makedirs(DIST)
     shutil.copytree(os.path.join(ROOT, "assets"), os.path.join(DIST, "assets"))
     build_home()
+    build_studio_privacy()
     for a in APPS:
         if a.get("pages"):
             build_app(a)

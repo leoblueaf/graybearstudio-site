@@ -1,4 +1,4 @@
-Last updated: October 13, 2026
+Last updated: October 14, 2026
 
 Hitherto is made by GrayBear Studio. This policy explains what happens to information in the Hitherto app for iPhone.
 
@@ -12,11 +12,12 @@ The app stores the following in its private storage on your iPhone:
 
 - your prayers and their details
 - the dates you prayed
-- notes and journal entries
+- notes, reflections and journal entries
+- Bible verses you highlight
 - answered-prayer entries
 - your practice history and streak
 - your first name, if you choose to enter one
-- your reminder time and appearance setting
+- your prayer and reminder times and appearance setting
 
 This information is included in your device's own backups (iCloud Backup or a computer backup) if you use them. Those backups are controlled by you and Apple.
 
@@ -34,15 +35,15 @@ The app may occasionally show Apple's standard "rate this app" prompt. It is pro
 
 ## Notifications
 
-Daily reminders and the reminder before a free trial ends are local notifications scheduled on your iPhone. They are not sent from a server. You can turn them off in the app or in iOS Settings.
+Daily reminders, a notice on the morning a seasonal plan such as Advent begins, and the reminder before a free trial ends are local notifications scheduled on your iPhone. They are not sent from a server. You can turn them off in the app or in iOS Settings.
 
 ## Sharing and export
 
-If you choose to share something or export your record, the text goes only where you send it, using the iOS share sheet.
+If you choose to share something or export your record (as text, or your reflections as a PDF journal), the file is made on your iPhone and goes only where you send it, using the iOS share sheet.
 
 ## Links
 
-Links in the app (for example to this page or to support) open in your web browser. Our website is covered by its own privacy notice.
+Links in the app (for example to this page or to support) open in your web browser. Our website is covered by its own [privacy notice](https://graybearstudio.com/privacy/).
 
 ## Deleting your data
 
