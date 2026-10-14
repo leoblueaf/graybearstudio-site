@@ -161,9 +161,12 @@ def build_home():
         f':root[data-theme="dark"] {s}{{--app:{c} !important}}' for s, c in rules_light_dark) + "</style>"
     body = f"""{dark_css}
 <section class="wrap intro">
+<div class="intro-text">
 <p class="eyebrow">Independent mobile apps</p>
 <h1>Small apps, each built to do one job carefully.</h1>
 <p>GrayBear Studio makes focused apps for prayer, home upkeep, everyday eating, exam prep, new parents and the decisions in between. Each one says plainly what it does with your information.</p>
+</div>
+<div class="intro-bear">{BEAR.replace('stroke-width="2"', 'stroke-width="0.9"')}</div>
 </section>
 <section class="wrap" aria-label="Apps">
 <div class="apps">
