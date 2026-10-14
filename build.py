@@ -121,12 +121,21 @@ def mailto(addr):
     return f'<a class="addr" href="mailto:{addr}">{addr}</a>'
 
 
+def tile(a, here):
+    """App icon if assets/icons/<slug>.png exists, else the letter tile."""
+    if os.path.exists(os.path.join(ROOT, "assets", "icons", a["slug"] + ".png")):
+        src = href(here, "assets/icons").replace("index.html", "") + "/" + a["slug"] + ".png"
+        src = src.replace("//", "/")
+        return f'<img class="tile icon" src="{src}" alt="" width="64" height="64" loading="lazy">'
+    return f'<div class="tile" aria-hidden="true">{E(a["name"][0])}</div>'
+
+
 def build_home():
     cards = []
     for a in APPS:
         style = f'style="--app:{a["accent"][0]}"'
         live = " live" if a["status"] == "live" else ""
-        inner = (f'<div class="row"><div class="tile" aria-hidden="true">{E(a["name"][0])}</div>'
+        inner = (f'<div class="row">{tile(a, "")}'
                  f'<div><h2>{E(a["name"])}</h2><div class="cat">{E(a["category"])}</div></div></div>'
                  f'<p>{E(a["tagline"])}</p>'
                  f'<div class="foot"><span class="chip{live}">{E(a["status_label"])}</span>{{go}}</div>')
@@ -184,7 +193,7 @@ def build_app(a):
              if a.get("store_url") else "")
     chip = f'<span class="chip">{E(a["status_label"])}</span>'
     body = f"""<section class="hero"><div class="wrap col">
-<div class="row"><div class="tile" aria-hidden="true">{E(a["name"][0])}</div><p class="eyebrow" style="margin:0">{E(a["category"])} · {E(a["platform"])}</p></div>
+<div class="row">{tile(a, here)}<p class="eyebrow" style="margin:0">{E(a["category"])} · {E(a["platform"])}</p></div>
 <h1>{E(a["full_name"])}</h1>
 <p class="tag">{E(a["tagline"])}</p>
 <div class="meta">{store or chip}</div>

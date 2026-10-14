@@ -70,6 +70,7 @@ a.card:hover { transform: translateY(-2px); border-color: var(--app); }
   width: 46px; height: 46px; border-radius: 11px; flex: none; display: grid; place-items: center;
   background: var(--app); color: var(--surface); font: 600 1.35rem/1 var(--display);
 }
+.tile.icon { display: block; object-fit: cover; background: none; box-shadow: 0 0 0 1px var(--line); }
 .card h2 { font-size: 1.45rem; }
 .card .cat { font: 500 0.72rem/1 var(--mono); color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 0.3rem; }
 .card p { margin: 0; color: var(--muted); font-size: 0.98rem; line-height: 1.55; }
