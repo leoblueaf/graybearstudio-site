@@ -152,9 +152,9 @@ def build_home():
         f':root[data-theme="dark"] {s}{{--app:{c} !important}}' for s, c in rules_light_dark) + "</style>"
     body = f"""{dark_css}
 <section class="wrap intro">
-<p class="eyebrow">Independent apps for iPhone</p>
+<p class="eyebrow">Independent apps for iPhone and iPad</p>
 <h1>Small apps, each built to do one job carefully.</h1>
-<p>GrayBear Studio makes focused apps for prayer, home upkeep, exam prep, new parents and the decisions in between. Each one says plainly what it does with your information.</p>
+<p>GrayBear Studio makes focused apps for prayer, home upkeep, everyday eating, exam prep, new parents and the decisions in between. Each one says plainly what it does with your information.</p>
 </section>
 <section class="wrap" aria-label="Apps">
 <div class="apps">
@@ -180,11 +180,14 @@ def build_app(a):
         table = f'<div class="tablewrap"><table class="prices"><tbody>{rows}</tbody></table></div>'
     note = f'<p class="small">{E(a["price_note"])}</p>' if a["price_note"] else ""
     disc = f'<p class="disclosure">{E(a["subscription_disclosure"])}</p>' if a.get("subscription_disclosure") else ""
+    store = (f'<a class="btn" href="{E(a["store_url"])}" target="_blank" rel="noopener">View on the App Store ↗</a>'
+             if a.get("store_url") else "")
+    chip = f'<span class="chip">{E(a["status_label"])}</span>'
     body = f"""<section class="hero"><div class="wrap col">
 <div class="row"><div class="tile" aria-hidden="true">{E(a["name"][0])}</div><p class="eyebrow" style="margin:0">{E(a["category"])} · {E(a["platform"])}</p></div>
 <h1>{E(a["full_name"])}</h1>
 <p class="tag">{E(a["tagline"])}</p>
-<div class="meta"><span class="chip">{E(a["status_label"])}</span></div>
+<div class="meta">{store or chip}</div>
 </div></section>
 <section class="section"><div class="wrap col lede">{desc}{quote}</div></section>
 <section class="section"><div class="wrap col"><h2>What it does</h2><ul class="features">{feats}</ul></div></section>

@@ -84,6 +84,8 @@ a.card:hover { transform: translateY(-2px); border-color: var(--app); }
 .hero h1 { font-size: clamp(2.4rem, 6vw, 3.8rem); letter-spacing: -0.01em; }
 .hero .tag { font: 400 clamp(1.2rem, 2.4vw, 1.5rem)/1.4 var(--display); font-style: italic; color: var(--app); margin: 0.9rem 0 0; max-width: 34ch; }
 .hero .meta { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem; align-items: center; }
+.btn { display: inline-block; background: var(--app); color: var(--surface); text-decoration: none; font: 600 0.92rem/1 var(--body); padding: 0.75rem 1rem; border-radius: 8px; }
+.btn:hover { opacity: 0.9; }
 .section { padding-block: 2.75rem; border-bottom: 1px solid var(--line); }
 .section:last-of-type { border-bottom: 0; }
 .section h2 { font-size: 1.7rem; margin-bottom: 1.1rem; }

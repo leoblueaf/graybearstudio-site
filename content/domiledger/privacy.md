@@ -36,7 +36,7 @@ When you back up your data or export a PDF, the app creates a file and lets you 
 
 ## Links
 
-Links in the app to this website or to Apple's terms open in your browser. A QR code read from an appliance label is opened only if you tap it.
+Links in the app to this website open in your browser. A QR code read from an appliance label is opened only if you tap it.
 
 ## Children
 
