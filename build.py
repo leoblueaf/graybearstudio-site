@@ -152,7 +152,7 @@ def build_home():
         f':root[data-theme="dark"] {s}{{--app:{c} !important}}' for s, c in rules_light_dark) + "</style>"
     body = f"""{dark_css}
 <section class="wrap intro">
-<p class="eyebrow">Independent apps for iPhone and iPad</p>
+<p class="eyebrow">Independent mobile apps</p>
 <h1>Small apps, each built to do one job carefully.</h1>
 <p>GrayBear Studio makes focused apps for prayer, home upkeep, everyday eating, exam prep, new parents and the decisions in between. Each one says plainly what it does with your information.</p>
 </section>
@@ -161,7 +161,7 @@ def build_home():
 {''.join(cards)}
 </div>
 </section>"""
-    write("", page("", "GrayBear Studio", body, description="Independent iPhone apps from GrayBear Studio."))
+    write("", page("", "GrayBear Studio", body, description="Independent mobile apps from GrayBear Studio."))
 
 
 def build_app(a):
@@ -226,7 +226,7 @@ def build_app(a):
 <h2 style="margin-top:0">Common questions</h2>
 {''.join(faqs)}
 <div class="contact"><h2>Still need help?</h2>
-<p>Email {mailto(a["email"])}. Include your iPhone model and iOS version if something is not working. We read every message.</p></div>
+<p>Email {mailto(a["email"])}. Include your device model and software version if something is not working. We read every message.</p></div>
 </div></article>"""
     write(here, page(here, f'{a["name"]} Support', body, a, f'Help with {a["name"]}.'))
 
