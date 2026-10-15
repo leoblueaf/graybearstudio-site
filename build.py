@@ -313,6 +313,15 @@ def main():
         build_404()
         with open(os.path.join(DIST, "CNAME"), "w") as f:
             f.write("graybearstudio.com\n")
+        urls = ["https://graybearstudio.com/", "https://graybearstudio.com/privacy/"]
+        for a_ in APPS:
+            if a_.get("pages"):
+                urls += [f"https://graybearstudio.com/{a_['slug']}/{x}" for x in ("", "privacy/", "support/", "terms/")]
+        with open(os.path.join(DIST, "sitemap.xml"), "w") as f:
+            f.write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+                    + "".join(f"  <url><loc>{u}</loc></url>\n" for u in urls) + "</urlset>\n")
+        with open(os.path.join(DIST, "robots.txt"), "w") as f:
+            f.write("User-agent: *\nAllow: /\nSitemap: https://graybearstudio.com/sitemap.xml\n")
         open(os.path.join(DIST, ".nojekyll"), "w").close()
     n = sum(len(fs) for _, _, fs in os.walk(DIST))
     print(f"built {n} files into {os.path.relpath(DIST, ROOT)}")
