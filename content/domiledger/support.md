@@ -2,7 +2,7 @@
 On your iPhone only. DomiLedger has no account and no server, so there is nothing to sign in to and nothing stored with us.
 
 ### How do I move my records to a new phone?
-Open the Ledger tab and choose Back up data, then save the file to iCloud Drive or Files. On the new phone, install DomiLedger and choose Restore from backup. Photos in renting-mode condition records are not yet included in this backup file (the app tells you when this applies); they stay on your phone and in your iPhone's own backup if that is turned on.
+Open the Ledger tab and choose Back up data, then save the file to iCloud Drive or Files. On the new phone, install DomiLedger and choose Restore from backup. Photos in renting-mode condition records and the files of your documents are not yet included in this backup file (the app tells you when this applies); they stay on your phone and in your iPhone's own backup if that is turned on.
 
 ### How do recall checks work?
 DomiLedger checks the brand and model you entered against the U.S. Consumer Product Safety Commission's recall records. A match on the model is shown as a possible recall to verify; a brand-only match is shown as information. Checks need an internet connection, and if a check cannot run the app says so. Always confirm a recall against the official notice before acting on it.

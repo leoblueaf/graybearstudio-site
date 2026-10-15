@@ -1,4 +1,4 @@
-Last updated: October 13, 2026
+Last updated: October 15, 2026
 
 DomiLedger is published by GrayBear Studio. This policy explains what happens to your information when you use the DomiLedger app for iPhone.
 
@@ -8,11 +8,11 @@ We do not collect your data. Everything you enter stays on your device. DomiLedg
 
 ## What the app stores, and where
 
-DomiLedger stores the information you enter on your device only: your home's details, your maintenance plan and history, costs, notes, appliances and warranties, photos and receipts you add, and condition records with their photos. This information is not sent to us or to anyone else. Deleting the app deletes this information from your device.
+DomiLedger stores the information you enter on your device only: your home's details, your maintenance plan and history, costs, notes, appliances and warranties, photos and receipts you add, condition records with their photos, and documents you scan or import, such as a lease or an insurance policy. This information is not sent to us or to anyone else. Deleting the app deletes this information from your device.
 
 ## Photos and the camera
 
-If you allow it, DomiLedger uses the camera to take photos and to read the label on an appliance, and uses your photo library to add photos you choose. Label reading happens on your device. DomiLedger reads the date stored inside a photo so a condition record can show when it was taken. Photos are copied into the app's own storage on your device and are not uploaded.
+If you allow it, DomiLedger uses the camera to take photos and to read the label on an appliance, and uses your photo library to add photos you choose. If you scan a document, the iPhone's document scanner runs on your device and the pages are saved as a PDF in the app's own storage. Label reading happens on your device. DomiLedger reads the date stored inside a photo so a condition record can show when it was taken. Photos are copied into the app's own storage on your device and are not uploaded.
 
 ## Notifications
 
@@ -32,7 +32,7 @@ DomiLedger Pro is sold through Apple's App Store. Apple processes your payment; 
 
 ## Backups and exports
 
-When you back up your data or export a PDF, the app creates a file and lets you choose where to save or send it, for example iCloud Drive, Files, Mail or another app. That file then sits wherever you put it, and the policies of that service apply. Your iPhone's own backup may also include the app's data, according to your device settings.
+When you back up your data or export a PDF, the app creates a file and lets you choose where to save or send it, for example iCloud Drive, Files, Mail or another app. That file then sits wherever you put it, and the policies of that service apply. Your iPhone's own backup may also include the app's data, according to your device settings. Document files and condition record photos are not yet included in the backup file; they stay on your device and in your iPhone's own backup if that is turned on.
 
 ## Links
 
