@@ -1,6 +1,6 @@
-Last updated: October 14, 2026
+Last updated: October 15, 2026
 
-This notice covers the GrayBear Studio website, graybearstudio.com. Each app has its own privacy policy, linked from that app's page.
+This notice covers the GrayBear Studio websites: graybearstudio.com and research.graybearstudio.com, the site of the Hidden Structure Research Group. Each app has its own privacy policy, linked from that app's page.
 
 ## The short version
 
