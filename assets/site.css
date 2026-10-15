@@ -188,3 +188,4 @@ details .ans p { margin: 0 0 0.6rem; }
 }
 
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+.section .notice { margin: 0; }

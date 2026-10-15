@@ -1,4 +1,4 @@
-Last updated: October 14, 2026
+Last updated: October 15, 2026
 
 Hitherto is made by GrayBear Studio. This policy explains what happens to information in the Hitherto app for iPhone.
 
@@ -39,7 +39,7 @@ Daily reminders, a notice on the morning a seasonal plan such as Advent begins, 
 
 ## Sharing and export
 
-If you choose to share something or export your record (as text, or your reflections as a PDF journal), the file is made on your iPhone and goes only where you send it, using the iOS share sheet.
+If you choose to share something or export your record (as text, or your reflections or highlights as PDFs), the file is made on your iPhone and goes only where you send it, using the iOS share sheet.
 
 ## Links
 

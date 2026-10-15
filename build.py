@@ -205,6 +205,9 @@ def build_app(a):
         table = f'<div class="tablewrap"><table class="prices"><tbody>{rows}</tbody></table></div>'
     note = f'<p class="small">{E(a["price_note"])}</p>' if a["price_note"] else ""
     disc = f'<p class="disclosure">{E(a["subscription_disclosure"])}</p>' if a.get("subscription_disclosure") else ""
+    notice = (f'<section class="section"><div class="wrap col"><div class="notice"><p>{E(a["page_notice"])}</p></div></div></section>'
+              if a.get("page_notice") else "")
+    plus = f'<p>{E(a["price_plus"])}</p>' if a.get("price_plus") else ""
     store = (f'<a class="btn" href="{E(a["store_url"])}" target="_blank" rel="noopener">View on the App Store ↗</a>'
              if a.get("store_url") else "")
     chip = f'<span class="chip">{E(a["status_label"])}</span>'
@@ -214,9 +217,9 @@ def build_app(a):
 <p class="tag">{E(a["tagline"])}</p>
 <div class="meta">{store or chip}</div>
 </div></section>
-<section class="section"><div class="wrap col lede">{desc}{quote}</div></section>
+{notice}<section class="section"><div class="wrap col lede">{desc}{quote}</div></section>
 <section class="section"><div class="wrap col"><h2>What it does</h2><ul class="features">{feats}</ul></div></section>
-<section class="section"><div class="wrap col"><h2>Price</h2><p>{E(a["price_intro"])}</p><p>{E(a["price_plus"])}</p>{table}{note}{disc}</div></section>
+<section class="section"><div class="wrap col"><h2>Price</h2><p>{E(a["price_intro"])}</p>{plus}{table}{note}{disc}</div></section>
 <section class="section"><div class="wrap col"><h2>Help and policies</h2>
 <div class="links">
 <a href="{href(here, s + '/support')}"><b>Support</b><span>Questions and contact</span></a>
