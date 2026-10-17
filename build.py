@@ -323,6 +323,8 @@ def main():
             build_app(a)
     from quilt_build import build_quilt
     quilt_urls = build_quilt(DIST, ROOT)
+    import demo_pulse
+    demo_pulse.build(page, write, href, accent_css, ROOT)
     if not PREVIEW:
         build_404()
         with open(os.path.join(DIST, "CNAME"), "w") as f:
