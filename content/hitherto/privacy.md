@@ -43,7 +43,7 @@ If you choose to share something or export your record (as text, or your reflect
 
 ## Links
 
-Links in the app (for example to this page or to support) open in your web browser. Our website is covered by its own [privacy notice](https://graybearstudio.com/privacy/).
+Links in the app (for example to this page or to support) open in your web browser. Our website is covered by its own [privacy notice](https://graybearstudio.com/privacy/). The Hitherto Prayer Quilt is a separate public website with its own privacy notice. The app never sends it anything.
 
 ## Deleting your data
 
