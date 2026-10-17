@@ -177,8 +177,10 @@ button.btn { border: 0; cursor: pointer; }
 .pv-check input { accent-color: var(--app); width: 1.05rem; height: 1.05rem; }
 .pv-posts { display: grid; gap: 1rem; }
 .pv-post { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; display: grid; }
-@media (min-width: 720px) { .pv-post:has(.pv-photo) { grid-template-columns: 15rem 1fr; } }
-.pv-post > div { padding: 1rem 1.15rem 1.1rem; }
+.pv-media { position: relative; aspect-ratio: 16 / 9; overflow: hidden; background: var(--paper); }
+.pv-media img, .pv-media .pv-photo { position: absolute; inset: 0; width: 100%; height: 100%; min-height: 0; object-fit: cover; display: block; }
+.pv-text { padding: 1rem 1.15rem 1.1rem; min-width: 0; }
+@media (min-width: 720px) { .pv-post:has(.pv-media) { grid-template-columns: 16rem 1fr; } .pv-post .pv-media { aspect-ratio: auto; min-height: 11rem; } }
 .pv-post.pinned { border-left: 4px solid var(--app); }
 .pv-post h3 { font-size: 1.3rem; margin: 0.2rem 0 0.35rem; }
 .pv-post .x { margin: 0; color: var(--muted); }

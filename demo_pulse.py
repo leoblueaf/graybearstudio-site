@@ -339,8 +339,8 @@ SCRIPT = """<script>
     list.forEach(p => {
       const fromCfm = p.b === "cfm";
       const a = document.createElement("article"); a.className = "pv-post" + (p.pin ? " pinned" : "") + (fromCfm && board !== "cfm" ? " from-cfm" : "");
-      a.innerHTML = `${p.photo ? `<img class="pv-photo" alt="">` : p.img ? PHOTO(p.img, "Sample photo") : ""}<div><p class="pv-meta"></p><h3></h3><p class="x"></p><p class="pv-aud"></p></div>`;
-      if (p.photo) a.querySelector("img").src = p.photo;
+      a.innerHTML = `${p.photo ? `<div class="pv-media"><img alt="Photo attached to this post"></div>` : p.img ? `<div class="pv-media">${PHOTO(p.img, "Sample photo")}</div>` : ""}<div class="pv-text"><p class="pv-meta"></p><h3></h3><p class="x"></p><p class="pv-aud"></p></div>`;
+      if (p.photo) a.querySelector(".pv-media img").src = p.photo;
       const by = fromCfm ? "Career Field Manager" : `${p.b} Functional Manager`;
       a.querySelector(".pv-meta").textContent = `${p.pin ? "Pinned. " : ""}${p.k}. ${by}. ${p.d}`;
       a.querySelector("h3").textContent = p.t; a.querySelector(".x").textContent = p.x;
