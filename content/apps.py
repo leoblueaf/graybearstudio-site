@@ -202,6 +202,7 @@ APPS = [
         "accent": ("#7D6B54", "#C9A56E"),
         "status": "soon",
         "status_label": "Coming soon",
+        "ai": "Answers to the questions you type are written by an AI model.",
         "pages": True,
         "email": "littlecompass@graybearstudio.com",
         "page_notice": "Little Compass provides general information for parents. It does not diagnose, treat, or give medical advice, and it is not a substitute for care from your child's clinician. In an emergency, call 911.",
@@ -246,6 +247,7 @@ APPS = [
         "accent": ("#4F7A60", "#9CC2A8"),
         "status": "soon",
         "status_label": "Coming soon",
+        "ai": "Foods in your photos, typed meals and scanned products are identified, and their nutrition estimated, by an AI model.",
         "pages": True,
         "email": "foodwise@graybearstudio.com",
         "description": [

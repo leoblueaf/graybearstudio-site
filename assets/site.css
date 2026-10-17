@@ -189,3 +189,22 @@ details .ans p { margin: 0 0 0.6rem; }
 
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 .section .notice { margin: 0; }
+
+/* AI marker (Little Compass, FoodWise): a soft violet-to-teal glow, separate from each app's accent */
+:root { --ai1: #6D4FE0; --ai2: #1C9AA6; --ai-ink: #5537C4; --ai-glow: rgba(109,79,224,.28); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --ai1: #A58BFF; --ai2: #5FD3DD; --ai-ink: #C3B2FF; --ai-glow: rgba(165,139,255,.30); } }
+:root[data-theme="dark"] { --ai1: #A58BFF; --ai2: #5FD3DD; --ai-ink: #C3B2FF; --ai-glow: rgba(165,139,255,.30); }
+.card .row .chip.ai { margin-left: auto; align-self: flex-start; }
+.hero .meta .chip.ai { padding-block: 0.45rem; }
+.chip.ai {
+  display: inline-flex; align-items: center; gap: 0.32rem; color: var(--ai-ink); border-color: transparent;
+  background: linear-gradient(var(--surface), var(--surface)) padding-box,
+              linear-gradient(120deg, var(--ai1), var(--ai2)) border-box;
+  box-shadow: 0 0 10px -1px var(--ai-glow);
+  animation: ai-glow 3.2s ease-in-out infinite;
+}
+.chip.ai svg { width: 1.05em; height: 1.05em; color: var(--ai1); }
+.card.has-ai { box-shadow: 0 0 0 1px color-mix(in srgb, var(--ai1) 22%, transparent), 0 10px 28px -14px var(--ai-glow); }
+@keyframes ai-glow { 0%, 100% { box-shadow: 0 0 8px -2px var(--ai-glow); } 50% { box-shadow: 0 0 16px 1px var(--ai-glow); } }
+@media (prefers-reduced-motion: reduce) { .chip.ai { animation: none; } }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }

@@ -143,13 +143,25 @@ def tile(a, here):
     return f'<div class="tile" aria-hidden="true">{E(a["name"][0])}</div>'
 
 
+AI_SPARK = ('<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.5c.4 2.9 1.6 4.1 4.5 4.5-2.9.4-4.1 1.6-4.5 4.5-.4-2.9-1.6-4.1-4.5-4.5 2.9-.4 4.1-1.6 4.5-4.5Z" fill="currentColor"/><circle cx="12.6" cy="12.2" r="1.3" fill="currentColor"/></svg>')
+
+
+def ai_chip(a):
+    """Marker for apps with an AI feature (David, 16 Oct)."""
+    if not a.get("ai"):
+        return ""
+    return (f'<span class="chip ai" title="{E(a["ai"])}">{AI_SPARK}Uses AI'
+            f'<span class="sr">. {E(a["ai"])}</span></span>')
+
+
 def build_home():
     cards = []
     for a in APPS:
         style = f'style="--app:{a["accent"][0]}"'
         live = " live" if a["status"] == "live" else ""
+        ai = " has-ai" if a.get("ai") else ""
         inner = (f'<div class="row">{tile(a, "")}'
-                 f'<div><h2>{E(a["name"])}</h2><div class="cat">{E(a["category"])}</div></div></div>'
+                 f'<div><h2>{E(a["name"])}</h2><div class="cat">{E(a["category"])}</div></div>{ai_chip(a)}</div>'
                  f'<p>{E(a["tagline"])}</p>'
                  f'<div class="foot"><span class="chip{live}">{E(a["status_label"])}</span>{{go}}</div>')
         if a.get("pages"):
@@ -161,9 +173,9 @@ def build_home():
         else:
             link = None
         if link:
-            cards.append(f'<a class="card" {style} href="{link}"{ext}>{inner.replace("{go}", go)}</a>')
+            cards.append(f'<a class="card{ai}" {style} href="{link}"{ext}>{inner.replace("{go}", go)}</a>')
         else:
-            cards.append(f'<div class="card" {style}>{inner.replace("{go}", "")}</div>')
+            cards.append(f'<div class="card{ai}" {style}>{inner.replace("{go}", "")}</div>')
     # dark-mode accent per card (inline style carries the light accent)
     rules_light_dark = []
     for i, a in enumerate(APPS):
@@ -215,7 +227,7 @@ def build_app(a):
 <div class="row">{tile(a, here)}<p class="eyebrow" style="margin:0">{E(a["category"])} · {E(a["platform"])}</p></div>
 <h1>{E(a["full_name"])}</h1>
 <p class="tag">{E(a["tagline"])}</p>
-<div class="meta">{store or chip}</div>
+<div class="meta">{store or chip}{ai_chip(a)}</div>
 </div></section>
 {notice}<section class="section"><div class="wrap col lede">{desc}{quote}</div></section>
 <section class="section"><div class="wrap col"><h2>What it does</h2><ul class="features">{feats}</ul></div></section>
