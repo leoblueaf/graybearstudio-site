@@ -13,6 +13,9 @@ BODY = """
 <button type="button" class="pv-link" id="reset">Reset the demo</button>
 </div></div>
 
+<nav class="pv-subnav" aria-label="Sections"><div class="wrap">
+<a href="#board-h">Issue board</a><a href="#loop">How it works</a><a href="#submit">Raise an issue</a><a href="#mentors">Mentors</a><a href="#boards">Message boards</a><a href="#news">What changed</a>
+</div></nav>
 <section class="pv-hero"><div class="wrap pv-hero-grid">
 <div>
 <h1>The Pulse</h1>
@@ -97,6 +100,46 @@ BODY = """
 </div>
 </div></section>
 
+
+<section class="section" id="mentors"><div class="wrap">
+<h2>Find a mentor</h2>
+<p class="pv-hint" style="margin:-0.4rem 0 1.2rem;font-size:1rem">Chiefs who have volunteered to mentor. Read their profiles and ask for a conversation. Each Chief decides whether to accept.</p>
+<div class="pv-filter" role="group" aria-label="Filter mentors by focus">
+<button type="button" class="pv-chip" aria-pressed="true" data-focus="all">All</button>
+<button type="button" class="pv-chip" aria-pressed="false" data-focus="Leadership">Leadership</button>
+<button type="button" class="pv-chip" aria-pressed="false" data-focus="Career moves">Career moves</button>
+<button type="button" class="pv-chip" aria-pressed="false" data-focus="Joint and broadening">Joint and broadening</button>
+<button type="button" class="pv-chip" aria-pressed="false" data-focus="Training and evaluation">Training and evaluation</button>
+<button type="button" class="pv-chip" aria-pressed="false" data-focus="Life and family">Life and family</button>
+</div>
+<div class="pv-mentors" id="mentor-list"></div>
+<p class="pv-hint" style="margin-top:0.8rem">Sample profiles. In a real version each Chief writes their own profile and chooses how many mentees to take.</p>
+<div class="pv-box pv-volunteer"><h3>Are you a Chief?</h3><p class="pv-hint" style="margin-top:0.3rem">Add your profile: your path, what you can help with, and how many people you can take on. You can pause it any time.</p><button type="button" class="btn pv-ghost" id="vol-btn" style="margin-top:0.7rem">Add my profile</button><p class="pv-ok" id="vol-ok" role="status"></p></div>
+</div></section>
+
+<section class="section" id="boards"><div class="wrap">
+<h2>Message boards</h2>
+<p class="pv-hint" style="margin:-0.4rem 0 1.2rem;font-size:1rem">Straight from the people who run the career field. The CFM posts to the whole field; each MAJCOM Functional Manager posts to their command.</p>
+<div class="pv-tabs" role="tablist" aria-label="Message boards">
+<button type="button" role="tab" id="tab-cf" aria-selected="true" aria-controls="panel-board">Career field (CFM)</button>
+<button type="button" role="tab" id="tab-mj" aria-selected="false" aria-controls="panel-board">MAJCOM (MFMs)</button>
+</div>
+<div id="panel-board" role="tabpanel" class="pv-board-panel">
+<div class="pv-row pv-mj-pick" id="mj-pick" hidden><label class="f" for="mj">Command</label><select id="mj"></select></div>
+<details class="pv-composer"><summary>Post an update <span class="pv-hint" style="display:inline">(CFM and MFMs only)</span></summary>
+<form class="pv-form" id="post-form" novalidate style="margin-top:0.8rem">
+<label class="f" for="p-title">Headline</label><input type="text" id="p-title" maxlength="90" placeholder="Annual training conference dates set">
+<label class="f" for="p-body">Update</label><textarea id="p-body" maxlength="800" placeholder="What changed, who it affects, and what they should do."></textarea>
+<div class="pv-pair"><div><label class="f" for="p-kind">Type</label><select id="p-kind"><option>News</option><option>Announcement</option><option>Recognition</option><option>Event</option></select></div>
+<div><label class="f" for="p-photo">Photo (optional)</label><input type="file" id="p-photo" accept="image/*"></div></div>
+<label class="pv-check"><input type="checkbox" id="p-pin"> Pin to the top of the board</label>
+<div class="pv-row"><button class="btn" type="submit">Post update</button><p class="pv-ok" id="post-ok" role="status"></p></div>
+<p class="pv-hint">In the demo, posts stay in this browser and photos are not uploaded anywhere.</p>
+</form></details>
+<div class="pv-posts" id="posts"></div>
+</div>
+</div></section>
+
 <section class="section" id="news"><div class="wrap">
 <h2>What changed</h2>
 <div class="pv-news-grid">
@@ -120,6 +163,21 @@ BODY = """
 <p class="pv-hint" style="max-width:60ch;margin:1.6rem auto 0">A concept demo of a career field communication hub. Not an official U.S. Air Force or Department of the Air Force website, not endorsed by either, and holding no real data. What you type stays in this browser and is cleared by "Reset the demo".</p>
 </div></section>
 
+
+<dialog class="pv-dialog" id="m-dlg" aria-labelledby="m-title"><div>
+<h3 id="m-title"></h3>
+<p class="pv-hint" id="m-meta"></p>
+<p id="m-bio" style="margin:0"></p>
+<div class="pv-tags" id="m-tags"></div>
+<form class="pv-form" id="m-form" novalidate style="padding:1rem">
+<label class="f" for="m-msg">Why would you like to talk?</label>
+<textarea id="m-msg" maxlength="500" placeholder="I'm a new 7-level weighing a broadening job and would value 30 minutes on how you decided."></textarea>
+<div class="pv-pair"><div><label class="f" for="m-how">Best way to meet</label><select id="m-how"><option>Video call</option><option>Phone</option><option>In person if we're co-located</option></select></div>
+<div><label class="f" for="m-when">When</label><select id="m-when"><option>In the next two weeks</option><option>This month</option><option>No rush</option></select></div></div>
+<div class="pv-row" style="justify-content:flex-end"><button class="btn pv-ghost" type="button" id="m-close">Close</button><button class="btn" type="submit">Ask for a conversation</button></div>
+<p class="pv-ok" id="m-ok" role="status"></p>
+</form>
+</div></dialog>
 <dialog class="pv-dialog" id="dlg" aria-labelledby="d-title"><div>
 <h3 id="d-title"></h3>
 <p class="pv-hint" id="d-meta"></p>
@@ -192,8 +250,108 @@ SCRIPT = """<script>
     document.querySelector(".pv-board").scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "center" });
   });
   $("signup").addEventListener("submit", e => { e.preventDefault(); $("sub-ok").textContent = "Subscribed (demo only, nothing was sent)."; $("email").value = ""; });
-  $("reset").onclick = () => { issues = SAMPLE.map((x, i) => ({ ...x, id: i + 1 })); fresh = null; try { localStorage.removeItem(KEY); } catch { } render(); };
+  $("reset").onclick = () => { issues = SAMPLE.map((x, i) => ({ ...x, id: i + 1 })); fresh = null; try { localStorage.removeItem(KEY); localStorage.removeItem("pulse-demo.posts.v1"); } catch { } posts = POSTS0.slice(); render(); renderPosts(); };
   const zulu = () => { const d = new Date(); $("zulu").textContent = String(d.getUTCHours()).padStart(2, "0") + String(d.getUTCMinutes()).padStart(2, "0") + "Z"; };
+
+  // ---------------- mentors (sample)
+  const MENTORS = [
+    { n: "Chief M. Alvarez", y: 24, now: "Command Chief, sample wing", path: "Operations centers at four bases, two tours as a superintendent, one joint staff tour.", f: ["Leadership", "Joint and broadening"], open: 2, how: "Video call" },
+    { n: "Chief R. Okafor", y: 22, now: "Superintendent, sample operations center", path: "Instructor, standardization and evaluation, then a career-broadening tour in personnel.", f: ["Training and evaluation", "Career moves"], open: 3, how: "Phone or video" },
+    { n: "Chief D. Lindqvist", y: 26, now: "MAJCOM Functional Manager (sample)", path: "Overseas most of a career, two remote tours, and a dual-military family that made it work.", f: ["Life and family", "Career moves"], open: 1, how: "Video call" },
+    { n: "Chief T. Nakamura", y: 23, now: "Senior enlisted leader, sample joint staff", path: "Moved from the ops floor to joint planning; happy to talk about writing, briefing and boards.", f: ["Joint and broadening", "Leadership"], open: 0, how: "Video call" },
+    { n: "Chief S. Bennett", y: 21, now: "Chief, sample training squadron", path: "Built two upgrade-training programs from scratch and ran a schoolhouse.", f: ["Training and evaluation", "Leadership"], open: 2, how: "In person or video" },
+    { n: "Chief A. Haddad", y: 25, now: "First sergeant turned superintendent (sample)", path: "Took a special duty mid-career and came back to the field. Ask about stepping away and back.", f: ["Career moves", "Life and family"], open: 4, how: "Phone" },
+  ];
+  let focus = "all";
+  const initials = n => n.replace("Chief ", "").split(/[ .]+/).filter(Boolean).map(w => w[0]).join("").slice(0, 2);
+  function renderMentors() {
+    const box = $("mentor-list"); box.innerHTML = "";
+    MENTORS.filter(m => focus === "all" || m.f.includes(focus)).forEach((m, i) => {
+      const c = document.createElement("article"); c.className = "pv-mentor";
+      c.innerHTML = `<div class="pv-avatar" aria-hidden="true">${initials(m.n)}</div><div><h3></h3><p class="pv-hint"></p></div><p class="path"></p><div class="pv-tags"></div><div class="pv-row" style="justify-content:space-between"><span class="pv-open"></span><button type="button" class="btn pv-ghost">View profile</button></div>`;
+      c.querySelector("h3").textContent = m.n;
+      c.querySelector(".pv-hint").textContent = `${m.now}. ${m.y} years.`;
+      c.querySelector(".path").textContent = m.path;
+      c.querySelector(".pv-tags").innerHTML = m.f.map(t => `<span>${t}</span>`).join("");
+      const o = c.querySelector(".pv-open"); o.textContent = m.open ? `Taking ${m.open} more mentee${m.open === 1 ? "" : "s"}` : "Not taking mentees right now"; o.classList.toggle("full", !m.open);
+      c.querySelector("button").onclick = () => showMentor(MENTORS.indexOf(m));
+      box.append(c);
+    });
+  }
+  document.querySelectorAll(".pv-chip").forEach(b => b.onclick = () => {
+    focus = b.dataset.focus; document.querySelectorAll(".pv-chip").forEach(x => x.setAttribute("aria-pressed", x === b)); renderMentors();
+  });
+  let mIdx = -1;
+  function showMentor(i) {
+    const m = MENTORS[i]; mIdx = i;
+    $("m-title").textContent = m.n; $("m-meta").textContent = `${m.now}. ${m.y} years in. Prefers: ${m.how}.`;
+    $("m-bio").textContent = m.path; $("m-tags").innerHTML = m.f.map(t => `<span>${t}</span>`).join("");
+    $("m-ok").textContent = ""; $("m-msg").value = "";
+    $("m-form").querySelector("button[type=submit]").disabled = !m.open;
+    if (!m.open) $("m-ok").textContent = "This Chief isn't taking new mentees right now.";
+    $("m-dlg").showModal();
+  }
+  $("m-close").onclick = () => $("m-dlg").close();
+  $("m-dlg").addEventListener("click", e => { if (e.target === $("m-dlg")) $("m-dlg").close(); });
+  $("m-form").addEventListener("submit", e => {
+    e.preventDefault(); const ok = $("m-ok");
+    if ($("m-msg").value.trim().length < 10) { ok.className = "pv-ok bad"; ok.textContent = "Add a sentence on what you'd like to talk about."; return; }
+    ok.className = "pv-ok"; ok.textContent = `Request sent to ${MENTORS[mIdx].n}. (Demo only: nothing was sent.)`; $("m-msg").value = "";
+  });
+  $("vol-btn").onclick = () => { $("vol-ok").textContent = "In the real version this opens the profile form. (Demo only.)"; };
+
+  // ---------------- message boards (sample)
+  const MAJCOMS = ["ACC", "AETC", "AFGSC", "AFMC", "AFSOC", "AMC", "PACAF", "USAFE-AFAFRICA", "AFRC", "ANG"];
+  $("mj").innerHTML = MAJCOMS.map(m => `<option>${m}</option>`).join("");
+  const PHOTO = (hue, label) => `<div class="pv-photo" style="--h:${hue}" role="img" aria-label="${label}"><svg viewBox="0 0 120 70" aria-hidden="true"><path d="M0 58 L28 36 L46 48 L72 22 L120 56 L120 70 L0 70 Z" fill="currentColor" opacity=".35"/><circle cx="92" cy="18" r="8" fill="currentColor" opacity=".45"/></svg><span>Sample photo</span></div>`;
+  const POSTS0 = [
+    { b: "cf", t: "Annual training conference: dates and agenda", k: "Event", by: "Career Field Manager", d: "Sample, 3 days ago", x: "Save the dates. The agenda covers the training pathway changes, the issue board, and an hour of open questions with the Council. Virtual seats for every MAJCOM.", pin: true, img: 210 },
+    { b: "cf", t: "Council outcomes are on The Pulse", k: "News", by: "Career Field Manager", d: "Sample, 2 weeks ago", x: "Six issues worked this quarter. Read what was decided, who owns each item, and the dates to watch.", img: 0 },
+    { b: "cf", t: "Congratulations to this year's award winners", k: "Recognition", by: "Career Field Manager", d: "Sample, last month", x: "Thank you to every unit that submitted packages. The winners' write-ups are worth reading for anyone building a package next year.", img: 38 },
+    { b: "ACC", t: "Console upgrade schedule for the command", k: "Announcement", by: "ACC Functional Manager", d: "Sample, 5 days ago", x: "Installs begin next quarter. Each unit gets two weeks' notice and a loaner kit.", img: 0 },
+    { b: "USAFE-AFAFRICA", t: "Theater orientation for new arrivals", k: "Event", by: "USAFE-AFAFRICA Functional Manager", d: "Sample, 1 week ago", x: "A half-day session for everyone who has arrived in the last 90 days. Spouses welcome.", img: 160 },
+    { b: "AFGSC", t: "Manning snapshot and what it means for PCS season", k: "News", by: "AFGSC Functional Manager", d: "Sample, 2 weeks ago", x: "Where the command is short, where it's long, and how assignments will be balanced this cycle.", img: 0 },
+    { b: "AMC", t: "Spotlight: a unit that cut changeover time in half", k: "Recognition", by: "AMC Functional Manager", d: "Sample, 3 weeks ago", x: "A short write-up of how one team rebuilt its changeover brief, with their template attached.", img: 95 },
+  ];
+  const PKEY = "pulse-demo.posts.v1";
+  let posts; try { posts = JSON.parse(localStorage.getItem(PKEY)); } catch { }
+  if (!Array.isArray(posts)) posts = POSTS0.slice();
+  const savePosts = () => { try { localStorage.setItem(PKEY, JSON.stringify(posts.map(p => ({ ...p, photo: undefined })))); } catch { } };
+  let board = "cf";
+  function renderPosts() {
+    const key = board === "cf" ? "cf" : $("mj").value;
+    const list = posts.filter(p => p.b === key).sort((a, b) => (b.pin ? 1 : 0) - (a.pin ? 1 : 0));
+    const box = $("posts");
+    if (!list.length) { box.innerHTML = `<p class="pv-hint">No posts on the ${key} board yet. When the Functional Manager posts, it shows here.</p>`; return; }
+    box.innerHTML = "";
+    list.forEach(p => {
+      const a = document.createElement("article"); a.className = "pv-post" + (p.pin ? " pinned" : "");
+      a.innerHTML = `${p.photo ? `<img class="pv-photo" alt="">` : p.img !== undefined && p.img !== 0 ? PHOTO(p.img, "Sample photo") : ""}<div><p class="pv-meta"></p><h3></h3><p class="x"></p></div>`;
+      if (p.photo) a.querySelector("img").src = p.photo;
+      a.querySelector(".pv-meta").textContent = `${p.pin ? "Pinned. " : ""}${p.k}. ${p.by}. ${p.d}`;
+      a.querySelector("h3").textContent = p.t; a.querySelector(".x").textContent = p.x;
+      box.append(a);
+    });
+  }
+  function setTab(cf) {
+    board = cf ? "cf" : "mj";
+    $("tab-cf").setAttribute("aria-selected", cf); $("tab-mj").setAttribute("aria-selected", !cf);
+    $("mj-pick").hidden = cf; renderPosts();
+  }
+  $("tab-cf").onclick = () => setTab(true); $("tab-mj").onclick = () => setTab(false);
+  $("mj").onchange = renderPosts;
+  let pendingPhoto = null;
+  $("p-photo").onchange = e => { const f = e.target.files[0]; pendingPhoto = null; if (!f) return; const r = new FileReader(); r.onload = () => { pendingPhoto = r.result; }; r.readAsDataURL(f); };
+  $("post-form").addEventListener("submit", e => {
+    e.preventDefault(); const ok = $("post-ok");
+    const t = $("p-title").value.trim(), x = $("p-body").value.trim();
+    if (t.length < 4 || x.length < 10) { ok.className = "pv-ok bad"; ok.textContent = "Add a headline and a sentence or two."; return; }
+    const key = board === "cf" ? "cf" : $("mj").value;
+    posts.unshift({ b: key, t, x, k: $("p-kind").value, by: key === "cf" ? "Career Field Manager" : key + " Functional Manager", d: "Just now", pin: $("p-pin").checked, photo: pendingPhoto });
+    savePosts(); renderPosts(); $("post-form").reset(); pendingPhoto = null;
+    ok.className = "pv-ok"; ok.textContent = `Posted to the ${key === "cf" ? "career field" : key} board.`;
+  });
+  renderMentors(); renderPosts();
   zulu(); setInterval(zulu, 15000); render();
 })();
 </script>"""

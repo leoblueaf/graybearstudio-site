@@ -140,3 +140,50 @@ button.btn { border: 0; cursor: pointer; }
   .pv-metric b { font-size: 1.7rem; }
 }
 @media (prefers-reduced-motion: reduce) { .pv-issue.new { animation: none; } }
+
+/* section links */
+.pv-subnav { border-bottom: 1px solid var(--line); background: var(--paper); position: sticky; top: 0; z-index: 5; }
+.pv-subnav .wrap { display: flex; gap: 0.2rem 1.2rem; overflow-x: auto; padding-block: 0.55rem; scrollbar-width: none; }
+.pv-subnav a { color: var(--muted); text-decoration: none; font-size: 0.9rem; white-space: nowrap; padding-block: 0.15rem; border-bottom: 2px solid transparent; }
+.pv-subnav a:hover { color: var(--ink); border-color: var(--app); }
+
+/* mentors */
+.pv-filter { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-bottom: 1.1rem; }
+.pv-chip { font: 500 0.88rem var(--body); color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 99px; padding: 0.4rem 0.85rem; cursor: pointer; }
+.pv-chip[aria-pressed="true"] { background: var(--app); border-color: var(--app); color: var(--surface); }
+.pv-mentors { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr)); }
+.pv-mentor { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 1.1rem; display: grid; grid-template-columns: auto 1fr; gap: 0.6rem 0.85rem; align-content: start; }
+.pv-mentor > .path, .pv-mentor > .pv-tags, .pv-mentor > .pv-row { grid-column: 1 / -1; }
+.pv-mentor h3 { font-size: 1.2rem; }
+.pv-mentor .pv-hint { margin-top: 0.1rem; }
+.pv-mentor .path { margin: 0; font-size: 0.95rem; }
+.pv-avatar { width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center; font: 500 1.15rem var(--display); color: var(--app); background: color-mix(in srgb, var(--app) 12%, var(--surface)); border: 1px solid color-mix(in srgb, var(--app) 35%, transparent); }
+.pv-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.pv-tags span { font-size: 0.78rem; border: 1px solid var(--line); border-radius: 99px; padding: 0.15rem 0.6rem; color: var(--muted); }
+.pv-open { font-size: 0.85rem; color: var(--pv-done); font-weight: 600; }
+.pv-open.full { color: var(--muted); font-weight: 400; }
+.pv-volunteer { margin-top: 1.2rem; max-width: 34rem; }
+
+/* message boards */
+.pv-tabs { display: flex; gap: 0; border-bottom: 1px solid var(--line); margin-bottom: 1rem; }
+.pv-tabs button { font: 500 1rem var(--body); background: none; border: 0; border-bottom: 3px solid transparent; padding: 0.6rem 1rem; color: var(--muted); cursor: pointer; margin-bottom: -1px; }
+.pv-tabs button[aria-selected="true"] { color: var(--ink); border-color: var(--app); }
+.pv-mj-pick { margin-bottom: 1rem; }
+.pv-mj-pick select { font: 1rem var(--body); color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 0.45rem 0.7rem; }
+.pv-composer { background: var(--surface); border: 1px dashed var(--line); border-radius: 10px; padding: 0.8rem 1rem; margin-bottom: 1.2rem; }
+.pv-composer summary { cursor: pointer; font-weight: 600; }
+.pv-composer .pv-form { border: 0; padding: 0; background: none; }
+.pv-check { display: flex; gap: 0.5rem; align-items: center; font-size: 0.95rem; }
+.pv-check input { accent-color: var(--app); width: 1.05rem; height: 1.05rem; }
+.pv-posts { display: grid; gap: 1rem; }
+.pv-post { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; display: grid; }
+@media (min-width: 720px) { .pv-post:has(.pv-photo) { grid-template-columns: 15rem 1fr; } }
+.pv-post > div { padding: 1rem 1.15rem 1.1rem; }
+.pv-post.pinned { border-left: 4px solid var(--app); }
+.pv-post h3 { font-size: 1.3rem; margin: 0.2rem 0 0.35rem; }
+.pv-post .x { margin: 0; color: var(--muted); }
+.pv-meta { margin: 0; font-size: 0.82rem; color: var(--muted); }
+.pv-photo { position: relative; min-height: 9rem; width: 100%; height: 100%; object-fit: cover; display: block;
+  color: hsl(var(--h, 210) 35% 30%); background: linear-gradient(160deg, hsl(var(--h, 210) 45% 82%), hsl(var(--h, 210) 30% 62%)); }
+.pv-photo svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.pv-photo span { position: absolute; left: 0.6rem; bottom: 0.5rem; font-size: 0.72rem; color: #fff; background: rgba(0,0,0,.35); padding: 0.1rem 0.45rem; border-radius: 4px; }
