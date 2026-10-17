@@ -529,7 +529,7 @@ async function refresh() {
   const [sq, c] = await Promise.all([Q.getDay(DAY), Q.getCounters(DAY)]);
   const grew = sq.length !== squares.length;
   squares = sq; counters = c; L = Q.layout(DAY, squares.length); invalidate();
-  if (grew && !target && cam.s <= fitScale() * 1.05) showAll(false);
+  if (grew && !goal && !zoomGoal && cam.s <= fitScale() * 1.05) showAll(false);
   stats(); renderList(); dirty = true;
   const m = Q.mine.get(DAY);
   $("mine").hidden = !(m && squares.some(s => s.code === m.code));
