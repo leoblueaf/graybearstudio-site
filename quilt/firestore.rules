@@ -1,0 +1,193 @@
+rules_version = '2';
+// Hitherto Prayer Quilt: Firestore rules (project hitherto-quilt).
+// These are the real gate. The page's own checks (names, crisis words, blocked words) are for kindness.
+// Data:
+//   days/{YYYY-MM-DD}                 { squares: [ {code, text, initials, fabric, at} ], rm? }
+//   days/{date}/authors/{uid}         { code, held }          one per device per day, private
+//   held/{code}                       square + { day, reason } admin only
+//   counters/{date}                   { knots:{code:n}, reports:{code:n}, refs:{name:n}, kept:{code:true}, k }
+//   counters/{date}/k/{code_uid}      knot marker (one per device per square), private
+//   counters/{date}/r/{code_uid}      report marker, private
+//   meta/days                         { counts:{date:n}, k }   for past-quilt thumbnails
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() { return request.auth != null; }
+    function isAdmin() {
+      return signedIn()
+        && request.auth.token.email == '__ADMIN_EMAIL__'
+        && request.auth.token.email_verified == true
+        && request.auth.token.firebase.sign_in_provider == 'google.com';
+    }
+    function p2(n) { return n < 10 ? '0' + string(n) : string(n); }
+    function ymd(t) { return string(t.year()) + '-' + p2(t.month()) + '-' + p2(t.day()); }
+    // The quilt day runs midnight to midnight Eastern. Accept either offset (EDT or EST).
+    function isToday(d) {
+      return d == ymd(request.time - duration.value(4, 'h')) || d == ymd(request.time - duration.value(5, 'h'));
+    }
+    function isDate(d) { return d is string && d.matches('^20[0-9]{2}-[01][0-9]-[0-3][0-9]$'); }
+    function isCode(c) { return c is string && c.matches('^[A-HJ-NP-Z2-9]{6}$'); }
+
+    // No links, emails or phone numbers, ever.
+    function noContact(t) {
+      let s = t.lower();
+      return !s.matches('(?s).*(https?:|www[.]|[a-z0-9][.](com|org|net|io|co|us|info|biz|app|me|ly|gov|edu|tv|xyz|church|online|site)([^a-z]|$)).*')
+        && !s.matches('(?s).*[a-z0-9._%+-]+@[a-z0-9-]+[.][a-z]{2,}.*')
+        && !s.matches('(?s).*[0-9]{3}[^a-z0-9]{0,3}[0-9]{3}[^a-z0-9]{0,2}[0-9]{4}.*')
+        && !s.matches('(?s)(.*[^0-9])?[0-9]{3}[ .-][0-9]{4}([^0-9].*)?');
+    }
+    function sqFields(s) {
+      return isCode(s.code)
+        && s.text is string && s.text.size() >= 1 && s.text.size() <= 280 && noContact(s.text)
+        && s.initials is string && s.initials.matches('^[A-Za-z.& ]{0,6}$')
+        && s.fabric is int && s.fabric >= 0 && s.fabric <= 6
+        && s.at is timestamp
+        && s.at > request.time - duration.value(2, 'd') && s.at < request.time + duration.value(2, 'd');
+    }
+    function validSq(s) {
+      return s is map
+        && s.keys().hasAll(['code', 'text', 'initials', 'fabric', 'at'])
+        && s.keys().hasOnly(['code', 'text', 'initials', 'fabric', 'at'])
+        && sqFields(s);
+    }
+    function authorPath(day) { return /databases/$(database)/documents/days/$(day)/authors/$(request.auth.uid); }
+    // This write also creates this device's (first and only) author record for the day.
+    function newAuthor(day, code, held) {
+      return !exists(authorPath(day)) && existsAfter(authorPath(day))
+        && getAfter(authorPath(day)).data.code == code
+        && getAfter(authorPath(day)).data.held == held;
+    }
+
+    match /days/{day} {
+      allow read: if true;
+      allow create: if isAdmin() || (
+        signedIn() && isToday(day)
+        && request.resource.data.keys().hasOnly(['squares'])
+        && request.resource.data.squares.size() == 1
+        && validSq(request.resource.data.squares[0])
+        && newAuthor(day, request.resource.data.squares[0].code, false));
+      allow update: if isAdmin() || appendOk(day) || removeOk(day);
+      allow delete: if isAdmin();
+
+      // Append exactly one valid square to the end; nothing else may change.
+      function appendOk(day) {
+        let o = resource.data.squares;
+        let n = request.resource.data.squares;
+        return signedIn() && isToday(day)
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['squares'])
+          && n.size() == o.size() + 1
+          && n[0:o.size()] == o
+          && validSq(n[o.size()])
+          && newAuthor(day, n[o.size()].code, false);
+      }
+      // The device that sewed a square may remove it (any day). `rm` is the index removed.
+      function removeOk(day) {
+        let o = resource.data.squares;
+        let i = request.resource.data.rm;
+        return signedIn()
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['squares', 'rm'])
+          && i is int && i >= 0 && i < o.size()
+          && exists(authorPath(day)) && get(authorPath(day)).data.code == o[i].code
+          && request.resource.data.squares == o[0:i].concat(o[i + 1:o.size()]);
+      }
+
+      match /authors/{uid} {
+        allow get: if isAdmin() || (signedIn() && request.auth.uid == uid);
+        allow list, delete: if isAdmin();
+        allow update: if false;
+        allow create: if signedIn() && uid == request.auth.uid && isToday(day)
+          && request.resource.data.keys().hasOnly(['code', 'held'])
+          && isCode(request.resource.data.code)
+          && request.resource.data.held is bool
+          && (
+            (request.resource.data.held == false
+              && getAfter(/databases/$(database)/documents/days/$(day)).data.squares[
+                   getAfter(/databases/$(database)/documents/days/$(day)).data.squares.size() - 1].code
+                 == request.resource.data.code)
+            || (request.resource.data.held == true
+              && !exists(/databases/$(database)/documents/held/$(request.resource.data.code))
+              && existsAfter(/databases/$(database)/documents/held/$(request.resource.data.code))
+              && getAfter(/databases/$(database)/documents/held/$(request.resource.data.code)).data.day == day)
+          );
+      }
+    }
+
+    match /held/{code} {
+      allow read, update, delete: if isAdmin();
+      allow create: if isAdmin() || (
+        signedIn() && request.resource.data.code == code
+        && request.resource.data.keys().hasAll(['code', 'text', 'initials', 'fabric', 'at', 'day', 'reason'])
+        && request.resource.data.keys().hasOnly(['code', 'text', 'initials', 'fabric', 'at', 'day', 'reason'])
+        && sqFields(request.resource.data)
+        && isToday(request.resource.data.day)
+        && request.resource.data.reason in ['name', 'words']
+        && newAuthor(request.resource.data.day, code, true));
+    }
+
+    match /counters/{day} {
+      allow read: if true;
+      allow create, update: if isAdmin() || (signedIn() && isDate(day) && (bump(day, 'knots', 'k') || bump(day, 'reports', 'r') || refOk(day)));
+      allow delete: if isAdmin();
+
+      function before() { return resource == null ? {} : resource.data; }
+      // Raise exactly one entry of `field` by exactly 1. `k` names the entry.
+      function raised(field) {
+        let o = before();
+        let n = request.resource.data;
+        let key = n.k;
+        return key is string
+          && (resource == null ? n.keys().hasOnly([field, 'k'])
+                               : n.diff(o).affectedKeys().hasOnly([field, 'k']))
+          && n[field].diff(o.get(field, {})).affectedKeys().hasOnly([key])
+          && n[field][key] == o.get(field, {}).get(key, 0) + 1;
+      }
+      // Knots and reports: once per device per square, proven by a marker made in the same write.
+      function bump(day, field, coll) {
+        let key = request.resource.data.k;
+        let m = /databases/$(database)/documents/counters/$(day)/$(coll)/$(key + '_' + request.auth.uid);
+        return raised(field) && isCode(key) && !exists(m) && existsAfter(m);
+      }
+      // Referral counts: only when this device sews today's square in the same write.
+      function refOk(day) {
+        let key = request.resource.data.k;
+        return raised('refs') && key.matches('^[a-z0-9-]{1,30}$') && isToday(day)
+          && !exists(authorPath(day)) && existsAfter(authorPath(day))
+          && getAfter(authorPath(day)).data.held == false;
+      }
+
+      match /{coll}/{id} {
+        allow read: if isAdmin();
+        allow delete: if isAdmin();
+        allow update: if false;
+        allow create: if signedIn() && coll in ['k', 'r'] && request.resource.data.keys().size() == 0
+          && id == getAfter(/databases/$(database)/documents/counters/$(day)).data.k + '_' + request.auth.uid
+          && getAfter(/databases/$(database)/documents/counters/$(day)).data[coll == 'k' ? 'knots' : 'reports'][
+               getAfter(/databases/$(database)/documents/counters/$(day)).data.k]
+             == (exists(/databases/$(database)/documents/counters/$(day))
+                  ? get(/databases/$(database)/documents/counters/$(day)).data.get(coll == 'k' ? 'knots' : 'reports', {})
+                      .get(getAfter(/databases/$(database)/documents/counters/$(day)).data.k, 0)
+                  : 0) + 1;
+      }
+    }
+
+    match /meta/days {
+      allow read: if true;
+      allow create, update: if isAdmin() || (signedIn() && countOk());
+      function countOk() {
+        let o = resource == null ? {} : resource.data;
+        let n = request.resource.data;
+        let d = n.k;
+        return isDate(d) && isToday(d)
+          && (resource == null ? n.keys().hasOnly(['counts', 'k']) : n.diff(o).affectedKeys().hasOnly(['counts', 'k']))
+          && n.counts.diff(o.get('counts', {})).affectedKeys().hasOnly([d])
+          && n.counts[d] == o.get('counts', {}).get(d, 0) + 1
+          && !exists(authorPath(d)) && existsAfter(authorPath(d))
+          && getAfter(authorPath(d)).data.held == false;
+      }
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

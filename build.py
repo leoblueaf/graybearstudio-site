@@ -321,6 +321,8 @@ def main():
     for a in APPS:
         if a.get("pages"):
             build_app(a)
+    from quilt_build import build_quilt
+    quilt_urls = build_quilt(DIST, ROOT)
     if not PREVIEW:
         build_404()
         with open(os.path.join(DIST, "CNAME"), "w") as f:
@@ -329,6 +331,7 @@ def main():
         for a_ in APPS:
             if a_.get("pages"):
                 urls += [f"https://graybearstudio.com/{a_['slug']}/{x}" for x in ("", "privacy/", "support/", "terms/")]
+        urls += quilt_urls
         with open(os.path.join(DIST, "sitemap.xml"), "w") as f:
             f.write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
                     + "".join(f"  <url><loc>{u}</loc></url>\n" for u in urls) + "</urlset>\n")

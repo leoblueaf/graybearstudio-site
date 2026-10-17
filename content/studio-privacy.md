@@ -1,10 +1,10 @@
-Last updated: October 15, 2026
+Last updated: October 17, 2026
 
 This notice covers the GrayBear Studio websites: graybearstudio.com and research.graybearstudio.com, the site of the Hidden Structure Research Group. Each app has its own privacy policy, linked from that app's page.
 
 ## The short version
 
-This website does not use cookies, analytics, advertising or tracking of any kind. We do not ask for your name or email address, and there is no sign-in.
+This website does not use cookies, analytics, advertising or tracking of any kind. We do not ask for your name or email address, and there is no sign-in. The one exception is the Hitherto Prayer Quilt, described below.
 
 ## What happens when you visit
 
@@ -14,6 +14,10 @@ Like every website, pages are delivered by servers that see basic technical info
 - **Fonts.** The site's fonts load from Google Fonts, so your browser contacts Google's servers, which receive your IP address and browser details. Google's handling of this is described in the Google Privacy Policy.
 
 We do not receive or keep these records ourselves.
+
+## The Hitherto Prayer Quilt
+
+The Prayer Quilt pages at [graybearstudio.com/hitherto/quilt/](https://graybearstudio.com/hitherto/quilt/) work differently from the rest of this site. They load Google Firebase and Google reCAPTCHA so people can add squares and tie knots, and they give each browser a random ID when it does. They have their own [privacy notice](https://graybearstudio.com/hitherto/quilt/privacy/), which explains exactly what they store.
 
 ## If you email us
 
