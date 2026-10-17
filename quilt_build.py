@@ -109,7 +109,7 @@ MAIN = """
 <button type="button" id="zall" aria-label="Show the whole quilt">Whole</button>
 <button type="button" id="mine" aria-label="Find my square" hidden>Mine</button>
 </div>
-<div class="hint" id="hint">Drag to move · pinch or scroll to zoom · tap a square</div>
+<div class="hint" id="hint">Drag to move · pinch or scroll to zoom · double-click to zoom in · tap a square to read it</div>
 <div class="state" id="state" hidden></div>
 </div>
 <div id="list" hidden aria-live="polite"></div>
