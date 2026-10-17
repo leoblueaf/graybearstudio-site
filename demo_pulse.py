@@ -119,21 +119,25 @@ BODY = """
 
 <section class="section" id="boards"><div class="wrap">
 <h2>Message boards</h2>
-<p class="pv-hint" style="margin:-0.4rem 0 1.2rem;font-size:1rem">Straight from the people who run the career field. The CFM posts to the whole field; each MAJCOM Functional Manager posts to their command.</p>
+<p class="pv-hint" style="margin:-0.4rem 0 1.2rem;font-size:1rem">Straight from the people who run the career field. The CFM board carries messages from the Career Field Manager, sent to every command or only the ones affected. Each command's board carries its MAJCOM Functional Manager's updates, plus any CFM message sent to that command.</p>
 <div class="pv-tabs" role="tablist" aria-label="Message boards">
-<button type="button" role="tab" id="tab-cf" aria-selected="true" aria-controls="panel-board">Career field (CFM)</button>
-<button type="button" role="tab" id="tab-mj" aria-selected="false" aria-controls="panel-board">MAJCOM (MFMs)</button>
+<button type="button" role="tab" id="tab-cf" aria-selected="true" aria-controls="panel-board">From the CFM</button>
+<button type="button" role="tab" id="tab-mj" aria-selected="false" aria-controls="panel-board">Command boards (MFMs)</button>
 </div>
 <div id="panel-board" role="tabpanel" class="pv-board-panel">
-<div class="pv-row pv-mj-pick" id="mj-pick" hidden><label class="f" for="mj">Command</label><select id="mj"></select></div>
-<details class="pv-composer"><summary>Post an update <span class="pv-hint" style="display:inline">(CFM and MFMs only)</span></summary>
+<div class="pv-row pv-mj-pick" id="mj-pick" hidden><label class="f" for="mj">Your command</label><select id="mj"></select></div>
+<details class="pv-composer" id="composer"><summary id="composer-sum">Post as the CFM</summary>
 <form class="pv-form" id="post-form" novalidate style="margin-top:0.8rem">
+<fieldset id="aud-box"><legend>Send to</legend>
+<div class="pv-choices"><label><input type="radio" name="aud" value="all" checked> All commands</label><label><input type="radio" name="aud" value="some"> Selected commands</label></div>
+<div class="pv-cmds" id="aud-cmds" hidden></div>
+</fieldset>
 <label class="f" for="p-title">Headline</label><input type="text" id="p-title" maxlength="90" placeholder="Annual training conference dates set">
 <label class="f" for="p-body">Update</label><textarea id="p-body" maxlength="800" placeholder="What changed, who it affects, and what they should do."></textarea>
 <div class="pv-pair"><div><label class="f" for="p-kind">Type</label><select id="p-kind"><option>News</option><option>Announcement</option><option>Recognition</option><option>Event</option></select></div>
 <div><label class="f" for="p-photo">Photo (optional)</label><input type="file" id="p-photo" accept="image/*"></div></div>
 <label class="pv-check"><input type="checkbox" id="p-pin"> Pin to the top of the board</label>
-<div class="pv-row"><button class="btn" type="submit">Post update</button><p class="pv-ok" id="post-ok" role="status"></p></div>
+<div class="pv-row"><button class="btn" type="submit" id="post-btn">Post update</button><p class="pv-ok" id="post-ok" role="status"></p></div>
 <p class="pv-hint">In the demo, posts stay in this browser and photos are not uploaded anywhere.</p>
 </form></details>
 <div class="pv-posts" id="posts"></div>
@@ -250,7 +254,7 @@ SCRIPT = """<script>
     document.querySelector(".pv-board").scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "center" });
   });
   $("signup").addEventListener("submit", e => { e.preventDefault(); $("sub-ok").textContent = "Subscribed (demo only, nothing was sent)."; $("email").value = ""; });
-  $("reset").onclick = () => { issues = SAMPLE.map((x, i) => ({ ...x, id: i + 1 })); fresh = null; try { localStorage.removeItem(KEY); localStorage.removeItem("pulse-demo.posts.v1"); } catch { } posts = POSTS0.slice(); render(); renderPosts(); };
+  $("reset").onclick = () => { issues = SAMPLE.map((x, i) => ({ ...x, id: i + 1 })); fresh = null; try { localStorage.removeItem(KEY); localStorage.removeItem("pulse-demo.posts.v2"); } catch { } posts = POSTS0.slice(); render(); renderPosts(); };
   const zulu = () => { const d = new Date(); $("zulu").textContent = String(d.getUTCHours()).padStart(2, "0") + String(d.getUTCMinutes()).padStart(2, "0") + "Z"; };
 
   // ---------------- mentors (sample)
@@ -303,53 +307,73 @@ SCRIPT = """<script>
   // ---------------- message boards (sample)
   const MAJCOMS = ["ACC", "AETC", "AFGSC", "AFMC", "AFSOC", "AMC", "PACAF", "USAFE-AFAFRICA", "AFRC", "ANG"];
   $("mj").innerHTML = MAJCOMS.map(m => `<option>${m}</option>`).join("");
+  $("aud-cmds").innerHTML = MAJCOMS.map(m => `<label><input type="checkbox" value="${m}"> ${m}</label>`).join("");
+  document.querySelectorAll("input[name=aud]").forEach(r => r.onchange = () => { $("aud-cmds").hidden = r.value !== "some" || !r.checked ? $("aud-cmds").hidden && r.value !== "some" : false; $("aud-cmds").hidden = document.querySelector("input[name=aud]:checked").value !== "some"; });
   const PHOTO = (hue, label) => `<div class="pv-photo" style="--h:${hue}" role="img" aria-label="${label}"><svg viewBox="0 0 120 70" aria-hidden="true"><path d="M0 58 L28 36 L46 48 L72 22 L120 56 L120 70 L0 70 Z" fill="currentColor" opacity=".35"/><circle cx="92" cy="18" r="8" fill="currentColor" opacity=".45"/></svg><span>Sample photo</span></div>`;
+  // b: "cfm" for CFM messages (aud "all" or a list of commands); otherwise the command an MFM posted to.
   const POSTS0 = [
-    { b: "cf", t: "Annual training conference: dates and agenda", k: "Event", by: "Career Field Manager", d: "Sample, 3 days ago", x: "Save the dates. The agenda covers the training pathway changes, the issue board, and an hour of open questions with the Council. Virtual seats for every MAJCOM.", pin: true, img: 210 },
-    { b: "cf", t: "Council outcomes are on The Pulse", k: "News", by: "Career Field Manager", d: "Sample, 2 weeks ago", x: "Six issues worked this quarter. Read what was decided, who owns each item, and the dates to watch.", img: 0 },
-    { b: "cf", t: "Congratulations to this year's award winners", k: "Recognition", by: "Career Field Manager", d: "Sample, last month", x: "Thank you to every unit that submitted packages. The winners' write-ups are worth reading for anyone building a package next year.", img: 38 },
-    { b: "ACC", t: "Console upgrade schedule for the command", k: "Announcement", by: "ACC Functional Manager", d: "Sample, 5 days ago", x: "Installs begin next quarter. Each unit gets two weeks' notice and a loaner kit.", img: 0 },
-    { b: "USAFE-AFAFRICA", t: "Theater orientation for new arrivals", k: "Event", by: "USAFE-AFAFRICA Functional Manager", d: "Sample, 1 week ago", x: "A half-day session for everyone who has arrived in the last 90 days. Spouses welcome.", img: 160 },
-    { b: "AFGSC", t: "Manning snapshot and what it means for PCS season", k: "News", by: "AFGSC Functional Manager", d: "Sample, 2 weeks ago", x: "Where the command is short, where it's long, and how assignments will be balanced this cycle.", img: 0 },
-    { b: "AMC", t: "Spotlight: a unit that cut changeover time in half", k: "Recognition", by: "AMC Functional Manager", d: "Sample, 3 weeks ago", x: "A short write-up of how one team rebuilt its changeover brief, with their template attached.", img: 95 },
+    { b: "cfm", aud: "all", t: "Annual training conference: dates and agenda", k: "Event", d: "Sample, 3 days ago", x: "Save the dates. The agenda covers the training pathway changes, the issue board, and an hour of open questions with the Council. Virtual seats for every command.", pin: true, img: 210 },
+    { b: "cfm", aud: ["AFGSC", "USAFE-AFAFRICA", "PACAF"], t: "Console refresh: affected sites and timeline", k: "Announcement", d: "Sample, 1 week ago", x: "Sites in these three commands move to the new consoles first. MFMs will post the unit-by-unit schedule on their boards.", img: 0 },
+    { b: "cfm", aud: "all", t: "Council outcomes are on The Pulse", k: "News", d: "Sample, 2 weeks ago", x: "Six issues worked this quarter. Read what was decided, who owns each item, and the dates to watch.", img: 0 },
+    { b: "cfm", aud: "all", t: "Congratulations to this year's award winners", k: "Recognition", d: "Sample, last month", x: "Thank you to every unit that submitted packages. The winners' write-ups are worth reading for anyone building a package next year.", img: 38 },
+    { b: "ACC", t: "Console upgrade schedule for the command", k: "Announcement", d: "Sample, 5 days ago", x: "Installs begin next quarter. Each unit gets two weeks' notice and a loaner kit.", img: 0 },
+    { b: "USAFE-AFAFRICA", t: "Theater orientation for new arrivals", k: "Event", d: "Sample, 1 week ago", x: "A half-day session for everyone who has arrived in the last 90 days. Spouses welcome.", img: 160 },
+    { b: "AFGSC", t: "Manning snapshot and what it means for PCS season", k: "News", d: "Sample, 2 weeks ago", x: "Where the command is short, where it's long, and how assignments will be balanced this cycle.", img: 0 },
+    { b: "AMC", t: "Spotlight: a unit that cut changeover time in half", k: "Recognition", d: "Sample, 3 weeks ago", x: "A short write-up of how one team rebuilt its changeover brief, with their template attached.", img: 95 },
   ];
-  const PKEY = "pulse-demo.posts.v1";
+  const PKEY = "pulse-demo.posts.v2";
   let posts; try { posts = JSON.parse(localStorage.getItem(PKEY)); } catch { }
   if (!Array.isArray(posts)) posts = POSTS0.slice();
   const savePosts = () => { try { localStorage.setItem(PKEY, JSON.stringify(posts.map(p => ({ ...p, photo: undefined })))); } catch { } };
-  let board = "cf";
+  let board = "cfm";
+  const audText = p => p.aud === "all" ? "All commands" : p.aud.join(", ");
   function renderPosts() {
-    const key = board === "cf" ? "cf" : $("mj").value;
-    const list = posts.filter(p => p.b === key).sort((a, b) => (b.pin ? 1 : 0) - (a.pin ? 1 : 0));
+    const cmd = $("mj").value;
+    let list;
+    if (board === "cfm") list = posts.filter(p => p.b === "cfm");
+    else list = posts.filter(p => p.b === cmd || (p.b === "cfm" && (p.aud === "all" || p.aud.includes(cmd))));
+    list.sort((a, b) => (b.pin ? 1 : 0) - (a.pin ? 1 : 0));
     const box = $("posts");
-    if (!list.length) { box.innerHTML = `<p class="pv-hint">No posts on the ${key} board yet. When the Functional Manager posts, it shows here.</p>`; return; }
+    if (!list.length) { box.innerHTML = `<p class="pv-hint">Nothing on the ${board === "cfm" ? "CFM" : cmd} board yet.</p>`; return; }
     box.innerHTML = "";
     list.forEach(p => {
-      const a = document.createElement("article"); a.className = "pv-post" + (p.pin ? " pinned" : "");
-      a.innerHTML = `${p.photo ? `<img class="pv-photo" alt="">` : p.img !== undefined && p.img !== 0 ? PHOTO(p.img, "Sample photo") : ""}<div><p class="pv-meta"></p><h3></h3><p class="x"></p></div>`;
+      const fromCfm = p.b === "cfm";
+      const a = document.createElement("article"); a.className = "pv-post" + (p.pin ? " pinned" : "") + (fromCfm && board !== "cfm" ? " from-cfm" : "");
+      a.innerHTML = `${p.photo ? `<img class="pv-photo" alt="">` : p.img ? PHOTO(p.img, "Sample photo") : ""}<div><p class="pv-meta"></p><h3></h3><p class="x"></p><p class="pv-aud"></p></div>`;
       if (p.photo) a.querySelector("img").src = p.photo;
-      a.querySelector(".pv-meta").textContent = `${p.pin ? "Pinned. " : ""}${p.k}. ${p.by}. ${p.d}`;
+      const by = fromCfm ? "Career Field Manager" : `${p.b} Functional Manager`;
+      a.querySelector(".pv-meta").textContent = `${p.pin ? "Pinned. " : ""}${p.k}. ${by}. ${p.d}`;
       a.querySelector("h3").textContent = p.t; a.querySelector(".x").textContent = p.x;
+      a.querySelector(".pv-aud").textContent = fromCfm ? (board === "cfm" ? `Sent to: ${audText(p)}` : "From the CFM") : "";
       box.append(a);
     });
   }
-  function setTab(cf) {
-    board = cf ? "cf" : "mj";
-    $("tab-cf").setAttribute("aria-selected", cf); $("tab-mj").setAttribute("aria-selected", !cf);
-    $("mj-pick").hidden = cf; renderPosts();
+  function setTab(cfm) {
+    board = cfm ? "cfm" : "mj";
+    $("tab-cf").setAttribute("aria-selected", cfm); $("tab-mj").setAttribute("aria-selected", !cfm);
+    $("mj-pick").hidden = cfm; $("aud-box").hidden = !cfm;
+    $("composer-sum").textContent = cfm ? "Post as the CFM" : `Post as the ${$("mj").value} MFM`;
+    $("post-ok").textContent = ""; renderPosts();
   }
   $("tab-cf").onclick = () => setTab(true); $("tab-mj").onclick = () => setTab(false);
-  $("mj").onchange = renderPosts;
+  $("mj").onchange = () => setTab(false);
   let pendingPhoto = null;
   $("p-photo").onchange = e => { const f = e.target.files[0]; pendingPhoto = null; if (!f) return; const r = new FileReader(); r.onload = () => { pendingPhoto = r.result; }; r.readAsDataURL(f); };
   $("post-form").addEventListener("submit", e => {
     e.preventDefault(); const ok = $("post-ok");
     const t = $("p-title").value.trim(), x = $("p-body").value.trim();
     if (t.length < 4 || x.length < 10) { ok.className = "pv-ok bad"; ok.textContent = "Add a headline and a sentence or two."; return; }
-    const key = board === "cf" ? "cf" : $("mj").value;
-    posts.unshift({ b: key, t, x, k: $("p-kind").value, by: key === "cf" ? "Career Field Manager" : key + " Functional Manager", d: "Just now", pin: $("p-pin").checked, photo: pendingPhoto });
-    savePosts(); renderPosts(); $("post-form").reset(); pendingPhoto = null;
-    ok.className = "pv-ok"; ok.textContent = `Posted to the ${key === "cf" ? "career field" : key} board.`;
+    let post;
+    if (board === "cfm") {
+      const some = document.querySelector("input[name=aud]:checked").value === "some";
+      const picked = [...$("aud-cmds").querySelectorAll("input:checked")].map(i => i.value);
+      if (some && !picked.length) { ok.className = "pv-ok bad"; ok.textContent = "Pick at least one command, or send to all commands."; return; }
+      post = { b: "cfm", aud: some ? picked : "all" };
+    } else post = { b: $("mj").value };
+    posts.unshift({ ...post, t, x, k: $("p-kind").value, d: "Just now", pin: $("p-pin").checked, photo: pendingPhoto });
+    savePosts(); renderPosts(); $("post-form").reset(); $("aud-cmds").hidden = true; pendingPhoto = null;
+    ok.className = "pv-ok";
+    ok.textContent = board === "cfm" ? `Sent to ${post.aud === "all" ? "all commands" : post.aud.join(", ")}. It also shows on ${post.aud === "all" ? "every command board" : "those command boards"}.` : `Posted to the ${post.b} board.`;
   });
   renderMentors(); renderPosts();
   zulu(); setInterval(zulu, 15000); render();

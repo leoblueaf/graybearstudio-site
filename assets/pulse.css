@@ -187,3 +187,9 @@ button.btn { border: 0; cursor: pointer; }
   color: hsl(var(--h, 210) 35% 30%); background: linear-gradient(160deg, hsl(var(--h, 210) 45% 82%), hsl(var(--h, 210) 30% 62%)); }
 .pv-photo svg { position: absolute; inset: 0; width: 100%; height: 100%; }
 .pv-photo span { position: absolute; left: 0.6rem; bottom: 0.5rem; font-size: 0.72rem; color: #fff; background: rgba(0,0,0,.35); padding: 0.1rem 0.45rem; border-radius: 4px; }
+.pv-cmds { display: flex; flex-wrap: wrap; gap: 0.4rem 0.9rem; margin-top: 0.5rem; padding: 0.7rem 0.8rem; border: 1px solid var(--line); border-radius: 8px; background: var(--paper); }
+.pv-cmds label { display: inline-flex; gap: 0.35rem; align-items: center; font-size: 0.92rem; }
+.pv-cmds input { accent-color: var(--app); }
+.pv-aud { margin: 0.55rem 0 0; font-size: 0.82rem; font-weight: 600; color: var(--app); }
+.pv-post.from-cfm { background: color-mix(in srgb, var(--app) 6%, var(--surface)); }
+.pv-board-panel [hidden], .pv-form [hidden] { display: none !important; }
