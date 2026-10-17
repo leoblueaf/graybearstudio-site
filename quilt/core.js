@@ -41,7 +41,9 @@ export function closesLocal() {
 const ALPHA = "ABCDEFGHJKMNPQRSTUVWXYZ23456789";
 export function newCode() { const a = crypto.getRandomValues(new Uint8Array(6)); return [...a].map(x => ALPHA[x % ALPHA.length]).join(""); }
 export const MAX_TEXT = 280, MAX_INIT = 6, DAY_CAP = 1800;
-export const FABRICS = ["Linen", "Gingham", "Ticking stripe", "Polka dot", "Calico", "Chevron", "Herringbone"];
+export const FABRICS = ["Linen", "Gingham", "Ticking stripe", "Polka dot", "Calico", "Chevron", "Herringbone",
+  "Solid", "Plaid", "Floral", "Pinstripe", "Windowpane"];
+export const MAX_FABRIC = FABRICS.length - 1;
 
 // The page's own checks. The Firestore rules repeat the hard ones.
 const CONTACT = [/https?:/i, /www\./i, /[a-z0-9]\.(com|org|net|io|co|us|info|biz|app|me|ly|gov|edu|tv|xyz|church|online|site)([^a-z]|$)/i,
@@ -205,6 +207,17 @@ export function fabricTile(kind, base, seed) {
   if (kind === 4) { for (let k = 0; k < 26; k++) { const px = r() * TILE, py = r() * TILE; x.globalAlpha = .55; x.fillStyle = k % 3 ? hi : lo; for (let p = 0; p < 5; p++) { const a = p / 5 * 6.283; x.beginPath(); x.arc(px + Math.cos(a) * 2.4, py + Math.sin(a) * 2.4, 1.5, 0, 7); x.fill(); } } }
   if (kind === 5) { x.globalAlpha = .4; x.strokeStyle = hi; x.lineWidth = 3; for (let j = -8; j < TILE + 8; j += 12) { x.beginPath(); for (let i = 0; i <= TILE; i += 12) x.lineTo(i, j + ((i / 12) % 2 ? 6 : 0)); x.stroke(); } }
   if (kind === 6) { x.globalAlpha = .3; x.strokeStyle = hi; x.lineWidth = 1.2; for (let i = 0; i < TILE; i += 8) for (let j = 0; j < TILE; j += 8) { x.beginPath(); if (((i / 8) + (j / 8)) % 2) { x.moveTo(i, j); x.lineTo(i + 8, j + 8); } else { x.moveTo(i + 8, j); x.lineTo(i, j + 8); } x.stroke(); } }
+  if (kind === 7) { // solid: plain cotton, only the faintest weave so it still reads as cloth
+    for (let i = 0; i < TILE; i += 3) { x.globalAlpha = .05; x.fillStyle = i % 6 ? hi : lo; x.fillRect(0, i, TILE, 1); } }
+  if (kind === 8) { // plaid: wide and narrow bands both ways
+    x.globalAlpha = .28; x.fillStyle = hi; for (let i = 0; i < TILE; i += 32) { x.fillRect(i, 0, 12, TILE); x.fillRect(0, i, TILE, 12); }
+    x.globalAlpha = .35; x.fillStyle = lo; for (let i = 20; i < TILE; i += 32) { x.fillRect(i, 0, 3, TILE); x.fillRect(0, i, TILE, 3); } }
+  if (kind === 9) { // floral: small five-petal flowers on a loose grid
+    for (let i = 0; i < 9; i++) { const px = (i % 3) * 43 + 14 + r() * 12, py = Math.floor(i / 3) * 43 + 14 + r() * 12;
+      x.globalAlpha = .6; x.fillStyle = hi; for (let p = 0; p < 5; p++) { const a = p / 5 * 6.283; x.beginPath(); x.ellipse(px + Math.cos(a) * 5, py + Math.sin(a) * 5, 4, 2.6, a, 0, 7); x.fill(); }
+      x.globalAlpha = .7; x.fillStyle = lo; x.beginPath(); x.arc(px, py, 2, 0, 7); x.fill(); } }
+  if (kind === 10) { x.globalAlpha = .45; x.fillStyle = hi; for (let i = 3; i < TILE; i += 8) x.fillRect(i, 0, 1, TILE); }
+  if (kind === 11) { x.globalAlpha = .45; x.strokeStyle = hi; x.lineWidth = 1.5; for (let i = 0; i <= TILE; i += 32) { x.beginPath(); x.moveTo(i, 0); x.lineTo(i, TILE); x.moveTo(0, i); x.lineTo(TILE, i); x.stroke(); } }
   x.globalAlpha = 1;
   fabricCache.set(key, c);
   return c;

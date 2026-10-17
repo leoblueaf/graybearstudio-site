@@ -40,7 +40,7 @@ service cloud.firestore {
       return isCode(s.code)
         && s.text is string && s.text.size() >= 1 && s.text.size() <= 280 && noContact(s.text)
         && s.initials is string && s.initials.matches('^[A-Za-z.& ]{0,6}$')
-        && s.fabric is int && s.fabric >= 0 && s.fabric <= 6
+        && s.fabric is int && s.fabric >= 0 && s.fabric <= 11
         && s.at is timestamp
         && s.at > request.time - duration.value(2, 'd') && s.at < request.time + duration.value(2, 'd');
     }

@@ -323,7 +323,7 @@ $("list").addEventListener("click", e => {
 const fab = $("fabrics");
 Q.FABRICS.forEach((name, i) => {
   const l = document.createElement("label"); l.className = "swatch";
-  const c = document.createElement("canvas"); c.width = c.height = 64; c.getContext("2d").drawImage(Q.fabricTile(i, ["#6B2F3A", "#3D4A6B", "#5F6B4E", "#7A5A3A", "#4A3A4F", "#8A4B3A", "#2F4B4B"][i], i), 0, 0, 64, 64);
+  const c = document.createElement("canvas"); c.width = c.height = 64; c.getContext("2d").drawImage(Q.fabricTile(i, ["#6B2F3A", "#3D4A6B", "#5F6B4E", "#7A5A3A", "#4A3A4F", "#8A4B3A", "#2F4B4B"][i % 7], i), 0, 0, 64, 64);
   l.innerHTML = `<input type="radio" name="fabric" value="${i}" ${i === 0 ? "checked" : ""}><span class="sr">${name}</span>`;
   l.prepend(c); l.title = name; fab.append(l);
 });
