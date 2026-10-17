@@ -63,13 +63,15 @@ const OK_CAPS = new Set(("God Jesus Christ Holy Spirit Lord Father Son Saint St 
   "November December Savior Saviour Messiah King Emmanuel Immanuel Mary Joseph Thank Thanks Please Pray Prayer Dear Our My We I " +
   "New York San Los Las North South East West Fort Mount Lake Grand Great United States County City Kingdom America American Army Navy " +
   "Air Force Marines Coast Guard Pastor Father Sister Brother Aunt Uncle Grandma Grandpa Mom Dad Dr Mr Mrs Ms Psalm Psalms Romans Genesis " +
-  "Matthew Mark Luke John Acts Isaiah Proverbs").split(" "));
-// Two capitalized words in a row, neither on the allowlist, looks like a full name.
+  "Matthew Mark Luke John Acts Isaiah Proverbs " +
+  "For Please Praying Help Heal Bless Praise Lift Give Grant Protect Comfort Guide Be Let In With And To The A An All Every This " +
+  "Today Tonight Also Lots Peace Strength Healing Wisdom Hope Grace Mercy Rest Safe Safety Courage Patience Guidance").split(" "));
+// Two capitalized words in a row look like a full name unless both are on the allowlist ("Jesus Christ", "New York").
 export function looksLikeFullName(t) {
   const words = t.replace(/[^A-Za-z' ]+/g, " ").split(/\s+/).filter(Boolean);
   for (let i = 0; i < words.length - 1; i++) {
     const a = words[i], b = words[i + 1];
-    if (/^[A-Z][a-z']{1,}$/.test(a) && /^[A-Z][a-z']{2,}$/.test(b) && !OK_CAPS.has(a) && !OK_CAPS.has(b)) return true;
+    if (/^[A-Z][a-z']{1,}$/.test(a) && /^[A-Z][a-z']{2,}$/.test(b) && !(OK_CAPS.has(a) && OK_CAPS.has(b))) return true;
   }
   return false;
 }

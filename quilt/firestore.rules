@@ -88,7 +88,7 @@ service cloud.firestore {
           && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['squares', 'rm'])
           && i is int && i >= 0 && i < o.size()
           && exists(authorPath(day)) && get(authorPath(day)).data.code == o[i].code
-          && request.resource.data.squares == o[0:i].concat(o[i + 1:o.size()]);
+          && request.resource.data.squares == o.removeAll([o[i]]);
       }
 
       match /authors/{uid} {

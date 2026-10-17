@@ -37,7 +37,8 @@ function resize() {
   const b = cv.getBoundingClientRect(); dpr = Math.min(window.devicePixelRatio || 1, 2);
   W = b.width; H = b.height; cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); dirty = true;
 }
-function fitScale() { return Math.min(W, H) * .9 / ((2 * L.R + 1) * CELL); }
+// Small quilts sit inside the stage with room around them instead of filling it.
+function fitScale() { return Math.min(W, H) * .9 / ((2 * Math.max(L.R, 2) + 1) * CELL); }
 function showAll(animate = true) { const t = { x: 0, y: 0, s: fitScale() }; if (animate && !reduce) target = t; else { cam = t; target = null; } dirty = true; }
 function glideTo(i, s = 1.9) { const c = L.cells[i]; if (!c) return; const t = { x: c.gx * CELL, y: c.gy * CELL, s }; if (reduce) { cam = t; target = null; } else target = t; dirty = true; }
 
