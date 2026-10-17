@@ -33,7 +33,7 @@ APPS = [
         ],
         "quote": ("Thus far the LORD has helped us.", "1 Samuel 7:12"),
         "features": [
-            ("A daily practice", "A 90-day plan of short Scripture readings, reflections and prayer prompts, a few minutes each."),
+            ("A daily practice", "270 days of short Scripture readings, reflections and prayer prompts in three 90-day collections, a few minutes each."),
             ("Advent", "A short reading and prayer for each day from November 29 to Christmas. The first three days are free."),
             ("Your prayer list", "Keep what you're carrying. Hitherto gently rotates a few prayers to the top each day so none are forgotten."),
             ("Pray through the day", "Choose one time or several, such as before each meal, and get a gentle reminder at each."),

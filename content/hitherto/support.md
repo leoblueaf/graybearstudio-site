@@ -13,8 +13,8 @@ Open Settings in Hitherto and tap Restore purchases, signed in with the same App
 ### How do I cancel my subscription or free trial?
 On your iPhone, open Settings > [your name] > Subscriptions > Hitherto, then cancel. To avoid being charged, cancel at least 24 hours before the trial or period ends. Hitherto also reminds you 2 days before a free trial ends.
 
-### What happens after day 90 of the daily practice?
-The plan starts again at day 1. More plans, starting with seasonal ones, are being added.
+### How long is the daily practice? What happens at the end?
+The daily practice has 270 days in three 90-day collections. After day 270 it starts again at day 1. Seasonal plans such as Advent are added along the way.
 
 ### Which Bible translation does Hitherto use?
 The Berean Standard Bible (BSB), which is in the public domain. It's built into the app and works offline.
