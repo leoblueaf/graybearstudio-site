@@ -225,3 +225,55 @@ button.btn { border: 0; cursor: pointer; }
   .pv-app .section[data-screen] { padding-block: 1.2rem 2rem; }
 }
 @media (max-width: 720px) { .pv-app:not([data-view="home"]):not([data-view="board"]) .pv-hero { display: none; } }
+
+/* Network features from the 1C3 Connect concept (18 Oct). */
+.pv-filter2 { margin-top: -0.4rem; }
+.pv-tags .kind { background: var(--app); color: var(--surface); border-color: var(--app); }
+.pv-hubgrid { display: grid; gap: 0.9rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr)); }
+.pv-hubcard { text-align: left; font: inherit; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-top: 3px solid var(--app); border-radius: 10px; padding: 1rem; display: flex; flex-direction: column; gap: 0.4rem; cursor: pointer; transition: transform .12s ease, border-color .12s ease; }
+.pv-hubcard:hover { border-color: var(--app); transform: translateY(-2px); }
+.pv-hubcard b { font: 500 1.15rem/1.25 var(--display); }
+.pv-hubcard span { color: var(--muted); font-size: 0.92rem; }
+.pv-hubcard small { color: var(--app); font-size: 0.8rem; font-weight: 600; margin-top: auto; }
+.pv-dialog h4 { font: 600 0.8rem var(--body); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin: 1.1rem 0 0.4rem; }
+.pv-res { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.35rem; }
+.pv-res li { display: flex; align-items: center; gap: 0.5rem; font-size: 0.95rem; }
+.pv-res small { color: var(--muted); }
+.pv-play { width: 1.4rem; height: 1.4rem; border-radius: 50%; background: var(--app); flex: none; position: relative; }
+.pv-play::after { content: ""; position: absolute; left: 0.52rem; top: 0.38rem; border-left: 0.5rem solid var(--surface); border-top: 0.32rem solid transparent; border-bottom: 0.32rem solid transparent; }
+.pv-qa { border: 1px solid var(--line); border-radius: 8px; padding: 0.55rem 0.75rem; margin-bottom: 0.4rem; background: var(--paper); }
+.pv-qa summary { cursor: pointer; font-weight: 500; }
+.pv-qa p { margin: 0.45rem 0 0; color: var(--muted); font-size: 0.95rem; }
+.pv-plan { display: grid; gap: 0.7rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr)); margin-bottom: 1.2rem; }
+.pv-plan div { background: var(--surface); border: 1px solid var(--line); border-left: 3px solid var(--app); border-radius: 8px; padding: 0.7rem 0.85rem; display: grid; gap: 0.15rem; }
+.pv-plan span { color: var(--muted); font-size: 0.9rem; }
+.pv-events, .pv-threads { display: grid; gap: 0.9rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr)); }
+.pv-event, .pv-thread { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 1rem; display: flex; flex-direction: column; gap: 0.35rem; }
+.pv-event h3, .pv-thread h3 { font-size: 1.15rem; }
+.pv-event p { margin: 0; }
+.pv-event .pv-row { margin-top: auto; padding-top: 0.5rem; }
+.pv-evk { display: inline-block; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--app); }
+.pv-thread.pending { border-style: dashed; }
+.pv-pend, .pv-smebadge { margin-left: 0.6rem; font-size: 0.75rem; font-weight: 600; padding: 0.1rem 0.5rem; border-radius: 99px; }
+.pv-pend { background: color-mix(in srgb, var(--pv-raised) 22%, transparent); color: var(--ink); }
+.pv-smebadge { background: color-mix(in srgb, var(--pv-done) 22%, transparent); color: var(--ink); }
+.pv-thread .pv-row { margin-top: auto; }
+.pv-kpis { grid-template-columns: repeat(auto-fit, minmax(min(100%, 9.5rem), 1fr)) !important; margin-bottom: 1.2rem; }
+.pv-health { align-items: start; }
+.pv-bars { display: grid; gap: 0.55rem; margin: 0.6rem 0; }
+.pv-bar { display: grid; grid-template-columns: minmax(0, 11rem) 1fr 2.6rem; gap: 0.6rem; align-items: center; font-size: 0.88rem; }
+.pv-bar i { height: 0.6rem; border-radius: 99px; background: linear-gradient(90deg, var(--app) var(--v), color-mix(in srgb, var(--app) 12%, transparent) var(--v)); }
+.pv-bar b { text-align: right; font-variant-numeric: tabular-nums; }
+.pv-rules { list-style: none; padding: 0; margin: 0.4rem 0 0; display: grid; gap: 0.7rem; }
+.pv-rules li { display: grid; gap: 0.15rem; }
+.pv-rules span { color: var(--muted); font-size: 0.92rem; }
+.pv-rules .pv-link, .pv-row .pv-link { justify-self: start; font-weight: 600; }
+.pv-pubs { display: grid; gap: 0.8rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); margin: 0.6rem 0; }
+.pv-pubs div { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 0.8rem 0.9rem; display: grid; gap: 0.15rem; }
+.pv-pubs i { color: var(--app); }
+.pv-pubs span { color: var(--muted); font-size: 0.9rem; }
+.pv-net { margin-top: 0.6rem; }
+.pv-road { list-style: none; counter-reset: rd; padding: 0; margin: 0.6rem 0 0; display: grid; gap: 0.7rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr)); }
+.pv-road li { counter-increment: rd; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 0.8rem 0.9rem; display: grid; gap: 0.2rem; }
+.pv-road li::before { content: "Phase " counter(rd); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--app); }
+.pv-road span { color: var(--muted); font-size: 0.9rem; }

@@ -14,22 +14,26 @@ BODY = """
 </div></div>
 
 <nav class="pv-subnav" aria-label="Sections"><div class="wrap">
-<a href="#board-h">Issue board</a><a href="#loop">How it works</a><a href="#submit">Raise an issue</a><a href="#mentors">Mentors</a><a href="#boards">Message boards</a><a href="#news">What changed</a>
+<a href="#board-h">Issue board</a><a href="#loop">How it works</a><a href="#submit">Raise an issue</a><a href="#mentors">Mentors and SMEs</a><a href="#hub">Development hub</a><a href="#events">Events</a><a href="#forums">Forums</a><a href="#boards">Message boards</a><a href="#news">What changed</a><a href="#health">Network health</a>
 </div></nav>
 <div class="pv-back" id="pv-back"><div class="wrap"><button type="button" id="pv-home">Home</button><span id="pv-where"></span></div></div>
 <section class="pv-hero"><div class="wrap pv-hero-grid">
 <div class="pv-home">
 <h1>The Pulse</h1>
 <p class="tag">Every issue raised gets an answer back.</p>
-<p class="lede">One place for the whole career field to raise what is getting in the way, see who is working it, and hear what was decided. From the CFM to the FAC to the Council, and back out to every Airman.</p>
+<p class="lede">One place for the whole career field to raise what is getting in the way, find the people who have done it before, and hear what was decided. Operational excellence through connected expertise.</p>
 <nav class="pv-tiles" aria-label="Sections">
 <a class="pv-tile pv-tile-main" href="#/submit"><span class="pv-ticon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span><span class="pv-tt">Raise an issue<small>Two minutes. It gets an answer back.</small></span></a>
 <a class="pv-tile" href="#/board"><span class="pv-ticon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h4v14H4zM10 5h4v9h-4zM16 5h4v6h-4z"/></svg></span><span class="pv-tbadge" id="t-open"></span><span class="pv-tt">Issue board<small>See what is open</small></span></a>
 <a class="pv-tile" href="#/loop"><span class="pv-ticon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3M18 3v4h-4M6 21v-4h4"/></svg></span><span class="pv-tt">How it works<small>From raised to answered</small></span></a>
-<a class="pv-tile" href="#/mentors"><span class="pv-ticon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 6.5M18 14.5a6.5 6.5 0 0 1 3.5 5.5"/></svg></span><span class="pv-tt">Find a mentor<small>Chiefs who will talk</small></span></a>
+<a class="pv-tile" href="#/mentors"><span class="pv-ticon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 6.5M18 14.5a6.5 6.5 0 0 1 3.5 5.5"/></svg></span><span class="pv-tt">Mentors and SMEs<small>Chiefs and experts who will talk</small></span></a>
+<a class="pv-tile" href="#/hub"><span class="pv-ticon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V6l8-3 8 3v13l-8 3zM12 3v19M4 6l8 3 8-3"/></svg></span><span class="pv-tt">Development hub<small>Podcasts, Q&amp;As, library</small></span></a>
+<a class="pv-tile" href="#/events"><span class="pv-ticon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v14H4zM4 10h16M8 3v5M16 3v5"/></svg></span><span class="pv-tt">Events<small>Webinars and Ask Me Anything</small></span></a>
+<a class="pv-tile" href="#/forums"><span class="pv-ticon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h12v8H8l-5 3zM9 17h7l5 3v-9h-3"/></svg></span><span class="pv-tt">Forums<small>Ask peers and experts</small></span></a>
 <a class="pv-tile" href="#/boards"><span class="pv-ticon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v10H9l-5 4zM8 9h8M8 12h5"/></svg></span><span class="pv-tt">Message boards<small>CFM and command news</small></span></a>
 <a class="pv-tile" href="#/roles"><span class="pv-ticon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v6M5 21v-5h14v5M12 9H5v7M12 9h7v7M3 21h18"/></svg></span><span class="pv-tt">Who does what<small>CFM, FAC, Council</small></span></a>
 <a class="pv-tile" href="#/news"><span class="pv-ticon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h11l3 3v13H5zM8 10h8M8 14h8M8 18h5"/></svg></span><span class="pv-tt">What changed<small>Decisions shared back</small></span></a>
+<a class="pv-tile" href="#/health"><span class="pv-ticon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h4l3-7 4 14 3-7h4"/></svg></span><span class="pv-tt">Network health<small>Measures, rules, roadmap</small></span></a>
 </nav>
 <div class="pv-actions"><a class="btn" href="#submit">Raise an issue</a><a class="btn pv-ghost" href="#loop">See how it moves</a></div>
 <p class="pv-zulu" id="zulu" aria-label="Current Zulu time">0000Z</p>
@@ -112,9 +116,10 @@ BODY = """
 
 
 <section class="section" id="mentors" data-screen="mentors"><div class="wrap">
-<h2>Find a mentor</h2>
-<p class="pv-hint" style="margin:-0.4rem 0 1.2rem;font-size:1rem">Chiefs who have volunteered to mentor. Read their profiles and ask for a conversation. Each Chief decides whether to accept.</p>
-<div class="pv-filter" role="group" aria-label="Filter mentors by focus">
+<h2>Mentors and SMEs</h2>
+<p class="pv-hint" style="margin:-0.4rem 0 1.2rem;font-size:1rem">Volunteers who have offered their time: Chief mentors for the long view, subject matter experts for a specific problem, and coaches for a skill you are building. Read a profile and ask for a conversation. Each volunteer decides whether to accept.</p>
+<div class="pv-filter" role="group" aria-label="Filter by type of help" id="type-chips"><button type="button" class="pv-tchip pv-chip" aria-pressed="true" data-type="all">Everyone</button><button type="button" class="pv-tchip pv-chip" aria-pressed="false" data-type="Mentor">Chief mentors</button><button type="button" class="pv-tchip pv-chip" aria-pressed="false" data-type="SME">Subject matter experts</button><button type="button" class="pv-tchip pv-chip" aria-pressed="false" data-type="Coach">Coaches</button></div>
+<div class="pv-filter pv-filter2" role="group" aria-label="Filter mentors by focus">
 <button type="button" class="pv-chip" aria-pressed="true" data-focus="all">All</button>
 <button type="button" class="pv-chip" aria-pressed="false" data-focus="Leadership">Leadership</button>
 <button type="button" class="pv-chip" aria-pressed="false" data-focus="Career moves">Career moves</button>
@@ -123,8 +128,49 @@ BODY = """
 <button type="button" class="pv-chip" aria-pressed="false" data-focus="Life and family">Life and family</button>
 </div>
 <div class="pv-mentors" id="mentor-list"></div>
-<p class="pv-hint" style="margin-top:0.8rem">Sample profiles. In a real version each Chief writes their own profile and chooses how many mentees to take.</p>
-<div class="pv-box pv-volunteer"><h3>Are you a Chief?</h3><p class="pv-hint" style="margin-top:0.3rem">Add your profile: your path, what you can help with, and how many people you can take on. You can pause it any time.</p><button type="button" class="btn pv-ghost" id="vol-btn" style="margin-top:0.7rem">Add my profile</button><p class="pv-ok" id="vol-ok" role="status"></p></div>
+<p class="pv-hint" style="margin-top:0.8rem">Sample profiles. In a real version each volunteer writes their own profile and chooses how many people to take.</p>
+<div class="pv-box pv-volunteer"><h3>Want to volunteer?</h3><p class="pv-hint" style="margin-top:0.3rem">Chiefs mentor, and anyone with deep experience in a system, mission or skill can sign up as an SME or coach. Add your profile, what you can help with, and how many people you can take on. You can pause it any time.</p><button type="button" class="btn pv-ghost" id="vol-btn" style="margin-top:0.7rem">Add my profile</button><p class="pv-ok" id="vol-ok" role="status"></p></div>
+</div></section>
+
+
+<section class="section" id="hub" data-screen="hub"><div class="wrap">
+<h2>Development hub</h2>
+<p class="pv-hint" style="margin:-0.4rem 0 1.2rem;font-size:1rem">Everything for growing in the career field, sorted by topic. Each topic has podcasts, answered questions, a reference library and a mentor who has been there.</p>
+<div class="pv-hubgrid" id="hub-grid"></div>
+</div></section>
+
+<section class="section" id="events" data-screen="events"><div class="wrap">
+<h2>Events</h2>
+<p class="pv-hint" style="margin:-0.4rem 0 1.2rem;font-size:1rem">Live online sessions led by people who know the work: workshops on a topic, Ask Me Anything sessions with senior leaders, and the regular syncs that keep the field connected.</p>
+<div class="pv-plan">
+<div><b>Initial</b><span>3-level course welcome and network introduction</span></div>
+<div><b>Recurring</b><span>5-level and 7-level sessions as Airmen upgrade</span></div>
+<div><b>Spotlight</b><span>Leadership syncs and MFM syncs, open to the field</span></div>
+</div>
+<div class="pv-filter" role="group" aria-label="Filter events" id="ev-chips">
+<button type="button" class="pv-chip" aria-pressed="true" data-ev="all">All</button>
+<button type="button" class="pv-chip" aria-pressed="false" data-ev="Workshop">Workshops</button>
+<button type="button" class="pv-chip" aria-pressed="false" data-ev="Ask Me Anything">Ask Me Anything</button>
+<button type="button" class="pv-chip" aria-pressed="false" data-ev="Course">Courses</button>
+<button type="button" class="pv-chip" aria-pressed="false" data-ev="Sync">Syncs</button>
+</div>
+<div class="pv-events" id="ev-list"></div>
+<p class="pv-hint" style="margin-top:0.8rem">Sample events. Times in Zulu so every command reads the same clock.</p>
+</div></section>
+
+<section class="section" id="forums" data-screen="forums"><div class="wrap">
+<h2>Forums</h2>
+<p class="pv-hint" style="margin:-0.4rem 0 1.2rem;font-size:1rem">Ask a question, share what worked, and learn from peers and experts across every command. Chief moderators keep it professional.</p>
+<div class="pv-filter" role="group" aria-label="Forums" id="fo-chips"></div>
+<details class="pv-composer" id="fo-composer"><summary>Start a thread</summary>
+<form class="pv-form" id="fo-form" novalidate style="margin-top:0.8rem">
+<label class="f" for="fo-title">Your question or topic</label><input type="text" id="fo-title" maxlength="100" placeholder="How did you prepare for your first NCOIC job?">
+<label class="f" for="fo-body">Details</label><textarea id="fo-body" maxlength="600" placeholder="Give enough context for someone at another base to help. Keep it unclassified."></textarea>
+<label class="pv-check" id="fo-coc-row"><input type="checkbox" id="fo-coc"> I have read and agree to the <button type="button" class="pv-link" id="fo-coc-open">code of conduct</button></label>
+<div class="pv-row"><button class="btn" type="submit">Post thread</button><p class="pv-ok" id="fo-ok" role="status"></p></div>
+<p class="pv-hint">New threads are checked by a moderator before they show to everyone. In the demo that takes a few seconds.</p>
+</form></details>
+<div class="pv-threads" id="fo-list"></div>
 </div></section>
 
 <section class="section" id="boards" data-screen="boards"><div class="wrap">
@@ -170,6 +216,52 @@ BODY = """
 </div>
 </div></section>
 
+
+<section class="section" id="health" data-screen="health"><div class="wrap">
+<h2>Network health</h2>
+<p class="pv-hint" style="margin:-0.4rem 0 1.2rem;font-size:1rem">How the network is doing, the rules it runs on, and where it goes next. The program manager reports these to the FAC and the CFM.</p>
+<div class="pv-metrics pv-kpis" aria-label="Sample measures">
+<div class="pv-metric"><b>1,284</b><span>active members this quarter</span></div>
+<div class="pv-metric"><b>96</b><span>volunteers (31 Chiefs, 65 SMEs and coaches)</span></div>
+<div class="pv-metric"><b>412</b><span>connections made this quarter</span></div>
+<div class="pv-metric"><b>4.6/5</b><span>member satisfaction</span></div>
+<div class="pv-metric"><b>3 days</b><span>median wait for a first reply</span></div>
+</div>
+<div class="pv-two pv-health">
+<div class="pv-box"><h3>What people come for</h3><div class="pv-bars" id="hl-bars"></div><p class="pv-hint">Share of hub and mentor activity by topic. Sample figures. Long-term, the network would also track retention and promotion trends.</p></div>
+<div class="pv-box"><h3>Rules of the network</h3>
+<ul class="pv-rules">
+<li><button type="button" class="pv-link" data-rule="coc">Code of conduct</button><span>Professional, respectful, confidential. Applies to mentors, mentees and SMEs alike.</span></li>
+<li><button type="button" class="pv-link" data-rule="privacy">Privacy and security</button><span>Follows Air Force and DoD rules for privacy and official communication. Professional conversations stay on approved channels.</span></li>
+<li><button type="button" class="pv-link" data-rule="dispute">Resolving problems</button><span>A clear path for conflicts or misconduct, owned by the program manager.</span></li>
+<li><button type="button" class="pv-link" data-rule="mod">Moderation</button><span>Chief moderators review forum posts against the code of conduct.</span></li>
+</ul></div>
+</div>
+<h3 style="margin-top:2rem">Guidance this is built on</h3>
+<div class="pv-pubs">
+<div><b>DAFMAN 36-2643</b><i>Coaching and Mentoring Program</i><span>Defines mentoring and coaching, the roles, and how they differ.</span></div>
+<div><b>DAFI 36-2670</b><i>Total Force Development</i><span>The Continuum of Learning and how Airmen own their development.</span></div>
+<div><b>AFH 36-2618</b><i>The Enlisted Force Structure</i><span>Mentorship and developing subordinates as a core duty of every NCO and Senior NCO.</span></div>
+</div>
+<p class="pv-hint">Publications are on the Air Force e-Publishing site. Titles shown for context; check the current version before citing.</p>
+<h3 style="margin-top:2rem">How the network is run</h3>
+<div class="pv-roles pv-net">
+<div class="pv-role"><b>Career Field Manager</b><p>Oversight and direction, keeping the network aligned with career field goals.</p></div>
+<div class="pv-role"><b>Network program manager</b><p>Runs it day to day: onboarding volunteers, curating content, tracking measures, enforcing the rules.</p></div>
+<div class="pv-role"><b>Functional Advisory Council</b><p>Senior leaders and command representatives who set direction, approve policy changes and champion the network.</p></div>
+<div class="pv-role"><b>Command and wing liaisons</b><p>Local points of contact who promote the network, help Airmen sign up and spot new volunteers.</p></div>
+<div class="pv-role"><b>Technical support team</b><p>Keeps the platform secure and working, answers user questions and builds new features.</p></div>
+</div>
+<h3 style="margin-top:2rem">Roadmap</h3>
+<ol class="pv-road">
+<li><b>Charter</b><span>Code of conduct, roles and measures written; FAC endorsement.</span></li>
+<li><b>Pilot</b><span>Two commands, a first wave of volunteers, the hub seeded with content.</span></li>
+<li><b>Field-wide</b><span>Every command, liaisons named, events on a regular rhythm.</span></li>
+<li><b>Sustain</b><span>Quarterly health report, yearly review of the rules and measures.</span></li>
+</ol>
+<div class="pv-box" style="margin-top:1.2rem"><h3>Decisions for the FAC</h3><ul><li>Endorse the charter and code of conduct</li><li>Name the network program manager</li><li>Approve the platform and where conversations happen</li><li>Agree the measures and the reporting rhythm</li></ul><p class="pv-hint">Sample list for the demo.</p></div>
+</div></section>
+
 <section class="pv-close pv-home"><div class="wrap">
 <p class="motto">Integrate. Connect. Inform. Enable.</p>
 <p>One team, one voice, one mission.</p>
@@ -178,6 +270,11 @@ BODY = """
 </div></section>
 
 
+<dialog class="pv-dialog" id="g-dlg" aria-labelledby="g-title"><div>
+<h3 id="g-title"></h3>
+<div id="g-body"></div>
+<div class="pv-row" style="justify-content:flex-end"><button class="btn" type="button" id="g-close">Close</button></div>
+</div></dialog>
 <dialog class="pv-dialog" id="m-dlg" aria-labelledby="m-title"><div>
 <h3 id="m-title"></h3>
 <p class="pv-hint" id="m-meta"></p>
@@ -264,7 +361,7 @@ SCRIPT = """<script>
     document.querySelector(".pv-board").scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "center" });
   });
   $("signup").addEventListener("submit", e => { e.preventDefault(); $("sub-ok").textContent = "Subscribed (demo only, nothing was sent)."; $("email").value = ""; });
-  $("reset").onclick = () => { issues = SAMPLE.map((x, i) => ({ ...x, id: i + 1 })); fresh = null; try { localStorage.removeItem(KEY); localStorage.removeItem("pulse-demo.posts.v2"); } catch { } posts = POSTS0.slice(); render(); renderPosts(); };
+  $("reset").onclick = () => { issues = SAMPLE.map((x, i) => ({ ...x, id: i + 1 })); fresh = null; try { localStorage.removeItem(KEY); localStorage.removeItem("pulse-demo.posts.v2"); } catch { } posts = POSTS0.slice(); try { ["pulse-demo.rsvp", "pulse-demo.threads", "pulse-demo.coc"].forEach(k => localStorage.removeItem(k)); } catch { } rsvp = []; threads = THREADS0.slice(); cocOk = false; reported = []; $("fo-coc").checked = false; render(); renderPosts(); renderEvents(); renderThreads(); };
   const zulu = () => { const d = new Date(); $("zulu").textContent = String(d.getUTCHours()).padStart(2, "0") + String(d.getUTCMinutes()).padStart(2, "0") + "Z"; };
 
   // ---------------- mentors (sample)
@@ -275,25 +372,33 @@ SCRIPT = """<script>
     { n: "Chief T. Nakamura", y: 23, now: "Senior enlisted leader, sample joint staff", path: "Moved from the ops floor to joint planning; happy to talk about writing, briefing and boards.", f: ["Joint and broadening", "Leadership"], open: 0, how: "Video call" },
     { n: "Chief S. Bennett", y: 21, now: "Chief, sample training squadron", path: "Built two upgrade-training programs from scratch and ran a schoolhouse.", f: ["Training and evaluation", "Leadership"], open: 2, how: "In person or video" },
     { n: "Chief A. Haddad", y: 25, now: "First sergeant turned superintendent (sample)", path: "Took a special duty mid-career and came back to the field. Ask about stepping away and back.", f: ["Career moves", "Life and family"], open: 4, how: "Phone" },
+    { n: "MSgt J. Rivera", r: "SME", y: 14, now: "SME: data links and network planning (sample)", path: "Ten years on the systems side, now the person units call when the picture drops. Happy to walk through troubleshooting.", f: ["Training and evaluation"], open: 5, how: "Video call or chat" },
+    { n: "SMSgt K. Osei", r: "SME", y: 18, now: "SME: joint and NATO operations (sample)", path: "Two NATO tours and a combatant command. Ask about working in a coalition cell and preparing for a joint job.", f: ["Joint and broadening"], open: 3, how: "Video call" },
+    { n: "TSgt L. Moreau", r: "SME", y: 11, now: "SME: instructor and evaluator (sample)", path: "Writes and grades evaluations. Can help you prepare for one, or build training for your section.", f: ["Training and evaluation"], open: 4, how: "Phone or video" },
+    { n: "SMSgt P. Ward", r: "Coach", y: 19, now: "Coach: writing, briefing and boards (sample)", path: "A structured four-session plan for the skill you pick: performance statements, briefing up, or board preparation.", f: ["Leadership", "Career moves"], open: 2, how: "Video call" },
   ];
-  let focus = "all";
-  const initials = n => n.replace("Chief ", "").split(/[ .]+/).filter(Boolean).map(w => w[0]).join("").slice(0, 2);
+  MENTORS.forEach(m => { m.r = m.r || "Mentor"; });
+  let focus = "all", mtype = "all";
+  const initials = n => n.split(" ").slice(1).join(" ").split(/[ .]+/).filter(Boolean).map(w => w[0]).join("").slice(0, 2);
   function renderMentors() {
     const box = $("mentor-list"); box.innerHTML = "";
-    MENTORS.filter(m => focus === "all" || m.f.includes(focus)).forEach((m, i) => {
+    MENTORS.filter(m => (focus === "all" || m.f.includes(focus)) && (mtype === "all" || m.r === mtype)).forEach((m, i) => {
       const c = document.createElement("article"); c.className = "pv-mentor";
       c.innerHTML = `<div class="pv-avatar" aria-hidden="true">${initials(m.n)}</div><div><h3></h3><p class="pv-hint"></p></div><p class="path"></p><div class="pv-tags"></div><div class="pv-row" style="justify-content:space-between"><span class="pv-open"></span><button type="button" class="btn pv-ghost">View profile</button></div>`;
       c.querySelector("h3").textContent = m.n;
       c.querySelector(".pv-hint").textContent = `${m.now}. ${m.y} years.`;
       c.querySelector(".path").textContent = m.path;
-      c.querySelector(".pv-tags").innerHTML = m.f.map(t => `<span>${t}</span>`).join("");
-      const o = c.querySelector(".pv-open"); o.textContent = m.open ? `Taking ${m.open} more mentee${m.open === 1 ? "" : "s"}` : "Not taking mentees right now"; o.classList.toggle("full", !m.open);
+      c.querySelector(".pv-tags").innerHTML = `<span class="kind">${m.r === "Mentor" ? "Chief mentor" : m.r}</span>` + m.f.map(t => `<span>${t}</span>`).join("");
+      const o = c.querySelector(".pv-open"); o.textContent = m.open ? `Taking ${m.open} more ${m.r === "Mentor" ? "mentee" : "request"}${m.open === 1 ? "" : "s"}` : "Not taking requests right now"; o.classList.toggle("full", !m.open);
       c.querySelector("button").onclick = () => showMentor(MENTORS.indexOf(m));
       box.append(c);
     });
   }
-  document.querySelectorAll(".pv-chip").forEach(b => b.onclick = () => {
-    focus = b.dataset.focus; document.querySelectorAll(".pv-chip").forEach(x => x.setAttribute("aria-pressed", x === b)); renderMentors();
+  document.querySelectorAll(".pv-chip[data-focus]").forEach(b => b.onclick = () => {
+    focus = b.dataset.focus; document.querySelectorAll(".pv-chip[data-focus]").forEach(x => x.setAttribute("aria-pressed", x === b)); renderMentors();
+  });
+  document.querySelectorAll(".pv-chip[data-type]").forEach(b => b.onclick = () => {
+    mtype = b.dataset.type; focus = "all"; document.querySelectorAll(".pv-chip[data-type]").forEach(x => x.setAttribute("aria-pressed", x === b)); document.querySelectorAll(".pv-chip[data-focus]").forEach(x => x.setAttribute("aria-pressed", x.dataset.focus === "all")); renderMentors();
   });
   let mIdx = -1;
   function showMentor(i) {
@@ -302,7 +407,7 @@ SCRIPT = """<script>
     $("m-bio").textContent = m.path; $("m-tags").innerHTML = m.f.map(t => `<span>${t}</span>`).join("");
     $("m-ok").textContent = ""; $("m-msg").value = "";
     $("m-form").querySelector("button[type=submit]").disabled = !m.open;
-    if (!m.open) $("m-ok").textContent = "This Chief isn't taking new mentees right now.";
+    if (!m.open) $("m-ok").textContent = "This volunteer isn't taking new requests right now.";
     $("m-dlg").showModal();
   }
   $("m-close").onclick = () => $("m-dlg").close();
@@ -385,8 +490,130 @@ SCRIPT = """<script>
     ok.className = "pv-ok";
     ok.textContent = board === "cfm" ? `Sent to ${post.aud === "all" ? "all commands" : post.aud.join(", ")}. It also shows on ${post.aud === "all" ? "every command board" : "those command boards"}.` : `Posted to the ${post.b} board.`;
   });
+
+  // ---------------- shared helpers for the network features
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const load = (k, d) => { try { const v = JSON.parse(localStorage.getItem(k)); return v == null ? d : v; } catch { return d; } };
+  const store = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch { } };
+  function go(screen) {
+    if (matchMedia("(max-width: 720px)").matches) location.hash = "#/" + screen;
+    else { const el = document.querySelector(`[data-screen="${screen}"]`); if (el) el.scrollIntoView({ behavior: "smooth" }); }
+  }
+  function dialog(title, html) { $("g-title").textContent = title; $("g-body").innerHTML = html; $("g-dlg").showModal(); }
+  $("g-close").onclick = () => $("g-dlg").close();
+  $("g-dlg").addEventListener("click", e => { if (e.target === $("g-dlg")) $("g-dlg").close(); });
+
+  // ---------------- development hub (sample content)
+  const HUB = [
+    { t: "MFM, P&P, KLP and KDP jobs", d: "What these positions do, who fills them and how to compete for one.", focus: "Career moves",
+      pod: ["Inside a MAJCOM functional manager's week", "Key positions: what the board looks for"], qa: [["When should I start preparing for a key position?", "About two years out. Talk to someone who held it and ask what they wish they had done first."], ["Do I need a staff tour first?", "Not always. A strong ops record and clear writing matter more than one specific job."]], docs: ["Position descriptions (sample)", "How nominations work (sample)"] },
+    { t: "Superintendent", d: "Running an operations center: people, readiness and the mission at once.", focus: "Leadership",
+      pod: ["First 90 days as a superintendent", "Balancing the floor and the front office"], qa: [["How do I take over from a strong predecessor?", "Keep what works for 60 days, listen, then change one thing at a time."], ["What should I read first?", "The unit's last inspection report and every open issue on the board."]], docs: ["Superintendent continuity template (sample)", "Readiness review checklist (sample)"] },
+    { t: "NCOIC positions", d: "Your first time leading a section: expectations, pitfalls and tools.", focus: "Leadership",
+      pod: ["From best operator to first-time leader", "Feedback that actually lands"], qa: [["My section is short on people. Where do I start?", "Map the critical tasks, cross-train two people deep, and tell your superintendent early."], ["How often should I give feedback?", "Formally on schedule, informally every week."]], docs: ["NCOIC turnover checklist (sample)", "Section training plan template (sample)"] },
+    { t: "Core competencies", d: "The skills every member of the career field is expected to master, by skill level.", focus: "Training and evaluation",
+      pod: ["What 5-level looks like done well", "Keeping skills sharp between evaluations"], qa: [["How do I know I'm ready for my 7-level?", "When you can teach the task and explain why each step matters."], ["Where are the current standards?", "In the official training references. The hub would link the current version."]], docs: ["Competency map by skill level (sample)", "Self-assessment worksheet (sample)"] },
+    { t: "Missions: joint, MAJCOM and SC2E", d: "What the work looks like in each mission set, and how to move between them.", focus: "Joint and broadening",
+      pod: ["Life in a joint operations center", "Coalition work: what changes"], qa: [["How do I land a joint job?", "Build a record of clear writing and briefing, then tell your functional manager early."], ["Is a joint tour good for my career?", "Usually, if you come back able to explain what you learned."]], docs: ["Mission set overviews (sample)", "Joint job primer (sample)"] },
+    { t: "Subject matter experts", d: "Who knows what across the field, and how to reach them for a specific problem.", focus: "Training and evaluation",
+      pod: ["Ask an SME: troubleshooting the hard way", "How SMEs keep current"], qa: [["How do I reach an SME?", "Use the Mentors and SMEs page and pick Subject matter experts."], ["Can I become an SME?", "Yes. Volunteer with a short profile and what you can help with."]], docs: ["SME directory guide (sample)", "Volunteer expectations (sample)"] },
+    { t: "Leadership development", d: "Growing as a leader at every rank, with the people who have done it.", focus: "Leadership",
+      pod: ["Leading through a hard day on the floor", "Mentoring up and down"], qa: [["What is the difference between mentoring and coaching?", "Mentoring is a long-term relationship; coaching is structured and focused on one skill. Both are defined in DAFMAN 36-2643."], ["How do I find a mentor?", "Start with Chief mentors on the Mentors and SMEs page."]], docs: ["Leadership reading list (sample)", "Mentoring conversation guide (sample)"] },
+    { t: "Developmental opportunities", d: "Courses, broadening jobs, special duties and certifications, and when each fits.", focus: "Career moves",
+      pod: ["Special duty and coming back to the field", "Choosing your next course"], qa: [["When is the right time for a special duty?", "After you have led a section, so you bring something back."], ["Where are open broadening jobs posted?", "On the board each quarter, in the real version."]], docs: ["Opportunities by career stage (sample)", "Broadening job list (sample)"] },
+  ];
+  function renderHub() {
+    $("hub-grid").innerHTML = HUB.map((h, i) => `<button type="button" class="pv-hubcard" data-i="${i}"><b>${esc(h.t)}</b><span>${esc(h.d)}</span><small>${h.pod.length} podcasts, ${h.qa.length} Q&amp;As, ${h.docs.length} documents</small></button>`).join("");
+    $("hub-grid").querySelectorAll("button").forEach(b => b.onclick = () => openHub(+b.dataset.i));
+  }
+  function openHub(i) {
+    const h = HUB[i];
+    dialog(h.t, `<p class="pv-hint" style="margin-top:0">${esc(h.d)}</p>
+      <h4>Podcasts</h4><ul class="pv-res">${h.pod.map(x => `<li><span class="pv-play" aria-hidden="true"></span>${esc(x)} <small>sample episode</small></li>`).join("")}</ul>
+      <h4>Questions answered</h4>${h.qa.map(([q, a]) => `<details class="pv-qa"><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join("")}
+      <h4>Library</h4><ul class="pv-res">${h.docs.map(x => `<li>${esc(x)}</li>`).join("")}</ul>
+      <div class="pv-row" style="margin-top:0.8rem"><button type="button" class="btn pv-ghost" id="hub-mentor">Connect with a mentor in this area</button></div>`);
+    $("hub-mentor").onclick = () => {
+      $("g-dlg").close(); focus = h.focus; mtype = "all";
+      document.querySelectorAll(".pv-chip[data-focus]").forEach(x => x.setAttribute("aria-pressed", x.dataset.focus === focus));
+      document.querySelectorAll(".pv-chip[data-type]").forEach(x => x.setAttribute("aria-pressed", x.dataset.type === "all"));
+      renderMentors(); go("mentors");
+    };
+  }
+
+  // ---------------- events (sample)
+  const EVENTS = [
+    { id: 1, k: "Ask Me Anything", t: "Ask the CFM anything", w: "Thu, 1700Z", h: "Career Field Manager", d: "Open questions on manning, training and what the Council is working. Send questions ahead or ask live." },
+    { id: 2, k: "Workshop", t: "Writing strong performance statements", w: "Tue, 1500Z", h: "SMSgt P. Ward (sample)", d: "A hands-on session with before-and-after examples. Bring a draft." },
+    { id: 3, k: "Course", t: "3-level welcome to the network", w: "Monthly, first Wed, 1400Z", h: "Network program manager", d: "For new Airmen: how to find a mentor, use the hub and raise an issue." },
+    { id: 4, k: "Sync", t: "MFM sync, open to the field", w: "Quarterly, 1600Z", h: "MAJCOM Functional Managers", d: "Each command's update in ten minutes, then questions." },
+    { id: 5, k: "Workshop", t: "Getting ready for a joint job", w: "Mon, 1800Z", h: "SMSgt K. Osei (sample)", d: "What changes in a joint or NATO cell, and how to prepare in the months before." },
+    { id: 6, k: "Course", t: "5-level and 7-level upgrade check-in", w: "Every other month, 1500Z", h: "Training SMEs", d: "Common sticking points in upgrade training and how units are solving them." },
+    { id: 7, k: "Sync", t: "Leadership sync: superintendents", w: "Monthly, 1300Z", h: "Senior enlisted leaders", d: "Superintendents compare notes on readiness, people and process." },
+    { id: 8, k: "Ask Me Anything", t: "Ask a Chief: career moves", w: "Fri, 1900Z", h: "Chief A. Haddad (sample)", d: "Special duties, broadening and coming back to the field." },
+  ];
+  let evType = "all", rsvp = load("pulse-demo.rsvp", []);
+  function renderEvents() {
+    $("ev-list").innerHTML = EVENTS.filter(e => evType === "all" || e.k === evType).map(e => {
+      const going = rsvp.includes(e.id);
+      return `<article class="pv-event"><div class="pv-evk">${esc(e.k)}</div><h3>${esc(e.t)}</h3><p class="pv-hint">${esc(e.w)}. Led by ${esc(e.h)}.</p><p>${esc(e.d)}</p>
+      <div class="pv-row"><button type="button" class="btn ${going ? "" : "pv-ghost"}" data-rsvp="${e.id}" aria-pressed="${going}">${going ? "Going" : "Save my seat"}</button>${e.k === "Ask Me Anything" ? `<button type="button" class="pv-link" data-ask="${e.id}">Send a question ahead</button>` : ""}</div></article>`;
+    }).join("");
+    $("ev-list").querySelectorAll("[data-rsvp]").forEach(b => b.onclick = () => { const id = +b.dataset.rsvp; rsvp = rsvp.includes(id) ? rsvp.filter(x => x !== id) : [...rsvp, id]; store("pulse-demo.rsvp", rsvp); renderEvents(); });
+    $("ev-list").querySelectorAll("[data-ask]").forEach(b => b.onclick = () => {
+      const e = EVENTS.find(x => x.id === +b.dataset.ask);
+      dialog("Question for: " + e.t, `<form class="pv-form" id="ask-f" novalidate><label class="f" for="ask-q">Your question</label><textarea id="ask-q" maxlength="300" placeholder="Keep it unclassified. You can ask anonymously."></textarea><label class="pv-check"><input type="checkbox" checked> Ask anonymously</label><div class="pv-row"><button class="btn" type="submit">Send</button><p class="pv-ok" id="ask-ok" role="status"></p></div></form>`);
+      $("ask-f").onsubmit = ev => { ev.preventDefault(); const ok = $("ask-ok"); if ($("ask-q").value.trim().length < 8) { ok.className = "pv-ok bad"; ok.textContent = "Write the question first."; return; } ok.className = "pv-ok"; ok.textContent = "Sent to the host's queue. (Demo only.)"; $("ask-q").value = ""; };
+    });
+  }
+  document.querySelectorAll("#ev-chips .pv-chip").forEach(b => b.onclick = () => { evType = b.dataset.ev; document.querySelectorAll("#ev-chips .pv-chip").forEach(x => x.setAttribute("aria-pressed", x === b)); renderEvents(); });
+
+  // ---------------- forums (sample)
+  const FORUMS = [["all", "All forums"], ["career", "Career moves"], ["training", "Upgrade training"], ["leading", "Leading people"], ["joint", "Joint and NATO"], ["life", "Life and family"]];
+  const THREADS0 = [
+    { id: 1, f: "training", t: "Best way to study for the 7-level?", by: "SSgt (sample)", r: 6, last: "2 hours ago", sme: true },
+    { id: 2, f: "career", t: "Is a special duty worth it mid-career?", by: "TSgt (sample)", r: 11, last: "yesterday", sme: false },
+    { id: 3, f: "leading", t: "First week as an NCOIC: what would you do?", by: "TSgt (sample)", r: 9, last: "yesterday", sme: true },
+    { id: 4, f: "joint", t: "What to pack for a NATO assignment (work, not suitcase)", by: "MSgt (sample)", r: 4, last: "3 days ago", sme: true },
+    { id: 5, f: "life", t: "Dual-military and both in the career field: tips?", by: "SrA (sample)", r: 14, last: "4 days ago", sme: false },
+    { id: 6, f: "training", t: "Shift schedules that leave time for upgrade training", by: "SSgt (sample)", r: 7, last: "last week", sme: false },
+  ];
+  let forum = "all", threads = load("pulse-demo.threads", null) || THREADS0.slice(), cocOk = load("pulse-demo.coc", false), reported = [];
+  const fname = k => (FORUMS.find(f => f[0] === k) || ["", ""])[1];
+  $("fo-chips").innerHTML = FORUMS.map(([k, n], i) => `<button type="button" class="pv-chip" aria-pressed="${i === 0}" data-fo="${k}">${n}</button>`).join("");
+  $("fo-chips").querySelectorAll(".pv-chip").forEach(b => b.onclick = () => { forum = b.dataset.fo; $("fo-chips").querySelectorAll(".pv-chip").forEach(x => x.setAttribute("aria-pressed", x === b)); renderThreads(); });
+  function renderThreads() {
+    const list = threads.filter(x => forum === "all" || x.f === forum).sort((a, b) => b.id - a.id);
+    $("fo-list").innerHTML = list.map(x => `<article class="pv-thread${x.pending ? " pending" : ""}"><div><span class="pv-evk">${esc(fname(x.f))}</span>${x.pending ? '<span class="pv-pend">Waiting for moderator review</span>' : ""}${x.sme ? '<span class="pv-smebadge">SME answered</span>' : ""}</div><h3>${esc(x.t)}</h3><p class="pv-hint">Started by ${esc(x.by)}. ${x.r} ${x.r === 1 ? "reply" : "replies"}, last ${esc(x.last)}.</p><div class="pv-row"><button type="button" class="pv-link" data-rep="${x.id}">${reported.includes(x.id) ? "Reported" : "Report"}</button></div></article>`).join("") || '<p class="pv-hint">No threads here yet. Start one.</p>';
+    $("fo-list").querySelectorAll("[data-rep]").forEach(b => b.onclick = () => { const id = +b.dataset.rep; if (!reported.includes(id)) reported.push(id); renderThreads(); });
+  }
+  if (cocOk) $("fo-coc").checked = true;
+  $("fo-form").addEventListener("submit", e => {
+    e.preventDefault(); const ok = $("fo-ok"), title = $("fo-title").value.trim();
+    if (title.length < 8) { ok.className = "pv-ok bad"; ok.textContent = "Add a question or topic first."; return; }
+    if (!$("fo-coc").checked) { ok.className = "pv-ok bad"; ok.textContent = "Agree to the code of conduct to post."; return; }
+    cocOk = true; store("pulse-demo.coc", true);
+    const x = { id: Math.max(0, ...threads.map(t => t.id)) + 1, f: forum === "all" ? "career" : forum, t: title, by: "you", r: 0, last: "just now", sme: false, pending: true };
+    threads.push(x); store("pulse-demo.threads", threads); renderThreads();
+    ok.className = "pv-ok"; ok.textContent = "Posted. A moderator will review it."; $("fo-title").value = ""; $("fo-body").value = "";
+    setTimeout(() => { x.pending = false; store("pulse-demo.threads", threads); renderThreads(); ok.textContent = "Approved by a moderator. It's live."; }, 3500);
+  });
+
+  // ---------------- network health and rules
+  const BARS = [["Mentors and SMEs", 31], ["Developmental opportunities", 18], ["Leadership development", 16], ["Core competencies", 12], ["Missions: joint, MAJCOM, SC2E", 10], ["Superintendent and NCOIC", 8], ["Key positions", 5]];
+  $("hl-bars").innerHTML = BARS.map(([n, v]) => `<div class="pv-bar"><span>${esc(n)}</span><i style="--v:${v * 3}%"></i><b>${v}%</b></div>`).join("");
+  const RULES = {
+    coc: ["Code of conduct", "<ul><li>Treat every member with respect, whatever their rank.</li><li>Keep it professional and unclassified. Nothing sensitive, nothing For Official Use Only.</li><li>What a mentee shares in confidence stays in confidence, unless safety or the law requires otherwise.</li><li>No selling, recruiting or promoting outside businesses.</li><li>Volunteers give honest advice and say when something is outside what they know.</li></ul><p class='pv-hint'>Sample text for the demo. The real charter would be approved by the FAC.</p>"],
+    privacy: ["Privacy and security", "<ul><li>Follows Air Force and DoD rules for privacy, information security and official communication.</li><li>Profiles show only what the volunteer chooses to share.</li><li>Professional conversations stay on approved platforms and channels.</li><li>No classified or controlled information, ever.</li></ul>"],
+    dispute: ["Resolving problems", "<ol><li>Report the problem from the post or profile, or to the program manager directly.</li><li>The program manager reviews it and talks to the people involved.</li><li>Outcomes range from a reminder to removal from the network.</li><li>Anything that is a matter for the chain of command goes there.</li></ol>"],
+    mod: ["Moderation", "<p>New forum threads are reviewed by Chief moderators against the code of conduct, much like the career field's existing community pages. Members can report any post. Reported posts are reviewed within one duty day.</p>"],
+  };
+  document.querySelectorAll("[data-rule]").forEach(b => b.onclick = () => dialog(...RULES[b.dataset.rule]));
+  $("fo-coc-open").onclick = () => dialog(...RULES.coc);
+  renderHub(); renderEvents(); renderThreads();
+
   // Phone layout: a home screen of buttons, one section per screen (hash routes keep the iPhone back swipe working).
-  const NAMES = { board: "Issue board", loop: "How it works", submit: "Raise an issue", roles: "Who does what", mentors: "Find a mentor", boards: "Message boards", news: "What changed" };
+  const NAMES = { board: "Issue board", loop: "How it works", submit: "Raise an issue", roles: "Who does what", mentors: "Mentors and SMEs", boards: "Message boards", news: "What changed", hub: "Development hub", events: "Events", forums: "Forums", health: "Network health" };
   const phone = matchMedia("(max-width: 720px)");
   function route() {
     const m = location.hash.match(/^#\\/(\\w+)/), v = m && NAMES[m[1]] ? m[1] : "home";
