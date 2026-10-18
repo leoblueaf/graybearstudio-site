@@ -208,3 +208,11 @@
 .op-dlg [hidden] { display: none !important; }
 .op-status, .op-wait, .op-new { white-space: nowrap; }
 .op-recat .op-link { height: 2.4rem; }
+.op-to { border: 1px solid var(--line); border-radius: 10px; padding: 0.8rem 0.9rem; margin: 0; display: grid; gap: 0.6rem; background: var(--paper); }
+.op-to legend { font-weight: 600; font-size: 0.95rem; padding: 0 0.3rem; }
+.op-tolist { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.op-tochip { display: inline-flex; align-items: center; gap: 0.25rem; font-size: 0.86rem; font-weight: 500; background: color-mix(in srgb, var(--app) 12%, var(--surface)); border: 1px solid color-mix(in srgb, var(--app) 35%, transparent); border-radius: 99px; padding: 0.25rem 0.3rem 0.25rem 0.7rem; }
+.op-tochip button { border: 0; background: none; color: var(--muted); font-size: 1.05rem; line-height: 1; cursor: pointer; padding: 0 0.3rem; }
+.op-route { font-size: 0.88rem; margin-top: 0.4rem; }
+.op-route p { margin: 0.1rem 0; }
+.op-step select optgroup { font-weight: 600; }

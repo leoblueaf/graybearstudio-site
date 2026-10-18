@@ -79,11 +79,17 @@ BODY = r"""
 <p class="op-hint">Not sure? Tap the first question that's a "yes" and we'll pick the category for you. If more than one fits, the higher one wins. You can also pick a card directly.</p>
 <div class="op-q" id="op-qs"></div>
 <div class="op-cats" id="op-cats" role="radiogroup" aria-label="Report category"></div>
-<label class="f" for="op-rule">Reporting rule (number and title)</label>
-<input type="text" id="op-rule" maxlength="80" placeholder="Sample rule 00: title from the DAF Reporting Program Matrix">
+<label class="f" for="op-rulesel">Reporting rule</label>
+<select id="op-rulesel"><option value="">Pick a category first</option></select>
+<input type="text" id="op-rule" maxlength="90" hidden placeholder="Write your commander's CCIR, e.g. Any off-base arrest of a member">
 <label class="f" for="op-more">Other rules that also apply (optional)</label>
 <input type="text" id="op-more" maxlength="120" placeholder="Sample rules 00, 00">
-<p class="op-hint">Real rule numbers and titles come from the DAF Reporting Program Matrix and Templates, which are not public. The demo uses placeholders.</p>
+<p class="op-hint">Sample rule list. Real rule numbers and titles come from the DAF Reporting Program Matrix and CJCSM 3150.03, which are not public; a real version would load them here.</p>
+<fieldset class="op-to"><legend>Who it goes to</legend>
+<p class="op-hint">Filled in for you from the category and your unit's command. Add or remove recipients as needed.</p>
+<div class="op-tolist" id="op-tolist"></div>
+<div class="op-f"><label for="op-to-add">Add a recipient</label><select id="op-to-add"></select></div>
+</fieldset>
 </div>
 
 <div class="op-step" data-step="2" hidden>
@@ -150,6 +156,7 @@ BODY = r"""
 <div class="op-f"><label for="sf-kind">Report type</label><select id="sf-kind"><option value="">Any type</option><option>Initial</option><option>Initial/Final</option><option>Follow-Up</option><option>Final</option><option>Corrected Copy</option><option>Upgrade</option></select></div>
 <div class="op-f"><label for="sf-unit">Unit</label><select id="sf-unit"></select></div>
 <div class="op-f"><label for="sf-cmd">Command</label><select id="sf-cmd"></select></div>
+<div class="op-f"><label for="sf-to2">Sent to</label><select id="sf-to2"></select></div>
 <div class="op-f"><label for="sf-status">Status</label><select id="sf-status"><option value="">Open or closed</option><option value="open">Open</option><option value="closed">Closed</option></select></div>
 <div class="op-f"><label for="sf-from">From date</label><input type="date" id="sf-from"></div>
 <div class="op-f"><label for="sf-to">To date</label><input type="date" id="sf-to"></div>
@@ -193,7 +200,7 @@ BODY = r"""
 </form></dialog>
 
 <dialog class="op-dlg op-dlg-wide" id="d-ev" aria-labelledby="de-h"><div class="op-dform">
-<div class="op-dhead"><div><span class="op-pill" id="de-pill"></span> <span class="op-status" id="de-status"></span><h2 id="de-h"></h2><p class="op-hint" id="de-meta"></p></div><button type="button" class="op-x" id="de-close" aria-label="Close">&times;</button></div>
+<div class="op-dhead"><div><span class="op-pill" id="de-pill"></span> <span class="op-status" id="de-status"></span><h2 id="de-h"></h2><p class="op-hint" id="de-meta"></p><div class="op-route" id="de-route"></div></div><button type="button" class="op-x" id="de-close" aria-label="Close">&times;</button></div>
 <div class="op-dgrid">
 <div><h3>Reports sent</h3><div id="de-reports"></div></div>
 <div><h3>Messages</h3><div class="op-thread" id="de-thread"></div>
@@ -293,7 +300,7 @@ SCRIPT = r"""<script>
     return (neg ? "-" : "") + (h ? h + ":" + String(m).padStart(2, "0") : m) + ":" + String(s).padStart(2, "0"); };
 
   // ---------------- units (sample)
-  const CMDS = ["ACC", "AETC", "AFGSC", "AFMC", "AFSOC", "AMC", "PACAF", "USAFE-AFAFRICA", "AFRC", "ANG"];
+  const CMDS = ["ACC", "AETC", "AFGSC", "AFMC", "AFRC", "AFSOC", "AMC", "ANG", "PACAF", "USAFE-AFAFRICA", "SpOC", "STARCOM", "SSC"];
   const UNITS0 = [
     { id: "u1", name: "Sample Wing Command Post", inst: "Sample Air Force Base", cmd: "ACC", office: "SMPL/CP", phone: "DSN 000-0001", email: "sample.wing.cp@example.mil", rel: ["Wing commander", "Vice wing commander", "Delegated release authority"] },
     { id: "u2", name: "Sample Airlift Wing Command Post", inst: "Sample Field", cmd: "AMC", office: "SMPL2/CP", phone: "DSN 000-0002", email: "sample.airlift.cp@example.mil", rel: ["Wing commander", "Vice wing commander"] },
@@ -309,27 +316,27 @@ SCRIPT = r"""<script>
   const T = now();
   const R = (kind, t, why, extra) => ({ kind, t, why, who: (extra || {}).who || "Sample personnel", whatd: (extra || {}).whatd || "", cls: "CUI" });
   const EV = () => [
-    { id: 1, unit: "u1", cat: "B", what: "Sample: aircraft returned with a bird strike, no injuries", where: "Sample Air Force Base, runway 1", inc: T - 3 * HOUR, kinds: ["Initial"], last: T - 2.5 * HOUR, ack: T - 2.9 * HOUR, rule: "Sample rule 00",
+    { id: 1, unit: "u1", cat: "B", what: "Sample: aircraft returned with a bird strike, no injuries", where: "Sample Air Force Base, runway 1", inc: T - 3 * HOUR, kinds: ["Initial"], last: T - 2.5 * HOUR, ack: T - 2.9 * HOUR, rule: "SB-5 Sample: significant mission degradation at an installation", to: ["ACC", "AFSWC (Air Force Service Watch Cell)"],
       reps: [R("Initial", T - 2.5 * HOUR, "Aircraft landed safely after a bird strike on approach. No injuries. Aircraft impounded for inspection.")],
       thread: [{ from: "watch", t: T - 2 * HOUR, type: "Request for information", text: "Thanks. Please send an estimated return to service when maintenance has one.", seenU: false }] },
-    { id: 2, unit: "u1", cat: "C", what: "Sample: base-wide power outage, mission continuing on backup power", where: "Sample Air Force Base", inc: T - 2 * DAY, kinds: ["Initial", "Follow-Up"], last: T - 1 * DAY, ack: T - 2 * DAY + 20 * MIN, rule: "Sample rule 00",
+    { id: 2, unit: "u1", cat: "C", what: "Sample: base-wide power outage, mission continuing on backup power", where: "Sample Air Force Base", inc: T - 2 * DAY, kinds: ["Initial", "Follow-Up"], last: T - 1 * DAY, ack: T - 2 * DAY + 20 * MIN, rule: "SC-2 Sample: extended utility or network outage", to: ["ACC", "AFSWC (Air Force Service Watch Cell)"],
       reps: [R("Initial", T - 2 * DAY + 30 * MIN, "Utility power lost base-wide. Critical facilities on generators. Mission continuing."), R("Follow-Up", T - 1 * DAY, "Power restored to 80 percent of facilities. Remaining areas expected tomorrow.")], thread: [] },
-    { id: 3, unit: "u2", cat: "C", what: "Sample: tropical storm readiness change, first change for this storm", where: "Sample Field", inc: T - 7.2 * DAY, kinds: ["Initial"], last: T - 7.2 * DAY, ack: T - 7.2 * DAY + 10 * MIN, rule: "Sample rule 00",
+    { id: 3, unit: "u2", cat: "C", what: "Sample: tropical storm readiness change, first change for this storm", where: "Sample Field", inc: T - 7.2 * DAY, kinds: ["Initial"], last: T - 7.2 * DAY, ack: T - 7.2 * DAY + 10 * MIN, rule: "SC-1 Sample: severe weather readiness change", to: ["AMC", "AFSWC (Air Force Service Watch Cell)"],
       reps: [R("Initial", T - 7.2 * DAY, "Readiness condition raised for an approaching storm. Aircraft evacuation planning under way.")], thread: [] },
-    { id: 4, unit: "u3", cat: "B", what: "Sample: off-base vehicle accident involving two Airmen", where: "Near Sample Air Base", inc: T - 40 * MIN, kinds: ["Initial"], last: T - 25 * MIN, ack: null, rule: "Sample rule 00",
+    { id: 4, unit: "u3", cat: "B", what: "Sample: off-base vehicle accident involving two Airmen", where: "Near Sample Air Base", inc: T - 40 * MIN, kinds: ["Initial"], last: T - 25 * MIN, ack: null, rule: "SB-3 Sample: serious injury to several members in one event", to: ["USAFE-AFAFRICA", "AFSWC (Air Force Service Watch Cell)"],
       reps: [R("Initial", T - 25 * MIN, "Two Airmen involved in an off-base vehicle accident. Both taken to a local hospital. Condition being confirmed.")], thread: [] },
-    { id: 5, unit: "u4", cat: "C", what: "Sample: training sortie cancelled base-wide for a fuel contamination check", where: "Sample Air Force Base South", inc: T - 9 * HOUR, kinds: ["Initial"], last: T - 8.5 * HOUR, ack: T - 8.9 * HOUR, rule: "Sample rule 00",
+    { id: 5, unit: "u4", cat: "C", what: "Sample: training sortie cancelled base-wide for a fuel contamination check", where: "Sample Air Force Base South", inc: T - 9 * HOUR, kinds: ["Initial"], last: T - 8.5 * HOUR, ack: T - 8.9 * HOUR, rule: "SC-4 Sample: flying stopped installation-wide", to: ["AETC", "AFSWC (Air Force Service Watch Cell)"],
       reps: [R("Initial", T - 8.5 * HOUR, "Fuel samples failed a routine check. Flying stopped until retest results are in.")],
       thread: [{ from: "watch", t: T - 7 * HOUR, type: "Request for information", text: "How many sorties are affected, and when is the retest due?", seenU: true }, { from: "unit", t: T - 6 * HOUR, text: "14 sorties today. Retest results expected by 1800Z.", seenW: false }] },
-    { id: 6, unit: "u2", cat: "B", what: "Sample: hazardous cargo leak contained on the flightline", where: "Sample Field, cargo ramp", inc: T - 12 * DAY, kinds: ["Initial", "Final"], last: T - 11 * DAY, ack: T - 12 * DAY + 15 * MIN, rule: "Sample rule 00", closed: true,
+    { id: 6, unit: "u2", cat: "B", what: "Sample: hazardous cargo leak contained on the flightline", where: "Sample Field, cargo ramp", inc: T - 12 * DAY, kinds: ["Initial", "Final"], last: T - 11 * DAY, ack: T - 12 * DAY + 15 * MIN, rule: "SB-4 Sample: major damage to DAF property", to: ["AMC", "AFSWC (Air Force Service Watch Cell)"], closed: true,
       reps: [R("Initial", T - 12 * DAY + 20 * MIN, "Small leak from a cargo container. Area cordoned; fire department responded."), R("Final", T - 11 * DAY, "Leak contained and cleaned up. No injuries, no environmental impact. Closing.")], thread: [] },
-    { id: 7, unit: "u3", cat: "C", what: "Sample: network outage affecting the command post for 3 hours", where: "Sample Air Base (overseas)", inc: T - 20 * DAY, kinds: ["Initial/Final"], last: T - 20 * DAY, ack: T - 20 * DAY + 8 * MIN, rule: "Sample rule 00", closed: true,
+    { id: 7, unit: "u3", cat: "C", what: "Sample: network outage affecting the command post for 3 hours", where: "Sample Air Base (overseas)", inc: T - 20 * DAY, kinds: ["Initial/Final"], last: T - 20 * DAY, ack: T - 20 * DAY + 8 * MIN, rule: "Base defense network outage (unit CCIR, sample)", to: ["USAFE-AFAFRICA", "AFSWC (Air Force Service Watch Cell)"], closed: true,
       reps: [R("Initial/Final", T - 20 * DAY, "Network outage from 0900Z to 1200Z. Reporting done by alternate means. Service restored; no mission impact.")], thread: [] },
-    { id: 8, unit: "u4", cat: "WP", what: "Sample exercise: simulated aircraft mishap", where: "Sample Air Force Base South", inc: T - 4 * DAY, kinds: ["Initial"], last: T - 4 * DAY, ack: T - 4 * DAY + 5 * MIN, rule: "Exercise", closed: true,
+    { id: 8, unit: "u4", cat: "WP", what: "Sample exercise: simulated aircraft mishap", where: "Sample Air Force Base South", inc: T - 4 * DAY, kinds: ["Initial"], last: T - 4 * DAY, ack: T - 4 * DAY + 5 * MIN, rule: "SW-1 Sample exercise: simulated national-level event", to: ["AETC", "AFSWC (Air Force Service Watch Cell)"], closed: true,
       reps: [R("Initial", T - 4 * DAY, "EXERCISE EXERCISE EXERCISE. Simulated mishap for the quarterly exercise.")], thread: [] },
   ];
-  let events = load("oprep-demo.v2", null) || EV();
-  const saveEv = () => store("oprep-demo.v2", events);
+  let events = load("oprep-demo.v3", null) || EV();
+  const saveEv = () => store("oprep-demo.v3", events);
   const unreadU = e => (e.thread || []).filter(m => m.from === "watch" && !m.seenU).length;
   const unreadW = e => (e.thread || []).filter(m => m.from === "unit" && !m.seenW).length;
   const autoLeft = e => (e.ext || e.last + 7 * DAY) - now();
@@ -350,6 +357,46 @@ SCRIPT = r"""<script>
     document.querySelector('[data-view="watch"]').dataset.badge = wNew || "";
   }
 
+
+  // ---------------- rule lists (sample, not the official matrix) and recipients
+  const RULES = {
+    P: ["SP-1 Sample: event with multiple deaths or mass casualties", "SP-2 Sample: event likely to draw national or international media attention", "SP-3 Sample: hostile act against a US installation or forces", "SP-4 Sample: incident with diplomatic or foreign-government impact"],
+    WP: ["SW-1 Sample exercise: simulated national-level event", "SW-2 Sample exercise: simulated hostile act"],
+    B: ["SB-1 Sample: aircraft mishap with a destroyed aircraft", "SB-2 Sample: on-duty death of a service member", "SB-3 Sample: serious injury to several members in one event", "SB-4 Sample: major damage to DAF property", "SB-5 Sample: significant mission degradation at an installation", "SB-6 Sample: event likely to draw regional media attention"],
+    C: ["SC-1 Sample: severe weather readiness change", "SC-2 Sample: extended utility or network outage", "SC-3 Sample: serious off-base injury to members", "SC-4 Sample: flying stopped installation-wide", "SC-5 Sample: significant security incident with no injuries"],
+  };
+  const CUSTOM = "__custom";
+  const TO_GROUPS = [
+    ["Major commands and field commands", ["ACC", "AETC", "AFGSC", "AFMC", "AFRC", "AFSOC", "AMC", "ANG (NGB)", "PACAF", "USAFE-AFAFRICA", "SpOC", "STARCOM", "SSC"]],
+    ["Headquarters", ["AFSWC (Air Force Service Watch Cell)", "SFSWC (Space Force Service Watch Cell)", "AF/A3", "SF/S3/4/7"]],
+    ["Joint", ["NMCC-NJOIC", "JS/J3", "USAFRICOM", "USCENTCOM", "USCYBERCOM", "USEUCOM", "USINDOPACOM", "USNORTHCOM", "USSOCOM", "USSOUTHCOM", "USSPACECOM", "USSTRATCOM", "USTRANSCOM"]],
+    ["Other agencies", ["Army Watch", "Navy Watch", "Marine Corps Watch", "National Guard Watch", "Direct Reporting Unit (DRU)", "Field Operating Agency (FOA)", "Other government agency"]],
+  ];
+  const AFSWC = "AFSWC (Air Force Service Watch Cell)";
+  const defaultTo = cat => { const own = unitOf(me).cmd === "ANG" ? "ANG (NGB)" : unitOf(me).cmd; return cat === "P" ? [own, AFSWC, "NMCC-NJOIC", "JS/J3"] : cat === "WP" ? [own, AFSWC] : [own, AFSWC]; };
+  function renderRules() {
+    const sel = $("op-rulesel"), list = RULES[st.cat] || [];
+    if (!st.cat) { sel.innerHTML = '<option value="">Pick a category first</option>'; $("op-rule").hidden = true; return; }
+    const custom = st.cat === "C" && st.rule && !list.includes(st.rule);
+    sel.innerHTML = '<option value="">Choose a rule</option>' + list.map(r => `<option ${r === st.rule ? "selected" : ""}>${esc(r)}</option>`).join("") + (st.cat === "C" ? `<option value="${CUSTOM}" ${custom ? "selected" : ""}>Write your own CCIR...</option>` : "");
+    $("op-rule").hidden = !custom; if (custom) $("op-rule").value = st.rule;
+  }
+  $("op-rulesel").onchange = () => {
+    const v = $("op-rulesel").value;
+    if (v === CUSTOM) { $("op-rule").hidden = false; $("op-rule").value = ""; $("op-rule").focus(); st.rule = ""; }
+    else { $("op-rule").hidden = true; $("op-rule").value = v; st.rule = v; }
+    $("op-subj").textContent = subject(); clear1();
+  };
+  const clear1 = () => { const a1 = document.querySelector("[data-step='1'] .op-alert"); if (a1) a1.hidden = true; };
+  $("op-rule").addEventListener("input", clear1);
+  function renderTo() {
+    st.to = st.to || [];
+    $("op-tolist").innerHTML = st.to.length ? st.to.map((r, i) => `<span class="op-tochip">${esc(r)}<button type="button" aria-label="Remove ${esc(r)}" data-i="${i}">&times;</button></span>`).join("") : '<span class="op-hint">No recipients yet.</span>';
+    $("op-tolist").querySelectorAll("button").forEach(b => b.onclick = () => { st.to.splice(+b.dataset.i, 1); st.toTouched = true; renderTo(); });
+    $("op-to-add").innerHTML = '<option value="">Choose from the list</option>' + TO_GROUPS.map(([g, xs]) => `<optgroup label="${esc(g)}">${xs.filter(x => !st.to.includes(x)).map(x => `<option>${esc(x)}</option>`).join("")}</optgroup>`).join("");
+  }
+  $("op-to-add").onchange = () => { const v = $("op-to-add").value; if (v) { st.to.push(v); st.toTouched = true; renderTo(); } };
+
   // ---------------- wizard state
   let st = null, step = 0;
   function blank() { return { id: null, cat: null, kind: "Initial", inc: now() - 4 * MIN, known: now() - 2 * MIN, ack: null, sentSync: null, sentAsync: null, released: false }; }
@@ -357,7 +404,7 @@ SCRIPT = r"""<script>
     st = s; step = startStep || 0;
     $("op-empty").hidden = true; $("op-wiz").hidden = false;
     $("op-inc").value = toLocalInput(st.inc); $("op-known").value = toLocalInput(st.known);
-    ["what", "where", "rule", "more", "who", "whatd", "why", "change"].forEach(k => { const el = $("op-" + k); if (el) el.value = st[k] || ""; });
+    ["what", "where", "more", "who", "whatd", "why", "change"].forEach(k => { const el = $("op-" + k); if (el) el.value = st[k] || ""; });
     ["exercise", "rd", "sa", "outage", "newonly", "approve"].forEach(k => $("op-" + k).checked = !!st[k]);
     $("op-kind").value = st.kind; $("op-class").value = st.cls || "CUI";
     $("op-releaser").innerHTML = unitOf(me).rel.map(r => `<option>${esc(r)}</option>`).join("");
@@ -365,23 +412,30 @@ SCRIPT = r"""<script>
   }
   function collect() {
     st.inc = fromInput($("op-inc").value) || st.inc; st.known = fromInput($("op-known").value) || st.known;
-    ["what", "where", "rule", "more", "who", "whatd", "why", "change"].forEach(k => st[k] = $("op-" + k).value.trim());
+    ["what", "where", "more", "who", "whatd", "why", "change"].forEach(k => st[k] = $("op-" + k).value.trim());
+    st.rule = $("op-rulesel").value === CUSTOM ? $("op-rule").value.trim() : ($("op-rulesel").value || st.rule || "");
     ["exercise", "rd", "sa", "outage", "newonly", "approve"].forEach(k => st[k] = $("op-" + k).checked);
     st.kind = $("op-kind").value; st.cls = $("op-class").value; st.releaser = $("op-releaser").value;
   }
   function alertBox(id, html, bad) { const a = $(id); a.hidden = !html; a.className = "op-alert" + (bad ? " bad" : ""); a.innerHTML = html || ""; }
 
+  function pickCat(c) {
+    const changed = st.cat !== c; st.cat = c;
+    if (changed) { if (!(RULES[c] || []).includes(st.rule) && !(c === "C" && st.rule && !Object.values(RULES).flat().includes(st.rule))) st.rule = ""; if (!st.toTouched) st.to = defaultTo(c); }
+    renderCats(); updateTimers(); $("op-subj").textContent = subject();
+  }
   function renderCats() {
     $("op-qs").innerHTML = QS.map(([q, c], i) => `<button type="button" class="op-qb" data-c="${c}"><span>${i + 1}</span>${esc(q)}</button>`).join("");
-    $("op-qs").querySelectorAll(".op-qb").forEach(b => b.onclick = () => { st.cat = b.dataset.c; renderCats(); updateTimers(); });
+    $("op-qs").querySelectorAll(".op-qb").forEach(b => b.onclick = () => pickCat(b.dataset.c));
     $("op-cats").innerHTML = Object.entries(CATS).map(([k, c]) => `<label class="op-cat ${st.cat === k ? "on" : ""}"><input type="radio" name="op-cat" value="${k}" ${st.cat === k ? "checked" : ""}><b>${esc(c.n)}</b><span>${esc(c.desc)}</span><small>Synchronous ${c.sync} min. ${c.async ? "Asynchronous " + (c.async >= 60 ? c.async / 60 + " h" : c.async + " min") + " from " + (c.asyncFrom === "ack" ? "acknowledgment" : "incident") : "No asynchronous report"}.</small></label>`).join("");
-    $("op-cats").querySelectorAll("input").forEach(r => r.onchange = () => { st.cat = r.value; renderCats(); updateTimers(); });
+    $("op-cats").querySelectorAll("input").forEach(r => r.onchange = () => pickCat(r.value));
+    renderRules(); renderTo();
   }
 
   function subject() {
     const c = CATS[st.cat]; if (!c) return "Pick a category first";
     const t = st.kind === "Upgrade" ? now() : st.inc;
-    return `${st.cls || "CUI"} // ${c.s} ${st.kind === "Upgrade" ? "INITIAL (UPGRADE)" : st.kind.toUpperCase()} // ${(st.rule || "SAMPLE RULE 00").toUpperCase()} // ${dtg(t)}`;
+    return `${st.cls || "CUI"} // ${c.s} ${st.kind === "Upgrade" ? "INITIAL (UPGRADE)" : st.kind.toUpperCase()} // ${(st.rule || "RULE NOT SET").split(" Sample")[0].toUpperCase()} // ${dtg(t)}`;
   }
   function body() {
     let why = st.why || "";
@@ -404,6 +458,9 @@ SCRIPT = r"""<script>
     if (s === 1) {
       if (st.exercise && st.cat === "P") { st.cat = "WP"; renderCats(); }
       if (!st.cat) return alertBox("op-alert0", "", false), (alert1("Pick a category, or answer the questions from the top."), false);
+      if (!st.rule) return alert1(st.cat === "C" ? "Choose a rule, or pick \"Write your own CCIR\" and type it." : "Choose the reporting rule."), false;
+      if (!(st.to || []).length) return alert1("Add at least one recipient."), false;
+      const a1 = document.querySelector("[data-step='1'] .op-alert"); if (a1) a1.hidden = true;
       return true;
     }
     if (s === 2) {
@@ -428,7 +485,7 @@ SCRIPT = r"""<script>
     $("op-kindhelp").textContent = KIND_HELP[$("op-kind").value] || "";
     const corr = $("op-kind").value === "Corrected Copy"; $("op-change").hidden = !corr; $("op-change-l").hidden = !corr;
     $("op-subj").textContent = subject();
-    if (step === 3) $("op-preview").innerHTML = `<div class="op-mark">${esc(st.cls || "CUI")}</div>` + body().map(([k, v]) => `<p><b>${k}:</b> ${esc(v || "(none)")}</p>`).join("") + `<div class="op-mark">${esc(st.cls || "CUI")}</div>`;
+    if (step === 3) $("op-preview").innerHTML = `<div class="op-mark">${esc(st.cls || "CUI")}</div><p><b>TO:</b> ${esc((st.to || []).join(", "))}</p>` + body().map(([k, v]) => `<p><b>${k}:</b> ${esc(v || "(none)")}</p>`).join("") + `<div class="op-mark">${esc(st.cls || "CUI")}</div>`;
     if (step === 4) renderSend();
     updateTimers();
   }
@@ -469,16 +526,16 @@ SCRIPT = r"""<script>
     const nid = () => Math.max(0, ...events.map(x => x.id)) + 1;
     if (st.id) {
       const e = events.find(x => x.id === st.id);
-      if (kind === "Upgrade") { e.closed = true; const n = { id: nid(), unit: e.unit, cat: st.cat, what: st.what, where: st.where, inc: st.inc, kinds: ["Initial (upgrade)"], last: now(), ack: st.ack, rule: st.rule, reps: [...(e.reps || []), rep], thread: [{ from: "unit", t: now(), text: "Upgraded from report " + e.id + ".", seenW: false }] }; events.push(n); st.id = n.id; }
-      else { e.kinds.push(kind); e.reps = e.reps || []; e.reps.push(rep); e.last = now(); e.ext = null; if (["Final", "Initial/Final"].includes(kind)) e.closed = true; }
-    } else { const n = { id: nid(), unit: me, cat: st.cat, what: st.what, where: st.where, inc: st.inc, kinds: [kind], last: now(), ack: st.ack, rule: st.rule, reps: [rep], thread: [], closed: kind === "Initial/Final" }; events.push(n); st.id = n.id; }
+      if (kind === "Upgrade") { e.closed = true; const n = { id: nid(), unit: e.unit, cat: st.cat, what: st.what, where: st.where, inc: st.inc, kinds: ["Initial (upgrade)"], last: now(), ack: st.ack, rule: st.rule, to: (st.to || []).slice(), reps: [...(e.reps || []), rep], thread: [{ from: "unit", t: now(), text: "Upgraded from report " + e.id + ".", seenW: false }] }; events.push(n); st.id = n.id; }
+      else { e.kinds.push(kind); e.rule = st.rule || e.rule; e.to = (st.to && st.to.length) ? st.to.slice() : e.to; e.reps = e.reps || []; e.reps.push(rep); e.last = now(); e.ext = null; if (["Final", "Initial/Final"].includes(kind)) e.closed = true; }
+    } else { const n = { id: nid(), unit: me, cat: st.cat, what: st.what, where: st.where, inc: st.inc, kinds: [kind], last: now(), ack: st.ack, rule: st.rule, to: (st.to || []).slice(), reps: [rep], thread: [], closed: kind === "Initial/Final" }; events.push(n); st.id = n.id; }
     saveEv(); renderBoard(); refreshViews();
   }
 
   // ---------------- open an existing event
   function openEvent(id) {
     const e = events.find(x => x.id === id); if (!e) return;
-    const last = (e.reps || []).slice(-1)[0] || {}; const s = blank(); Object.assign(s, { id: e.id, cat: e.cat, what: e.what, where: e.where, inc: e.inc, known: e.inc, rule: e.rule, kind: "Follow-Up", ack: e.ack, who: last.who || "", whatd: last.whatd || "" });
+    const last = (e.reps || []).slice(-1)[0] || {}; const s = blank(); Object.assign(s, { id: e.id, cat: e.cat, what: e.what, where: e.where, inc: e.inc, known: e.inc, rule: e.rule, kind: "Follow-Up", ack: e.ack, who: last.who || "", whatd: last.whatd || "", to: (e.to || []).slice(), toTouched: true });
     openWizard(s, 2);
     alertBox("op-alert2", `Reporting on <b>${esc(e.what)}</b>. Choose Follow-Up, Final, Corrected Copy or Upgrade. For an upgrade, go back to Category and pick the higher one.`, false);
   }
@@ -546,7 +603,8 @@ SCRIPT = r"""<script>
   // ---------------- search
   function fillSearch() {
     const keep = id => $(id).value;
-    const u = keep("sf-unit"), c = keep("sf-cmd"), k = keep("sf-cat");
+    const u = keep("sf-unit"), c = keep("sf-cmd"), k = keep("sf-cat"), r2 = keep("sf-to2");
+    $("sf-to2").innerHTML = '<option value="">Anyone</option>' + TO_GROUPS.map(([g, xs]) => `<optgroup label="${esc(g)}">${xs.map(x => `<option>${esc(x)}</option>`).join("")}</optgroup>`).join(""); $("sf-to2").value = r2;
     $("sf-cat").innerHTML = '<option value="">Any category</option>' + Object.entries(CATS).map(([k2, c2]) => `<option value="${k2}">${esc(c2.n)}</option>`).join("");
     $("sf-unit").innerHTML = '<option value="">Any unit</option>' + units.map(x => `<option value="${x.id}">${esc(x.name)}</option>`).join("");
     $("sf-cmd").innerHTML = '<option value="">Any command</option>' + CMDS.map(x => `<option>${x}</option>`).join("");
@@ -557,12 +615,13 @@ SCRIPT = r"""<script>
     if (f.cat && e.cat !== f.cat) return false;
     if (f.kind && !e.kinds.some(k => k.startsWith(f.kind))) return false;
     if (f.unit && e.unit !== f.unit) return false;
+    if (f.to2 && !(e.to || []).includes(f.to2)) return false;
     if (f.cmd && u.cmd !== f.cmd) return false;
     if (f.status === "open" && e.closed) return false;
     if (f.status === "closed" && !e.closed) return false;
     if (f.from && e.inc < Date.parse(f.from + "T00:00:00Z")) return false;
     if (f.to && e.inc > Date.parse(f.to + "T23:59:59Z")) return false;
-    if (f.q) { const hay = [e.what, e.where, e.rule, u.name, u.inst, u.cmd, CATS[e.cat].n, ...(e.reps || []).map(r => r.why + " " + r.who + " " + r.whatd)].join(" ").toLowerCase(); if (!f.q.toLowerCase().split(/\s+/).every(w => hay.includes(w))) return false; }
+    if (f.q) { const hay = [e.what, e.where, e.rule, ...(e.to || []), u.name, u.inst, u.cmd, CATS[e.cat].n, ...(e.reps || []).map(r => r.why + " " + r.who + " " + r.whatd)].join(" ").toLowerCase(); if (!f.q.toLowerCase().split(/\s+/).every(w => hay.includes(w))) return false; }
     return true;
   }
   function card(e, mode) {
@@ -572,14 +631,14 @@ SCRIPT = r"""<script>
   }
   function runSearch() {
     fillSearch();
-    const f = { q: $("sf-q").value.trim(), cat: $("sf-cat").value, kind: $("sf-kind").value, unit: $("sf-unit").value, cmd: $("sf-cmd").value, status: $("sf-status").value, from: $("sf-from").value, to: $("sf-to").value };
+    const f = { q: $("sf-q").value.trim(), cat: $("sf-cat").value, kind: $("sf-kind").value, unit: $("sf-unit").value, cmd: $("sf-cmd").value, status: $("sf-status").value, to2: $("sf-to2").value, from: $("sf-from").value, to: $("sf-to").value };
     const list = events.filter(e => matches(e, f)).sort((a, b) => b.inc - a.inc);
     $("sf-count").textContent = list.length + " report" + (list.length === 1 ? "" : "s") + " found";
     $("sf-results").innerHTML = list.map(e => card(e, "search")).join("") || '<p class="op-hint">Nothing matches. Try clearing a filter.</p>';
     $("sf-results").querySelectorAll(".op-res").forEach(b => b.onclick = () => showEvent(+b.dataset.id, "search"));
   }
-  ["sf-q", "sf-cat", "sf-kind", "sf-unit", "sf-cmd", "sf-status", "sf-from", "sf-to"].forEach(id => $(id).addEventListener("input", runSearch));
-  $("sf-clear").onclick = () => { ["sf-q", "sf-cat", "sf-kind", "sf-unit", "sf-cmd", "sf-status", "sf-from", "sf-to"].forEach(id => $(id).value = ""); runSearch(); };
+  ["sf-q", "sf-cat", "sf-kind", "sf-unit", "sf-cmd", "sf-to2", "sf-status", "sf-from", "sf-to"].forEach(id => $(id).addEventListener("input", runSearch));
+  $("sf-clear").onclick = () => { ["sf-q", "sf-cat", "sf-kind", "sf-unit", "sf-cmd", "sf-to2", "sf-status", "sf-from", "sf-to"].forEach(id => $(id).value = ""); runSearch(); };
 
   // ---------------- AFSWC watch
   let wf = "all";
@@ -607,7 +666,8 @@ SCRIPT = r"""<script>
     $("de-pill").className = "op-pill op-l" + c.lvl; $("de-pill").textContent = c.s;
     $("de-status").className = "op-status " + (e.closed ? "closed" : "open"); $("de-status").textContent = e.closed ? "Closed" : e.ack ? "Open, acknowledged " + z(e.ack).slice(0, 5) + "Z" : "Open, awaiting acknowledgment";
     $("de-h").textContent = e.what;
-    $("de-meta").textContent = `${u.name} (${u.office || "office not set"}), ${u.cmd}. ${u.phone ? "Call back: " + u.phone + ". " : ""}Incident ${new Date(e.inc).toISOString().slice(0, 10)} ${z(e.inc).slice(0, 5)}Z at ${e.where || "location not given"}. ${e.rule || ""}`;
+    $("de-meta").textContent = `${u.name} (${u.office || "office not set"}), ${u.cmd}. ${u.phone ? "Call back: " + u.phone + ". " : ""}Incident ${new Date(e.inc).toISOString().slice(0, 10)} ${z(e.inc).slice(0, 5)}Z at ${e.where || "location not given"}.`;
+    $("de-route").innerHTML = `<p><b>Rule:</b> ${esc(e.rule || "Not set")}</p><p><b>Sent to:</b> ${esc((e.to || []).join(", ") || "Not recorded")}</p>`;
     $("de-reports").innerHTML = (e.reps || []).map(r => `<article class="op-rep"><div class="op-rephead"><b>${esc(r.kind)}</b><span>${new Date(r.t).toISOString().slice(0, 10)} ${z(r.t).slice(0, 5)}Z${r.by ? ", released by " + esc(r.by) : ""}</span></div>${r.subj ? `<code>${esc(r.subj)}</code>` : ""}<p><b>WHO:</b> ${esc(r.who || "")}</p>${r.whatd ? `<p><b>WHAT, WHEN, WHERE:</b> ${esc(r.whatd)}</p>` : ""}<p><b>WHY:</b> ${esc(r.why || "")}</p></article>`).join("");
     $("de-thread").innerHTML = (e.thread || []).length ? e.thread.map(m => `<div class="op-msg ${m.from}"><span>${m.from === "watch" ? "AFSWC" + (m.type ? ", " + esc(m.type) : "") : esc(u.name)}, ${z(m.t).slice(0, 5)}Z</span><p>${esc(m.text)}</p></div>`).join("") : '<p class="op-hint">No messages yet.</p>';
     $("de-thread").scrollTop = 1e6;
@@ -645,10 +705,10 @@ SCRIPT = r"""<script>
   // ---------------- clock, buttons, reset
   const tick = () => { const d = new Date(); $("op-zulu").textContent = d.toISOString().slice(11, 19) + "Z"; $("op-zulu2").textContent = d.toISOString().slice(11, 16) + "Z"; $("op-date").textContent = d.toISOString().slice(0, 10) + " UTC"; if (st) updateTimers(); };
   setInterval(tick, 1000); tick();
-  const trySample = () => { const s = blank(); Object.assign(s, { what: "Sample: government vehicle struck a light cart on the ramp, two Airmen hurt", where: "Sample Air Force Base, main ramp", who: "Two Airmen from a sample maintenance squadron", whatd: "At " + z(s.inc).slice(0, 5).replace(":", "") + "Z a government vehicle struck a light cart near the sample ramp.", why: "Both Airmen taken to the base clinic; injuries not life-threatening. Area cordoned off and a safety investigation started. Next update when the clinic reports.", rule: "Sample rule 00" }); openWizard(s, 0); $("op-wiz").scrollIntoView({ behavior: "smooth", block: "start" }); };
+  const trySample = () => { const s = blank(); Object.assign(s, { what: "Sample: government vehicle struck a light cart on the ramp, two Airmen hurt", where: "Sample Air Force Base, main ramp", who: "Two Airmen from a sample maintenance squadron", whatd: "At " + z(s.inc).slice(0, 5).replace(":", "") + "Z a government vehicle struck a light cart near the sample ramp.", why: "Both Airmen taken to the base clinic; injuries not life-threatening. Area cordoned off and a safety investigation started. Next update when the clinic reports.", rule: "" }); openWizard(s, 0); $("op-wiz").scrollIntoView({ behavior: "smooth", block: "start" }); };
   $("op-try").onclick = $("op-try2").onclick = trySample;
   $("op-new").onclick = $("op-new2").onclick = () => { openWizard(blank(), 0); $("op-wiz").scrollIntoView({ behavior: "smooth", block: "start" }); };
-  $("op-reset").onclick = () => { try { ["oprep-demo.v2", "oprep-demo.units", "oprep-demo.me"].forEach(k => localStorage.removeItem(k)); } catch { } events = EV(); units = UNITS0.map(u => ({ ...u, rel: u.rel.slice() })); me = "u1"; st = null; $("op-wiz").hidden = true; $("op-empty").hidden = false; saveEv(); saveUnits(); renderUnit(); renderBoard(); refreshViews(); };
+  $("op-reset").onclick = () => { try { ["oprep-demo.v3", "oprep-demo.units", "oprep-demo.me"].forEach(k => localStorage.removeItem(k)); } catch { } events = EV(); units = UNITS0.map(u => ({ ...u, rel: u.rel.slice() })); me = "u1"; st = null; $("op-wiz").hidden = true; $("op-empty").hidden = false; saveEv(); saveUnits(); renderUnit(); renderBoard(); refreshViews(); };
   renderUnit(); renderBoard(); updateTimers();
 })();
 </script>"""
