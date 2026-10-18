@@ -16,15 +16,25 @@ BODY = """
 <nav class="pv-subnav" aria-label="Sections"><div class="wrap">
 <a href="#board-h">Issue board</a><a href="#loop">How it works</a><a href="#submit">Raise an issue</a><a href="#mentors">Mentors</a><a href="#boards">Message boards</a><a href="#news">What changed</a>
 </div></nav>
+<div class="pv-back" id="pv-back"><div class="wrap"><button type="button" id="pv-home">Home</button><span id="pv-where"></span></div></div>
 <section class="pv-hero"><div class="wrap pv-hero-grid">
-<div>
+<div class="pv-home">
 <h1>The Pulse</h1>
 <p class="tag">Every issue raised gets an answer back.</p>
 <p class="lede">One place for the whole career field to raise what is getting in the way, see who is working it, and hear what was decided. From the CFM to the FAC to the Council, and back out to every Airman.</p>
+<nav class="pv-tiles" aria-label="Sections">
+<a class="pv-tile pv-tile-main" href="#/submit"><span class="pv-ticon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span><span class="pv-tt">Raise an issue<small>Two minutes. It gets an answer back.</small></span></a>
+<a class="pv-tile" href="#/board"><span class="pv-ticon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h4v14H4zM10 5h4v9h-4zM16 5h4v6h-4z"/></svg></span><span class="pv-tbadge" id="t-open"></span><span class="pv-tt">Issue board<small>See what is open</small></span></a>
+<a class="pv-tile" href="#/loop"><span class="pv-ticon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3M18 3v4h-4M6 21v-4h4"/></svg></span><span class="pv-tt">How it works<small>From raised to answered</small></span></a>
+<a class="pv-tile" href="#/mentors"><span class="pv-ticon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 6.5M18 14.5a6.5 6.5 0 0 1 3.5 5.5"/></svg></span><span class="pv-tt">Find a mentor<small>Chiefs who will talk</small></span></a>
+<a class="pv-tile" href="#/boards"><span class="pv-ticon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v10H9l-5 4zM8 9h8M8 12h5"/></svg></span><span class="pv-tt">Message boards<small>CFM and command news</small></span></a>
+<a class="pv-tile" href="#/roles"><span class="pv-ticon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v6M5 21v-5h14v5M12 9H5v7M12 9h7v7M3 21h18"/></svg></span><span class="pv-tt">Who does what<small>CFM, FAC, Council</small></span></a>
+<a class="pv-tile" href="#/news"><span class="pv-ticon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h11l3 3v13H5zM8 10h8M8 14h8M8 18h5"/></svg></span><span class="pv-tt">What changed<small>Decisions shared back</small></span></a>
+</nav>
 <div class="pv-actions"><a class="btn" href="#submit">Raise an issue</a><a class="btn pv-ghost" href="#loop">See how it moves</a></div>
 <p class="pv-zulu" id="zulu" aria-label="Current Zulu time">0000Z</p>
 </div>
-<div class="pv-board" aria-labelledby="board-h">
+<div class="pv-board" aria-labelledby="board-h" data-screen="board">
 <div class="pv-board-head"><h2 id="board-h">Issue board</h2><span>Select an issue to see its trail.</span></div>
 <div class="pv-lanes" id="lanes"></div>
 <div class="pv-board-foot">
@@ -36,7 +46,7 @@ BODY = """
 </div>
 </div></section>
 
-<section class="section" id="loop"><div class="wrap">
+<section class="section" id="loop" data-screen="loop"><div class="wrap">
 <h2>How an issue moves</h2>
 <p class="pv-hint" style="margin:-0.4rem 0 1.4rem;font-size:1rem">Four stops, in this order. Nothing is closed until the answer has gone back to the people who raised it.</p>
 <ol class="pv-loop">
@@ -48,7 +58,7 @@ BODY = """
 <p class="pv-back">Feedback on a shared decision starts a new issue at step 1, linked to the old one.</p>
 </div></section>
 
-<section class="section" id="submit"><div class="wrap pv-two">
+<section class="section" id="submit" data-screen="submit"><div class="wrap pv-two">
 <div>
 <h2>Raise an issue</h2>
 <p class="pv-hint" style="margin:-0.4rem 0 1.2rem;font-size:1rem">Takes about two minutes. In this demo it lands on the issue board so you can follow it.</p>
@@ -82,7 +92,7 @@ BODY = """
 </div>
 </div></section>
 
-<section class="section" id="roles"><div class="wrap">
+<section class="section" id="roles" data-screen="roles"><div class="wrap">
 <h2>Who does what</h2>
 <p class="pv-hint" style="margin:-0.4rem 0 1.2rem;font-size:1rem">Each step has one owner, so an issue is never waiting on "someone".</p>
 <div class="pv-roles">
@@ -101,7 +111,7 @@ BODY = """
 </div></section>
 
 
-<section class="section" id="mentors"><div class="wrap">
+<section class="section" id="mentors" data-screen="mentors"><div class="wrap">
 <h2>Find a mentor</h2>
 <p class="pv-hint" style="margin:-0.4rem 0 1.2rem;font-size:1rem">Chiefs who have volunteered to mentor. Read their profiles and ask for a conversation. Each Chief decides whether to accept.</p>
 <div class="pv-filter" role="group" aria-label="Filter mentors by focus">
@@ -117,7 +127,7 @@ BODY = """
 <div class="pv-box pv-volunteer"><h3>Are you a Chief?</h3><p class="pv-hint" style="margin-top:0.3rem">Add your profile: your path, what you can help with, and how many people you can take on. You can pause it any time.</p><button type="button" class="btn pv-ghost" id="vol-btn" style="margin-top:0.7rem">Add my profile</button><p class="pv-ok" id="vol-ok" role="status"></p></div>
 </div></section>
 
-<section class="section" id="boards"><div class="wrap">
+<section class="section" id="boards" data-screen="boards"><div class="wrap">
 <h2>Message boards</h2>
 <p class="pv-hint" style="margin:-0.4rem 0 1.2rem;font-size:1rem">Straight from the people who run the career field. The CFM board carries messages from the Career Field Manager, sent to every command or only the ones affected. Each command's board carries its MAJCOM Functional Manager's updates, plus any CFM message sent to that command.</p>
 <div class="pv-tabs" role="tablist" aria-label="Message boards">
@@ -144,7 +154,7 @@ BODY = """
 </div>
 </div></section>
 
-<section class="section" id="news"><div class="wrap">
+<section class="section" id="news" data-screen="news"><div class="wrap">
 <h2>What changed</h2>
 <div class="pv-news-grid">
 <div class="pv-news">
@@ -160,7 +170,7 @@ BODY = """
 </div>
 </div></section>
 
-<section class="pv-close"><div class="wrap">
+<section class="pv-close pv-home"><div class="wrap">
 <p class="motto">Integrate. Connect. Inform. Enable.</p>
 <p>One team, one voice, one mission.</p>
 <div class="pv-domains"><span>Air</span><span>Space</span><span>Cyber</span><span>Global operations</span></div>
@@ -375,6 +385,21 @@ SCRIPT = """<script>
     ok.className = "pv-ok";
     ok.textContent = board === "cfm" ? `Sent to ${post.aud === "all" ? "all commands" : post.aud.join(", ")}. It also shows on ${post.aud === "all" ? "every command board" : "those command boards"}.` : `Posted to the ${post.b} board.`;
   });
+  // Phone layout: a home screen of buttons, one section per screen (hash routes keep the iPhone back swipe working).
+  const NAMES = { board: "Issue board", loop: "How it works", submit: "Raise an issue", roles: "Who does what", mentors: "Find a mentor", boards: "Message boards", news: "What changed" };
+  const phone = matchMedia("(max-width: 720px)");
+  function route() {
+    const m = location.hash.match(/^#\\/(\\w+)/), v = m && NAMES[m[1]] ? m[1] : "home";
+    if (!phone.matches) { document.body.classList.remove("pv-app"); if (v !== "home") { const el = document.querySelector(`[data-screen="${v}"]`); if (el) el.scrollIntoView(); } return; }
+    document.body.classList.add("pv-app"); document.body.dataset.view = v;
+    document.querySelectorAll("[data-screen]").forEach(s => s.classList.toggle("on", s.dataset.screen === v));
+    $("pv-where").textContent = NAMES[v] || ""; window.scrollTo(0, 0);
+  }
+  $("pv-home").onclick = () => { if (history.length > 1 && location.hash.startsWith("#/")) history.back(); else location.hash = ""; };
+  document.querySelectorAll('a[href="#submit"], a[href="#loop"]').forEach(a => a.addEventListener("click", e => { if (phone.matches) { e.preventDefault(); location.hash = "#/" + a.getAttribute("href").slice(1); } }));
+  addEventListener("hashchange", route); phone.addEventListener("change", route); route();
+  const syncBadge = () => { const n = $("m-open").textContent; $("t-open").textContent = n + " open"; };
+  new MutationObserver(syncBadge).observe($("m-open"), { childList: true }); syncBadge();
   renderMentors(); renderPosts();
   zulu(); setInterval(zulu, 15000); render();
 })();

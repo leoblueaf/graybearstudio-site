@@ -195,3 +195,33 @@ button.btn { border: 0; cursor: pointer; }
 .pv-aud { margin: 0.55rem 0 0; font-size: 0.82rem; font-weight: 600; color: var(--app); }
 .pv-post.from-cfm { background: color-mix(in srgb, var(--app) 6%, var(--surface)); }
 .pv-board-panel [hidden], .pv-form [hidden] { display: none !important; }
+
+/* Phone layout: home screen of buttons, one section per screen (17 Oct). */
+.pv-tiles, .pv-back { display: none; }
+@media (max-width: 720px) {
+  .pv-app .pv-subnav, .pv-app .pv-actions, .pv-app .pv-hero p.lede, .pv-app .pv-zulu { display: none; }
+  .pv-app .pv-tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; margin-top: 1.4rem; }
+  .pv-tile { position: relative; display: flex; flex-direction: column; gap: 0.7rem; min-height: 7.2rem; padding: 0.95rem; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); color: var(--ink); text-decoration: none; -webkit-tap-highlight-color: transparent; transition: transform .12s ease, border-color .12s ease; }
+  .pv-tile:active { transform: scale(0.97); border-color: var(--app); }
+  .pv-tile-main { grid-column: 1 / -1; flex-direction: row; align-items: center; min-height: 0; background: var(--app); border-color: var(--app); color: var(--paper); }
+  .pv-ticon { width: 2.4rem; height: 2.4rem; border-radius: 50%; display: grid; place-items: center; background: color-mix(in srgb, var(--app) 14%, transparent); color: var(--app); flex: none; }
+  .pv-tile-main .pv-ticon { background: color-mix(in srgb, var(--paper) 22%, transparent); color: var(--paper); }
+  .pv-ticon svg { width: 1.3rem; height: 1.3rem; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .pv-tt { font-weight: 600; font-size: 1rem; line-height: 1.25; }
+  .pv-tt small { display: block; font-weight: 400; font-size: 0.8rem; color: var(--muted); margin-top: 0.2rem; }
+  .pv-tile-main .pv-tt small { color: inherit; opacity: 0.85; }
+  .pv-tbadge { position: absolute; top: 0.8rem; right: 0.8rem; font-size: 0.72rem; font-weight: 600; padding: 0.15rem 0.5rem; border-radius: 99px; background: color-mix(in srgb, var(--app) 14%, transparent); color: var(--app); }
+  .pv-tbadge:empty { display: none; }
+  .pv-app [data-screen]:not(.on) { display: none; }
+  .pv-app:not([data-view="home"]) .pv-home { display: none; }
+  .pv-app:not([data-view="home"]) .pv-back { display: block; position: sticky; top: 0; z-index: 6; background: var(--paper); border-bottom: 1px solid var(--line); }
+  .pv-back .wrap { display: flex; align-items: center; gap: 0.6rem; padding-block: 0.55rem; }
+  .pv-back button { font: inherit; font-weight: 600; color: var(--app); background: none; border: 0; padding: 0.4rem 0.2rem; cursor: pointer; display: inline-flex; align-items: center; gap: 0.25rem; }
+  .pv-back button::before { content: ""; width: 0.55rem; height: 0.55rem; border-left: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(45deg); }
+  .pv-back span { color: var(--muted); font-size: 0.9rem; margin-left: auto; }
+  .pv-app:not([data-view="home"]) .pv-hero { padding-block: 1rem; border-bottom: 0; }
+  .pv-app[data-view="home"] .pv-hero { padding-block: 1.6rem 1rem; border-bottom: 0; }
+  .pv-app[data-view="home"] .pv-close { padding-block: 1.6rem; }
+  .pv-app .section[data-screen] { padding-block: 1.2rem 2rem; }
+}
+@media (max-width: 720px) { .pv-app:not([data-view="home"]):not([data-view="board"]) .pv-hero { display: none; } }
