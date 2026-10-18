@@ -4,7 +4,7 @@ Built from the public DAFI 10-206 (1 July 2026). Lives at /demo/oprep/ in the st
 sitemap, linked from nowhere, sample data only. Nuclear and Special Access Program categories are deliberately left
 out of this public demo. To take it down: set OPREP_DEMO = False (the source stays here for later).
 """
-OPREP_DEMO = True
+OPREP_DEMO = False
 HERE = "demo/oprep"
 ACCENT = {"accent": ("#8C2F2F", "#E39A92")}
 
