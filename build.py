@@ -327,6 +327,8 @@ def main():
     demo_pulse.build(page, write, href, accent_css, ROOT)
     import demo_oprep
     demo_oprep.build(page, write, href, accent_css, ROOT)
+    import demo_pmp
+    demo_pmp.build(page, write, href, accent_css, ROOT)
     if not PREVIEW:
         build_404()
         with open(os.path.join(DIST, "CNAME"), "w") as f:

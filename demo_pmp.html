@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en" data-mode="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>PMP Reasoning Web · concept demo</title>
+<link rel="icon" href="../../assets/icons/pmp.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&display=swap">
+<style>
+/* Mirrors the iOS app's AppColors: dark is the default look, light is warm paper. Primary #2B63D4 in both. */
+:root{--bg:#080808;--surface:#111111;--high:#1C1C1C;--border:rgba(255,255,255,.06);--primary:#2B63D4;--green:#2ECC71;--amber:#F39C12;--danger:#FF5252;--text:#F5F5F5;--muted:#6E6E6E;--section:#555555;--gold:#FFB800;
+ --greenSoft:rgba(46,204,113,.10);--amberSoft:rgba(243,156,18,.10);--dangerSoft:rgba(255,82,82,.10);--primarySoft:rgba(43,99,212,.14);color-scheme:dark;
+ --font:"DM Sans",-apple-system,"Segoe UI",system-ui,sans-serif}
+html[data-mode="light"]{--bg:#F7F5F0;--surface:#FFFFFF;--high:#EFEDE6;--border:rgba(0,0,0,.09);--green:#1E9E5A;--amber:#A66E0F;--danger:#C0392B;--text:#1A1A18;--muted:#8A877E;--section:#5A5851;--gold:#CC9200;
+ --greenSoft:rgba(30,158,90,.09);--amberSoft:rgba(166,110,15,.09);--dangerSoft:rgba(192,57,43,.08);--primarySoft:rgba(43,99,212,.09);color-scheme:light}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:var(--bg);color:var(--text);font:15px/1.5 var(--font);-webkit-font-smoothing:antialiased}
+button,input,textarea,select{font:inherit;color:inherit}
+button{cursor:pointer}
+button:focus-visible,input:focus-visible,textarea:focus-visible,a:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+[hidden]{display:none!important}
+.banner{position:sticky;top:0;z-index:20;background:var(--primary);color:#fff;font-size:13px;display:flex;gap:14px;justify-content:center;align-items:center;flex-wrap:wrap;padding:7px max(16px,env(safe-area-inset-right,0px)) 7px max(16px,env(safe-area-inset-left,0px));padding-top:calc(7px + env(safe-area-inset-top,0px))}
+.banner button{background:rgba(255,255,255,.18);border:0;color:#fff;border-radius:99px;padding:3px 12px;font-size:12px;font-weight:600}
+.shell{display:grid;grid-template-columns:232px minmax(0,1fr);min-height:calc(100% - 34px)}
+.rail{border-right:1px solid var(--border);background:var(--surface);padding:22px 12px;display:flex;flex-direction:column;gap:2px;position:sticky;top:34px;height:calc(100vh - 34px)}
+.brand{display:flex;align-items:center;gap:10px;padding:2px 10px 20px;font-weight:800;font-size:17px;letter-spacing:-.01em}
+.brand img{width:34px;height:34px;border-radius:8px}
+.rnav{display:flex;align-items:center;gap:12px;border:0;background:none;padding:11px 12px;border-radius:12px;text-align:left;font-weight:600;color:var(--muted)}
+.rnav svg{width:21px;height:21px;flex:none}
+.rnav:hover{background:var(--high);color:var(--text)}
+.rnav.on{background:var(--primarySoft);color:var(--primary)}
+.rail .sep{height:1px;background:var(--border);margin:12px 8px}
+.rail .foot{margin-top:auto;font-size:12px;color:var(--muted);padding:10px 12px}
+main{min-width:0;padding:26px max(16px,env(safe-area-inset-right,0px)) 60px max(16px,env(safe-area-inset-left,0px))}
+.page{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:18px;animation:in .28s cubic-bezier(.2,.8,.2,1)}
+@keyframes in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.page{animation:none}}
+h1{font-size:30px;font-weight:800;letter-spacing:-.02em;margin:0;line-height:1.15}
+h2{font-size:20px;font-weight:700;margin:0;letter-spacing:-.01em}
+.sub{color:var(--muted);margin:2px 0 0}
+.label{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--section);margin:8px 2px -6px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:18px}
+.row{display:flex;gap:12px;align-items:center}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.goal{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
+.goal small{color:var(--muted);font-weight:600}
+.stat{text-align:center}
+.stat b{display:block;font-size:26px;font-weight:800;font-variant-numeric:tabular-nums}
+.stat span{color:var(--muted);font-size:13px}
+.exam{display:flex;justify-content:space-between;gap:10px;align-items:center}
+.pill{font-size:12px;font-weight:700;padding:4px 10px;border-radius:99px}
+.pill.ok{color:var(--green);background:var(--greenSoft)}
+.pill.warn{color:var(--amber);background:var(--amberSoft)}
+.mode{display:flex;align-items:center;gap:14px;width:100%;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:15px 16px;text-align:left}
+.mode:hover{border-color:var(--primary)}
+.mode.primary{background:var(--primary);border-color:var(--primary);color:#fff}
+.mode .ic{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;background:var(--high);flex:none}
+.mode.primary .ic{background:rgba(255,255,255,.16)}
+.mode .ic svg{width:20px;height:20px}
+.mode b{display:block;font-weight:700}
+.mode small{color:var(--muted)}
+.mode.primary small{color:rgba(255,255,255,.75)}
+.mode .chev{margin-left:auto;color:var(--muted)}
+.mode .badge{margin-left:auto;font-size:12px;font-weight:700;color:var(--danger);background:var(--dangerSoft);padding:2px 9px;border-radius:99px}
+.prem{font-size:11px;font-weight:800;letter-spacing:.08em;color:var(--primary);background:var(--primarySoft);border-radius:6px;padding:3px 7px;margin-left:auto}
+/* question */
+.qtop{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.tag{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:5px 10px;border-radius:99px;border:1px solid currentColor}
+.tag.people{color:var(--primary)}.tag.process{color:var(--amber)}.tag.business{color:var(--green)}.tag.n{color:var(--muted)}
+.qcount{margin-left:auto;color:var(--amber);font-weight:700}
+.iconbtn{border:0;background:var(--high);width:36px;height:36px;border-radius:10px;display:grid;place-items:center;color:var(--muted)}
+.iconbtn.on{color:var(--amber)}
+.stem{font-size:18px;line-height:1.6;margin:4px 0}
+.opt{display:flex;gap:14px;width:100%;text-align:left;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:15px 16px;line-height:1.5}
+.opt .k{flex:none;width:30px;height:30px;border-radius:9px;background:var(--high);display:grid;place-items:center;font-weight:700;color:var(--muted)}
+.opt:hover:not(:disabled){border-color:var(--primary)}
+.opt.sel{border-color:var(--primary)}
+.opt.right{border-color:var(--green);background:var(--greenSoft)}.opt.right .k{background:var(--green);color:#fff}
+.opt.wrong{border-color:var(--danger);background:var(--dangerSoft)}.opt.wrong .k{background:var(--danger);color:#fff}
+.opt:disabled{cursor:default}
+.ex{border-radius:16px;padding:16px 18px;border:1px solid}
+.ex h3{margin:0 0 6px;font-size:13px;font-weight:700;letter-spacing:.06em}
+.ex p{margin:0;line-height:1.6}
+.ex.ok{border-color:var(--green);background:var(--greenSoft)}.ex.ok h3{color:var(--green)}
+.ex.key{border-color:var(--primary);background:var(--primarySoft)}.ex.key h3{color:var(--primary)}
+.ex.trap{border-color:var(--danger);background:var(--dangerSoft)}.ex.trap h3{color:var(--danger)}
+.btns{display:flex;gap:10px}
+.btn{flex:1;border:1px solid var(--border);background:var(--surface);border-radius:14px;padding:14px;font-weight:700}
+.btn.blue{background:var(--primary);border-color:var(--primary);color:#fff}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.progress{height:6px;background:var(--high);border-radius:99px;overflow:hidden}
+.progress i{display:block;height:100%;background:var(--primary)}
+.back{border:0;background:none;color:var(--muted);font-weight:600;padding:0;display:inline-flex;gap:6px;align-items:center}
+/* mindset & approaches */
+.acc{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden}
+.acc>button{width:100%;border:0;background:none;display:flex;gap:12px;align-items:center;padding:15px 16px;text-align:left}
+.acc .chev{margin-left:auto;color:var(--muted);transition:transform .2s}
+.acc.open .chev{transform:rotate(180deg)}
+.acc.open{border-color:color-mix(in srgb,var(--rc,var(--primary)) 45%,transparent)}
+.acc .body{padding:0 16px 16px;line-height:1.6}
+.rn{font-size:12px;font-weight:700;padding:3px 9px;border-radius:99px;background:var(--primarySoft);color:var(--primary);white-space:nowrap}
+.pattern{display:flex;gap:10px;margin-top:12px;padding:10px 12px;border-radius:12px;background:var(--greenSoft);color:var(--green);font-size:14px;border:1px solid color-mix(in srgb,var(--green) 40%,transparent)}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{border:1px solid var(--border);background:var(--surface);border-radius:99px;padding:6px 12px;font-size:13px;font-weight:600;color:var(--muted)}
+.chip.on{border-color:var(--primary);color:var(--primary);background:var(--primarySoft)}
+.chip.p{color:var(--primary);border-color:color-mix(in srgb,var(--primary) 50%,transparent)}
+.chip.a{color:var(--green);border-color:color-mix(in srgb,var(--green) 50%,transparent)}
+.chip.h{color:var(--amber);border-color:color-mix(in srgb,var(--amber) 50%,transparent)}
+.trow{display:grid;grid-template-columns:96px minmax(0,1fr);gap:12px;padding:10px 0;border-top:1px solid var(--border);align-items:start}
+.trow:first-child{border-top:0}
+.trio{border:1px solid var(--border);border-radius:14px;padding:4px 14px;margin-top:10px}
+.mini{font-size:11px;font-weight:800;letter-spacing:.1em;color:var(--section);margin:14px 0 6px}
+.kw{display:flex;flex-wrap:wrap;gap:6px}
+.kw span{font-size:12px;padding:3px 9px;border-radius:8px;background:var(--high)}
+ul.tight{margin:0;padding-left:18px}
+/* glossary */
+.search{width:100%;padding:13px 14px;border-radius:14px;border:1px solid var(--border);background:var(--surface)}
+.term .star{color:var(--gold)}
+.term .cat{font-size:12px;color:var(--muted);margin-left:auto}
+.rel{border:0;background:var(--high);border-radius:8px;padding:4px 10px;font-size:13px;margin:4px 6px 0 0;color:var(--primary);font-weight:600}
+/* matching */
+.bank{display:flex;flex-wrap:wrap;gap:8px}
+.mb{border:1px solid var(--border);background:var(--surface);border-radius:12px;padding:10px 14px;font-weight:600;text-align:center}
+.mb.sel{border-color:var(--primary);background:var(--primarySoft);color:var(--primary)}
+.mb.used{opacity:.3;pointer-events:none}
+.slot{display:flex;flex-direction:column;gap:10px}
+.drop{border:1px dashed var(--border);background:var(--high);border-radius:12px;padding:11px 14px;text-align:left;color:var(--muted)}
+.drop.f{border-style:solid;color:var(--text);font-weight:600}
+.card.right{border-color:var(--green);background:var(--greenSoft)}.card.wrong{border-color:var(--danger);background:var(--dangerSoft)}
+/* misc */
+textarea{width:100%;min-height:220px;border-radius:14px;border:1px solid var(--border);background:var(--surface);padding:14px;line-height:1.6;resize:vertical}
+.seg{display:flex;background:var(--high);border-radius:12px;padding:3px;gap:3px}
+.seg button{flex:1;border:0;background:none;border-radius:9px;padding:9px;font-weight:600;color:var(--muted)}
+.seg button.on{background:var(--surface);color:var(--text)}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.55);display:grid;place-items:center;z-index:30;padding:20px}
+.sheet{background:var(--surface);border:1px solid var(--border);border-radius:22px;max-width:420px;width:100%;padding:24px;display:flex;flex-direction:column;gap:14px}
+.plan{display:flex;justify-content:space-between;align-items:center;border:1px solid var(--border);border-radius:14px;padding:14px 16px}
+.plan.best{border-color:var(--primary)}
+.plan b{display:block}
+.tabbar{display:none}
+.empty{color:var(--muted);text-align:center;padding:30px 10px}
+@media (max-width:820px){
+ .shell{grid-template-columns:1fr}.rail{display:none}
+ main{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
+ .tabbar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:15;background:var(--surface);border-top:1px solid var(--border);justify-content:space-around;padding:7px max(6px,env(safe-area-inset-right,0px)) calc(7px + env(safe-area-inset-bottom,0px)) max(6px,env(safe-area-inset-left,0px))}
+ .tabbar button{border:0;background:none;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11px;font-weight:600;color:var(--muted);min-width:56px}
+ .tabbar button svg{width:23px;height:23px}
+ .tabbar button.on{color:var(--primary)}
+ h1{font-size:26px}
+}
+@media (max-width:460px){.banner{font-size:12px;gap:8px;padding-top:calc(5px + env(safe-area-inset-top,0px));padding-bottom:5px}.banner span b+*{display:none}.grid3{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.stat b{font-size:22px}.trow{grid-template-columns:1fr;gap:4px}}
+</style>
+</head>
+<body>
+<div class="banner"><span><b>Concept demo</b> of PMP Reasoning on the web. Sample questions. Not affiliated with PMI.</span><button type="button" id="resetDemo">Reset demo</button></div>
+<div class="shell">
+ <nav class="rail" aria-label="Main"><div class="brand"><img src="../../assets/icons/pmp.png" alt="">PMP Reasoning</div><div id="rnav"></div><div class="foot">Built for the 2026 exam format</div></nav>
+ <main id="main"></main>
+</div>
+<nav class="tabbar" id="tabbar" aria-label="Main"></nav>
+<div class="modal" id="modal" hidden></div>
+<script>
+const DATA=__DATA__;
+const IC={
+home:'<path d="M3 11l9-7 9 7v9a1 1 0 01-1 1h-5v-6H9v6H4a1 1 0 01-1-1z"/>',
+mindset:'<path d="M12 3a6 6 0 00-6 6c0 2.2 1.2 3.7 2.5 5 .6.6 1 1.4 1 2.3V18h5v-1.7c0-.9.4-1.7 1-2.3C16.8 12.7 18 11.2 18 9a6 6 0 00-6-6z"/><path d="M10 21h4"/>',
+glossary:'<path d="M4 5.5A2.5 2.5 0 016.5 3H20v15H6.5A2.5 2.5 0 004 20.5z"/><path d="M4 20.5V5.5M8 7h8M8 11h6"/>',
+notes:'<path d="M5 3h10l4 4v14H5z"/><path d="M15 3v4h4M8 12h8M8 16h5"/>',
+account:'<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0116 0"/>',
+play:'<path d="M7 4l13 8-13 8z"/>',
+bolt:'<path d="M13 2L4 14h7l-1 8 9-12h-7z"/>',
+tune:'<path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/>',
+timer:'<circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/>',
+approach:'<path d="M4 17l5-6 4 3 7-8"/>',
+match:'<circle cx="6" cy="7" r="2.5"/><circle cx="6" cy="17" r="2.5"/><circle cx="18" cy="12" r="2.5"/><path d="M8.5 7.5l7 3.5M8.5 16.5l7-3.5"/>',
+missed:'<path d="M3 12a9 9 0 109-9"/><path d="M3 4v5h5"/>',
+flag:'<path d="M5 21V4h12l-2 4 2 4H5"/>',
+coach:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/>',
+domains:'<path d="M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z"/>',
+chev:'<path d="M9 6l6 6-6 6"/>', down:'<path d="M6 9l6 6 6-6"/>', left:'<path d="M15 6l-6 6 6 6"/>', star:'<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z" fill="currentColor"/>'
+};
+const S=(k,w)=>`<svg viewBox="0 0 24 24" ${w?`width="${w}" height="${w}"`:''} fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IC[k]}</svg>`;
+const TABS=[["home","Home"],["mindset","Mindset"],["glossary","Glossary"],["notes","Notes"],["account","Account"]];
+const DOM={people:"People",process:"Process",business:"Business Environment"};
+const HOT={hybrid:"Hybrid",adaptive:"Adaptive",strategy:"Strategy",value:"Value",sustainability:"Sustainability",ai_digital:"AI & Digital",stakeholder_engagement:"Stakeholders"};
+const FREE=10;
+const MATCH={items:["Cost Plus Incentive Fee (CPIF)","Firm Fixed Price (FFP)","Time and Materials (T&M)","Fixed Price Incentive Fee (FPIF)","Cost Plus Fixed Fee (CPFF)"],
+ prompts:[["A set price for a well-defined scope, with the seller carrying the cost risk",1],["A fixed price plus a financial incentive for meeting agreed performance targets",3],["Allowable costs reimbursed plus a fixed fee that does not change with performance",4],["Allowable costs reimbursed plus an incentive fee shared under an agreed formula",0],["Agreed hourly or unit rates billed for an undefined scope, often staff augmentation",2]]};
+const GOLD=[
+ {k:"p",name:"Predictive",full:"Protect the approved plan. Understand the impact before changing it.",one:"Protect the plan.",lab:"TYPICAL ANSWERS",acts:["Analyze impact first.","Review the management plan.","Submit a change request if a baseline changes.","Follow governance.","Update the appropriate project documents after approval."],kw:["Baseline","Scope","Schedule","Cost","WBS","Change Request","CCB","Phase Gate","Approval","Documentation"],ask:"Does this affect an approved baseline?",head:["Impact analysis","Change request","CCB","Baseline update"],brain:"Did we follow the approved plan correctly?"},
+ {k:"a",name:"Agile",full:"Protect the team and the timebox while continuously delivering customer value.",one:"Protect the team and the timebox.",lab:"TYPICAL ACTIONS",acts:["Reprioritize the backlog.","Collaborate with the Product Owner.","Gather customer feedback.","Remove impediments.","Let the team self-organize.","Improve during retrospectives.","Avoid disrupting the current sprint unless absolutely necessary."],kw:["Backlog","Sprint","Product Owner","Scrum Master","User Story","Increment","Velocity","Retrospective","Daily Scrum","Collaboration"],ask:"Can the backlog absorb this without disrupting the sprint?",head:["Product Owner","Backlog refinement","Next sprint","Reprioritization"],brain:"What is the fastest way to maximize customer value?"},
+ {k:"h",name:"Hybrid",full:"Keep predictive governance while allowing Agile teams to deliver adaptively.",one:"Protect governance while enabling Agile delivery.",lab:"YOU OFTEN SEE",acts:["Update the backlog, not a formal change request, for an Agile feature.","Use a change request when changing an approved project baseline.","Hold a steering committee review while the development team continues working in sprints."],kw:["Steering Committee","Change Board","Governance","Sprint","Backlog","Product Owner"],ask:"Is this a governance decision or a delivery decision?",head:["Governance: predictive answer","Delivery: agile answer"],brain:"How do we satisfy governance without slowing Agile delivery?"}
+];
+const store={get(k,d){try{const v=localStorage.getItem("pmpdemo:"+k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem("pmpdemo:"+k,JSON.stringify(v))}catch(e){}}};
+let P=store.get("p",{answers:{},flags:[],used:0,premium:false,exam:"2026-12-11",goal:20,theme:"dark",notes:""});
+const save=()=>store.set("p",P);
+let UI={view:"home",quiz:null,mOpen:-1,gq:"",gcat:"All",gOpen:null,aOpen:"Predictive",match:{sel:null,placed:{},checked:false}};
+function applyTheme(){const t=P.theme=="system"?(matchMedia("(prefers-color-scheme: light)").matches?"light":"dark"):P.theme;document.documentElement.dataset.mode=t}
+const M=document.getElementById("main");
+const stats=()=>{const a=Object.values(P.answers);const c=a.filter(x=>x.ok).length;return{n:a.length,acc:a.length?Math.round(100*c/a.length):0}};
+const daysTo=()=>Math.max(0,Math.ceil((new Date(P.exam+"T09:00")-new Date())/864e5));
+function ring(v,max,col,lbl){const r=34,c=2*Math.PI*r,p=Math.min(1,v/max);return `<svg width="88" height="88" viewBox="0 0 88 88" role="img" aria-label="${lbl}"><circle cx="44" cy="44" r="${r}" fill="none" stroke="var(--high)" stroke-width="8"/><circle cx="44" cy="44" r="${r}" fill="none" stroke="${col}" stroke-width="8" stroke-linecap="round" stroke-dasharray="${c*p} ${c}" opacity="${p>0?1:0}" transform="rotate(-90 44 44)"/><text x="44" y="50" text-anchor="middle" font-family="DM Sans,system-ui" font-weight="800" font-size="20" fill="var(--text)">${v}</text></svg>`}
+function domainAcc(){const r={people:[0,0],process:[0,0],business:[0,0]};Object.entries(P.answers).forEach(([i,a])=>{const d=DATA.questions[i].domain;r[d][1]++;if(a.ok)r[d][0]++});return r}
+function mode(k,t,s,extra="",cls=""){return `<button class="mode ${cls}" data-go="${k}"><span class="ic">${S(IC[k]?k:"play")}</span><span><b>${t}</b><small>${s}</small></span>${extra||`<span class="chev">${S("chev",18)}</span>`}</button>`}
+const V={
+home(){const s=stats(),d=daysTo(),miss=Object.values(P.answers).filter(a=>!a.ok).length;const today=Math.min(s.n,P.goal);
+ return `<div><h1>Hey there.</h1><p class="sub">Ready to train your judgment?</p></div>
+ <div class="grid2"><div class="card goal">${ring(today,P.goal,"var(--primary)","Daily goal")}<small>Daily goal · ${P.goal}</small></div><div class="card goal">${ring(s.n,50,"var(--green)","Weekly goal")}<small>Weekly goal · 50</small></div></div>
+ <div class="card exam"><div class="row"><span class="ic" style="color:var(--primary)">${S("timer",22)}</span><div><b>Exam: ${new Date(P.exam+"T09:00").toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"})}</b><div class="sub">${d} days remaining</div></div></div><span class="pill ${s.n>=Math.min(12,d)?"ok":"warn"}">${s.n>=Math.min(12,d)?"On Track":"Behind Recommended Pace"}</span></div>
+ <div class="grid3"><div class="card stat"><b style="color:var(--green)">${s.n}</b><span>Answered</span></div><div class="card stat"><b style="color:var(--amber)">${s.n?1:0}</b><span>Day Streak</span></div><div class="card stat"><b style="color:var(--primary)">${s.acc}%</b><span>Accuracy</span></div></div>
+ <div class="label">Select your mode</div>
+ ${mode("play","Practice Mode","Work through the bank, one question at a time","","primary").replace('data-go="play"','data-go="practice"')}
+ ${mode("bolt","Quick Drill","Five fast questions").replace('data-go="bolt"','data-go="drill"')}
+ ${mode("tune","Custom Quiz","Pick domains and question count").replace('data-go="tune"','data-go="custom"')}
+ ${mode("timer","Exam Sim","180 questions · 230 minutes",'<span class="prem">PREMIUM</span>').replace('data-go="timer"','data-go="exam"')}
+ <div class="label">Study tools</div>
+ ${mode("mindset","Mindset Guide","The 8 rules for what to do first")}
+ ${mode("approach","Delivery Approaches","Predictive, Agile and Hybrid compared").replace('data-go="approach"','data-go="approaches"')}
+ ${mode("match","Matching","Contract types and who carries cost risk")}
+ <div class="label">Review</div>
+ ${mode("missed","Missed Questions","Retry what you got wrong",miss?`<span class="badge">${miss}</span>`:"")}
+ ${mode("flag","Flagged Questions","Questions you marked to revisit",P.flags.length?`<span class="badge" style="color:var(--amber);background:var(--amberSoft)">${P.flags.length}</span>`:"")}
+ ${mode("coach","Coach","Where to focus next")}
+ <div class="label">Domains &amp; topics</div>
+ ${mode("domains","Domains and More","People 33% · Process 41% · Business Environment 26%")}`},
+quiz(){const Q=UI.quiz;if(!Q)return V.home();if(Q.done)return V.summary();const qi=Q.list[Q.i],q=DATA.questions[qi],ans=Q.ans[Q.i],done=ans!==undefined;
+ const fl=P.flags.includes(qi);
+ return `<button class="back" data-go="home">${S("left",18)} Home</button>
+ <div class="progress" aria-hidden="true"><i style="width:${100*(Q.i+(done?1:0))/Q.list.length}%"></i></div>
+ <div class="qtop"><span class="tag ${q.domain}">${DOM[q.domain]}</span>${q.hotTopic?`<span class="tag n">${HOT[q.hotTopic]||q.hotTopic}</span>`:""}<span class="qcount">Q${Q.i+1}/${Q.list.length}</span><button class="iconbtn ${fl?"on":""}" data-flag="${qi}" aria-label="${fl?"Unflag":"Flag"} question">${S("flag",18)}</button></div>
+ <p class="stem">${q.questionText}</p>
+ ${q.options.map((o,i)=>`<button class="opt ${done&&i==q.correctIndex?"right":""} ${done&&i==ans&&i!=q.correctIndex?"wrong":""}" data-ans="${i}" ${done?"disabled":""}><span class="k">${"ABCD"[i]}</span><span>${o}</span></button>`).join("")}
+ ${done?`<div class="ex ${ans==q.correctIndex?"ok":"trap"}"><h3>${ans==q.correctIndex?"Correct Answer Explanation":"Not quite. Here's the reasoning"}</h3><p>${q.explanation}</p></div><div class="ex key"><h3>Key Takeaway</h3><p>${q.keyTakeaway}</p></div>`:""}
+ <div class="btns"><button class="btn" data-qnav="-1" ${Q.i==0?"disabled":""}>${S("left",16)} Previous</button><button class="btn ${done?"blue":""}" data-qnav="1">${Q.i==Q.list.length-1?"Finish":done?"Next Question":"Skip"}</button></div>
+ ${!P.premium?`<p class="sub" style="text-align:center;font-size:13px">${Math.max(0,FREE-P.used)} free questions left in this demo</p>`:""}`},
+summary(){const Q=UI.quiz,c=Q.list.filter((qi,i)=>Q.ans[i]===DATA.questions[qi].correctIndex).length;return `<div class="card" style="text-align:center;display:flex;flex-direction:column;gap:12px;align-items:center;padding:30px">${ring(c,Q.list.length,"var(--green)","Score")}<h1>${c} of ${Q.list.length} correct</h1><p class="sub">${c==Q.list.length?"Clean sweep. Try a Custom Quiz on your weakest domain next.":"Every miss is saved to Missed Questions so you can retry it."}</p><div class="btns" style="width:100%"><button class="btn" data-go="home">Home</button><button class="btn blue" data-go="missed">Review misses</button></div></div>`},
+custom(){return `<button class="back" data-go="home">${S("left",18)} Home</button><div><h1>Custom Quiz</h1><p class="sub">Choose domains and how many questions.</p></div>
+ <div class="label">Domains</div><div class="chips">${Object.entries(DOM).map(([k,v])=>`<button class="chip ${UI.cd?.includes(k)!==false&&(UI.cd||Object.keys(DOM)).includes(k)?"on":""}" data-cd="${k}">${v}</button>`).join("")}</div>
+ <div class="label">Questions</div><div class="seg">${[3,5,8,12].map(n=>`<button class="${(UI.cn||5)==n?"on":""}" data-cn="${n}">${n}</button>`).join("")}</div>
+ <button class="btn blue" data-startcustom>Start quiz</button>`},
+exam(){return `<button class="back" data-go="home">${S("left",18)} Home</button><div><h1>Exam Sim</h1><p class="sub">Full-length practice under exam conditions.</p></div>
+ <div class="grid3"><div class="card stat"><b>180</b><span>questions</span></div><div class="card stat"><b>230</b><span>minutes</span></div><div class="card stat"><b>3</b><span>domains</span></div></div>
+ <div class="card"><p style="margin-top:0">Weighted like the exam: People 33%, Process 41%, Business Environment 26%. Then a full review pass with the reasoning on every answer.</p><button class="btn blue" style="width:100%" data-paywall>${P.premium?"Start (demo has 12 sample questions)":"Unlock with Premium"}</button></div>`},
+mindset(){return `<div class="row" style="justify-content:space-between"><h1>Mindset Guide</h1>${P.premium?'<span class="prem" style="margin:0">PREMIUM</span>':""}</div>
+ <div class="label">The 8 mindset rules</div><div class="chips"><span class="chip p">Predictive</span><span class="chip a">Agile</span><span class="chip h">Hybrid</span></div>
+ ${DATA.rules.map((r,i)=>{const o=UI.mOpen==i;const col=["var(--primary)","var(--green)","var(--amber)"][i%3];return `<div class="acc ${o?"open":""}" style="--rc:${col}"><button data-rule="${i}" aria-expanded="${o}"><span><span class="rn" style="color:${col};background:color-mix(in srgb,${col} 14%,transparent)">Rule ${r.ruleNumber}</span><div style="font-weight:700;margin-top:8px">${r.title}</div>${o?"":`<div class="sub" style="font-size:14px">${r.shortGuidance}</div>`}</span><span class="chev">${S("down",18)}</span></button>${o?`<div class="body"><div style="height:1px;background:var(--border);margin-bottom:12px"></div>${r.description}<div class="pattern">${S("bolt",16)}<span>${r.pmiPattern}</span></div></div>`:""}</div>`}).join("")}`},
+approaches(){return `<button class="back" data-go="home">${S("left",18)} Home</button><h1>Delivery Approaches</h1>
+ <p class="sub">PMI usually is not testing whether you remember a ceremony or artifact. It is testing which mindset should drive the decision. Start with the three golden rules, then use the tables to place any question in Predictive, Agile, or Hybrid.</p>
+ <div class="chips"><span class="chip p">Predictive</span><span class="chip a">Agile</span><span class="chip h">Hybrid</span></div>
+ ${GOLD.map(g=>{const o=UI.aOpen==g.name,col={p:"var(--primary)",a:"var(--green)",h:"var(--amber)"}[g.k];return `<div class="acc ${o?"open":""}" style="--rc:${col}"><button data-ap="${g.name}"><span style="width:10px;height:10px;border-radius:50%;background:${col};flex:none"></span><b>${g.name} - The Golden Rule</b><span class="chev">${S("down",18)}</span></button>${o?`<div class="body"><p style="margin:0 0 10px">${g.full}</p><div class="pattern" style="color:${col};background:color-mix(in srgb,${col} 12%,transparent);border-color:color-mix(in srgb,${col} 40%,transparent)"><b>IN ONE LINE</b>&nbsp;${g.one}</div><div class="mini">${g.lab}</div><ul class="tight">${g.acts.map(a=>`<li>${a}</li>`).join("")}</ul><div class="mini">KEYWORDS</div><div class="kw">${g.kw.map(k=>`<span>${k}</span>`).join("")}</div><div class="mini">WHEN SOMETHING CHANGES</div><p style="margin:0">Ask: <b>${g.ask}</b></p><p class="sub" style="margin-top:6px">You are probably heading toward: ${g.head.join(" · ")}</p><div class="mini">THE QUESTION IN YOUR HEAD</div><p style="margin:0;font-style:italic">${g.brain}</p></div>`:""}</div>`}).join("")}
+ ${DATA.approaches.map(s=>{const o=UI.aOpen==s.title;return `<div class="acc ${o?"open":""}"><button data-ap="${s.title}"><b>${s.title}</b><span class="chev">${S("down",18)}</span></button>${o?`<div class="body">${s.rows.map(r=>`<div class="trio">${["Predictive","Agile","Hybrid"].map((l,i)=>`<div class="trow"><span class="chip ${"pah"[i]}" style="text-align:center;font-size:11px">${l.toUpperCase()}</span><span>${r[i]}</span></div>`).join("")}</div>`).join("")}</div>`:""}</div>`}).join("")}`},
+match(){const m=UI.match;const allPlaced=Object.keys(m.placed).length==5;const score=MATCH.prompts.filter((p,j)=>m.placed[j]===p[1]).length;
+ return `<button class="back" data-go="home">${S("left",18)} Home</button><div class="qtop"><span class="tag people">Matching</span><span class="qcount">Set 1</span></div>
+ <h2>Match each contract type to how the seller is paid and who carries cost risk.</h2><div class="label">Answer bank</div>
+ <div class="bank">${MATCH.items.map((t,i)=>`<button class="mb ${m.sel===i?"sel":""} ${Object.values(m.placed).includes(i)?"used":""}" data-msel="${i}">${t}</button>`).join("")}</div>
+ ${MATCH.prompts.map((p,j)=>{const v=m.placed[j];const cls=m.checked?(v===p[1]?"right":"wrong"):"";return `<div class="card slot ${cls}"><span>${p[0]}</span><button class="drop ${v!==undefined?"f":""}" data-mslot="${j}">${v!==undefined?MATCH.items[v]:"Tap to place"}</button>${m.checked&&v!==p[1]?`<small style="color:var(--green);font-weight:600">Correct: ${MATCH.items[p[1]]}</small>`:""}</div>`}).join("")}
+ <button class="btn ${allPlaced?"blue":""}" ${allPlaced||m.checked?"":"disabled"} data-mcheck>${m.checked?`${score} of 5 correct · Try again`:allPlaced?"Submit":"Place all items to submit"}</button>`},
+glossary(){const cats=["All","Starred",...new Set(DATA.glossary.map(t=>t.category))];return `<h1>Glossary</h1><p class="sub">${DATA.glossary.length} terms, each with why PMI cares and the common trap.</p>
+ <label class="label" for="gq" style="margin-bottom:0">Search</label><input id="gq" class="search" placeholder="Search terms" value="${UI.gq}" autocomplete="off">
+ <div class="chips">${cats.map(c=>`<button class="chip ${UI.gcat==c?"on":""}" data-gcat="${c}">${c}</button>`).join("")}</div><div id="gl">${gl()}</div>`},
+notes(){return `<h1>Notes</h1><p class="sub">Capture thoughts while you study. Saved in this browser only.</p><label for="nt" class="label">Your notes</label><textarea id="nt" placeholder="Rule 5: baselined work goes through change control...">${P.notes||""}</textarea>`},
+account(){return `<h1>Account</h1>
+ <div class="card"><div class="label" style="margin:0 0 10px">Appearance</div><div class="seg">${["dark","light","system"].map(t=>`<button class="${P.theme==t?"on":""}" data-theme="${t}">${t[0].toUpperCase()+t.slice(1)}</button>`).join("")}</div></div>
+ <div class="card"><div class="label" style="margin:0 0 10px">Exam date</div><label for="ed" class="sub" style="display:block;margin-bottom:6px">Used for your pace tracker</label><input id="ed" type="date" class="search" value="${P.exam}"></div>
+ <div class="card"><div class="label" style="margin:0 0 10px">Daily goal</div><div class="seg">${[10,20,30,50].map(n=>`<button class="${P.goal==n?"on":""}" data-goal="${n}">${n}</button>`).join("")}</div></div>
+ <div class="card row" style="justify-content:space-between"><div><b>${P.premium?"Premium (demo)":"Free plan"}</b><div class="sub">${P.premium?"Every question, every path, the exam simulator":"10 free questions, Mindset Guide and Glossary free"}</div></div><button class="btn ${P.premium?"":"blue"}" style="flex:none;padding:10px 16px" data-paywall>${P.premium?"Manage":"Upgrade"}</button></div>`},
+missed(){const ids=Object.entries(P.answers).filter(([i,a])=>!a.ok).map(([i])=>+i);return listView("Missed Questions","Retry what you got wrong.",ids)},
+flag(){return listView("Flagged Questions","Questions you marked to revisit.",P.flags)},
+coach(){const r=domainAcc();const rows=Object.entries(r).map(([k,[c,n]])=>({k,n,p:n?Math.round(100*c/n):null}));const weak=rows.filter(x=>x.n).sort((a,b)=>a.p-b.p)[0];
+ return `<button class="back" data-go="home">${S("left",18)} Home</button><h1>Coach</h1><p class="sub">Based on the questions you've answered in this demo.</p>
+ ${rows.map(x=>`<div class="card"><div class="row" style="justify-content:space-between"><b>${DOM[x.k]}</b><span style="color:var(--muted)">${x.n?x.p+"% · "+x.n+" answered":"Not started"}</span></div><div class="progress" style="margin-top:10px"><i style="width:${x.p||0}%;background:${{people:"var(--primary)",process:"var(--amber)",business:"var(--green)"}[x.k]}"></i></div></div>`).join("")}
+ <div class="ex key"><h3>Recommendation</h3><p>${weak?`Drill ${DOM[weak.k]} next. It's your lowest domain at ${weak.p}%, and Business Environment alone is 26% of the 2026 exam.`:"Answer a few questions and the coach will point you at your weakest domain."}</p></div>
+ ${weak?`<button class="btn blue" data-drilldom="${weak.k}">Drill ${DOM[weak.k]}</button>`:""}`},
+domains(){const r=domainAcc();return `<button class="back" data-go="home">${S("left",18)} Home</button><h1>Domains and More</h1>
+ ${[["people","33%"],["process","41%"],["business","26%"]].map(([k,w])=>`<button class="mode" data-drilldom="${k}"><span class="ic" style="color:${{people:"var(--primary)",process:"var(--amber)",business:"var(--green)"}[k]}">${S("domains")}</span><span><b>${DOM[k]}</b><small>${w} of the exam · ${DATA.questions.filter(q=>q.domain==k).length} sample questions · ${r[k][1]} answered</small></span><span class="chev">${S("chev",18)}</span></button>`).join("")}
+ <div class="label">Hot topics in the sample</div><div class="chips">${[...new Set(DATA.questions.map(q=>q.hotTopic).filter(Boolean))].map(h=>`<span class="chip">${HOT[h]||h}</span>`).join("")}</div>`}
+};
+function listView(t,s,ids){return `<button class="back" data-go="home">${S("left",18)} Home</button><h1>${t}</h1><p class="sub">${s}</p>${ids.length?ids.map(i=>{const q=DATA.questions[i];return `<button class="mode" data-retry="${i}"><span class="tag ${q.domain}" style="flex:none">${DOM[q.domain].split(" ")[0]}</span><span style="min-width:0"><small style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;color:var(--text)">${q.questionText}</small></span><span class="chev">${S("chev",18)}</span></button>`}).join("")+`<button class="btn blue" data-retryall="${ids.join(",")}">Retry all ${ids.length}</button>`:`<div class="empty">Nothing here yet.</div>`}`}
+function gl(){const q=UI.gq.toLowerCase();const items=DATA.glossary.filter(t=>(UI.gcat=="All"||(UI.gcat=="Starred"?t.starred:t.category==UI.gcat))&&(t.term+" "+t.definition).toLowerCase().includes(q));
+ return items.length?items.map(t=>{const o=UI.gOpen==t.term;return `<div class="acc term ${o?"open":""}" style="margin-bottom:10px" id="t-${t.term.replace(/\W/g,"")}"><button data-term="${t.term}">${t.starred?`<span class="star">${S("star",16)}</span>`:""}<span><b>${t.term}</b>${o?"":`<div class="sub" style="font-size:14px">${t.definition}</div>`}</span><span class="cat">${t.category}</span><span class="chev">${S("down",18)}</span></button>${o?`<div class="body"><p style="margin-top:0">${t.definition}</p><div class="mini">WHY PMI CARES</div><p style="margin:0">${t.why}</p><div class="mini" style="color:var(--danger)">COMMON TRAP</div><p style="margin:0">${t.trap}</p>${t.related.length?`<div class="mini">RELATED</div>${t.related.map(r=>`<button class="rel" data-term="${r}">${r}</button>`).join("")}`:""}</div>`:""}</div>`}).join(""):`<div class="empty">No terms match "${UI.gq}". Try a shorter word.</div>`}
+function startQuiz(list){if(!list.length)return;UI.quiz={list,i:0,ans:{},done:false};go("quiz")}
+function paywall(){const m=document.getElementById("modal");m.hidden=false;m.innerHTML=`<div class="sheet" role="dialog" aria-modal="true" aria-label="Premium"><div class="row"><img src="../../assets/icons/pmp.png" alt="" style="width:48px;height:48px;border-radius:12px"><div><h2>PMP Reasoning Premium</h2><div class="sub">Every question, every path, the exam simulator.</div></div></div><div class="plan best"><div><b>Quarterly</b><span class="sub">About $0.49 a day</span></div><b>$44.99</b></div><div class="plan"><div><b>Monthly</b><span class="sub">About $0.66 a day</span></div><b>$19.99</b></div><button class="btn blue" data-unlock>Unlock Premium (demo, no charge)</button><button class="btn" data-close>Not now</button><p class="sub" style="font-size:12px;margin:0">Demo only. Nothing is purchased. On the real web version, payment would run through a secure checkout.</p></div>`}
+function nav(){document.getElementById("rnav").innerHTML=TABS.map(([k,l])=>`<button class="rnav ${UI.view==k?"on":""}" data-go="${k}">${S(k)}${l}</button>`).join("")+`<div class="sep"></div>`+[["practice","Practice","play"],["approaches","Delivery Approaches","approach"],["match","Matching","match"],["coach","Coach","coach"]].map(([k,l,i])=>`<button class="rnav ${UI.view==k||(k=="practice"&&UI.view=="quiz")?"on":""}" data-go="${k}">${S(i)}${l}</button>`).join("");
+ document.getElementById("tabbar").innerHTML=TABS.map(([k,l])=>`<button class="${UI.view==k?"on":""}" data-go="${k}">${S(k)}${l}</button>`).join("")}
+function go(v){if(v=="practice"){startQuiz(DATA.questions.map((_,i)=>i));return}if(v=="drill"){startQuiz(shuffle(DATA.questions.map((_,i)=>i)).slice(0,5));return}UI.view=v;try{history.replaceState(null,"","#"+v)}catch(e){}render();window.scrollTo(0,0)}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function render(){nav();M.innerHTML=`<div class="page">${(V[UI.view]||V.home)()}</div>`;
+ const g=document.getElementById("gq");if(g)g.addEventListener("input",e=>{UI.gq=e.target.value;document.getElementById("gl").innerHTML=gl()});
+ const n=document.getElementById("nt");if(n)n.addEventListener("input",e=>{P.notes=e.target.value;save()});
+ const ed=document.getElementById("ed");if(ed)ed.addEventListener("change",e=>{if(e.target.value){P.exam=e.target.value;save()}})}
+document.addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;const d=b.dataset;
+ if(d.go){go(d.go);return}
+ if(d.close!==undefined){document.getElementById("modal").hidden=true;return}
+ if(d.unlock!==undefined){P.premium=true;save();document.getElementById("modal").hidden=true;render();return}
+ if(d.paywall!==undefined){paywall();return}
+ if(d.ans!==undefined){const Q=UI.quiz,qi=Q.list[Q.i];if(!P.premium&&P.used>=FREE&&P.answers[qi]===undefined){paywall();return}const a=+d.ans;Q.ans[Q.i]=a;if(P.answers[qi]===undefined)P.used++;P.answers[qi]={ok:a==DATA.questions[qi].correctIndex};save();render();return}
+ if(d.qnav){const Q=UI.quiz,s=+d.qnav;if(s>0&&Q.i==Q.list.length-1){Q.done=true}else Q.i=Math.max(0,Q.i+s);render();window.scrollTo(0,0);return}
+ if(d.flag){const i=+d.flag;P.flags=P.flags.includes(i)?P.flags.filter(x=>x!=i):[...P.flags,i];save();render();return}
+ if(d.retry){startQuiz([+d.retry]);return}
+ if(d.retryall){startQuiz(d.retryall.split(",").map(Number));return}
+ if(d.drilldom){startQuiz(DATA.questions.map((q,i)=>q.domain==d.drilldom?i:-1).filter(i=>i>=0));return}
+ if(d.cd){const cur=UI.cd||Object.keys(DOM);UI.cd=cur.includes(d.cd)?cur.filter(x=>x!=d.cd):[...cur,d.cd];render();return}
+ if(d.cn){UI.cn=+d.cn;render();return}
+ if(d.startcustom!==undefined){const doms=UI.cd||Object.keys(DOM);startQuiz(shuffle(DATA.questions.map((q,i)=>doms.includes(q.domain)?i:-1).filter(i=>i>=0)).slice(0,UI.cn||5));return}
+ if(d.rule){UI.mOpen=UI.mOpen==+d.rule?-1:+d.rule;render();return}
+ if(d.ap){UI.aOpen=UI.aOpen==d.ap?null:d.ap;render();return}
+ if(d.term){const t=d.term;if(!DATA.glossary.some(x=>x.term==t))return;UI.gOpen=UI.gOpen==t&&!b.classList.contains("rel")?null:t;if(b.classList.contains("rel")){UI.gq="";UI.gcat="All"}if(UI.view!="glossary"){UI.view="glossary"}render();const el=document.getElementById("t-"+t.replace(/\W/g,""));if(el&&b.classList.contains("rel"))el.scrollIntoView({block:"center"});return}
+ if(d.gcat){UI.gcat=d.gcat;render();return}
+ if(d.msel!==undefined){const m=UI.match;if(m.checked)return;m.sel=m.sel==+d.msel?null:+d.msel;render();return}
+ if(d.mslot!==undefined){const m=UI.match,j=+d.mslot;if(m.checked)return;if(m.sel!==null){m.placed[j]=m.sel;m.sel=null}else if(m.placed[j]!==undefined)delete m.placed[j];render();return}
+ if(d.mcheck!==undefined){const m=UI.match;if(m.checked){UI.match={sel:null,placed:{},checked:false}}else m.checked=true;render();return}
+ if(d.theme){P.theme=d.theme;save();applyTheme();render();return}
+ if(d.goal){P.goal=+d.goal;save();render();return}
+});
+document.getElementById("modal").addEventListener("click",e=>{if(e.target.id=="modal")e.target.hidden=true});
+document.getElementById("resetDemo").addEventListener("click",()=>{P={answers:{},flags:[],used:0,premium:false,exam:"2026-12-11",goal:20,theme:P.theme,notes:""};save();UI.match={sel:null,placed:{},checked:false};UI.quiz=null;go("home")});
+matchMedia("(prefers-color-scheme: light)").addEventListener("change",()=>{if(P.theme=="system")applyTheme()});
+applyTheme();const h=location.hash.slice(1);UI.view=V[h]&&h!="quiz"?h:"home";render();
+</script>
+</body>
+</html>
