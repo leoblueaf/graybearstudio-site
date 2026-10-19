@@ -21,3 +21,6 @@ The Berean Standard Bible (BSB), which is in the public domain. It's built into 
 
 ### I'm not getting my daily reminder.
 Check that reminders are on in Hitherto's Settings, and that notifications for Hitherto are allowed in your iPhone's Settings > Notifications. Focus modes can also silence them.
+
+### Can my family use my Lifetime purchase?
+Yes. Hitherto Premium Lifetime works with Family Sharing, so up to five other people in your Apple family group can use Premium on their own iPhones at no extra cost. Each person's prayers and journal stay private on their own phone. The yearly and monthly subscriptions are not shared.
