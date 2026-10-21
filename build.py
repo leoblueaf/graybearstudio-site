@@ -309,7 +309,14 @@ def build_404():
 <p><a href="/">Go to all apps</a></p></section>"""
     os.makedirs(DIST, exist_ok=True)
     with open(os.path.join(DIST, "404.html"), "w", encoding="utf-8") as f:
-        f.write(page("", "Page not found", body))
+        doc = page("", "Page not found", body)
+        try:
+            import demo_makeory
+            if demo_makeory.MAKEORY_DEMO:
+                doc = doc.replace("</head>", demo_makeory.FALLBACK_SCRIPT + "\n</head>", 1)
+        except ImportError:
+            pass
+        f.write(doc)
 
 
 def main():
@@ -329,6 +336,8 @@ def main():
     demo_oprep.build(page, write, href, accent_css, ROOT)
     import demo_pmp
     demo_pmp.build(page, write, href, accent_css, ROOT)
+    import demo_makeory
+    demo_makeory.build(page, write, href, accent_css, ROOT)
     if not PREVIEW:
         build_404()
         with open(os.path.join(DIST, "CNAME"), "w") as f:
