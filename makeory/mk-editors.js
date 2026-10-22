@@ -4,7 +4,7 @@
 const { esc, money, ic, S, $, $$ } = MK;
 const L = MK.L;
 const LIBS = {
-  konva: "https://cdnjs.cloudflare.com/ajax/libs/konva/9.2.0/konva.min.js",
+  konva: "https://cdn.jsdelivr.net/npm/konva@9.2.0/konva.min.js",
   three: "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js",
   stl: "https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/STLLoader.js",
   orbit: "https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js",
