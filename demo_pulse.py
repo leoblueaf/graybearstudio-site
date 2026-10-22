@@ -643,6 +643,10 @@ def build(page, write, href, accent_css, root):
     css = href(HERE, "assets").replace("index.html", "") + "pulse.css?v=" + v
     doc = page(HERE, "The Pulse · concept demo", BODY + SCRIPT, None,
                "Concept demo of a career field communication hub.")
+    # No studio branding or links to the apps: drop the site header and footer (David, 22 Oct).
+    import re
+    doc = re.sub(r'<header class="top">.*?</header>\s*', "", doc, count=1, flags=re.S)
+    doc = re.sub(r'<footer class="bottom">.*?</footer>\s*', "", doc, count=1, flags=re.S)
     doc = doc.replace("</head>", f'<meta name="robots" content="noindex, nofollow">\n<link rel="stylesheet" href="{css}">\n'
                       + accent_css(ACCENT) + "\n</head>", 1)
     write(HERE, doc)
