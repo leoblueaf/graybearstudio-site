@@ -188,7 +188,7 @@ def build_home():
 <section class="wrap intro">
 <div class="intro-text">
 <p class="eyebrow">Independent mobile apps</p>
-<h1>Small apps, each built to do a specific job.</h1>
+<h1>Small apps, each built for one specific job.</h1>
 <p>GrayBear Studio makes focused apps for prayer, home upkeep, everyday eating, exam prep, new parents and the decisions in between. Each one says plainly what it does with your information.</p>
 </div>
 <div class="intro-bear" aria-hidden="true">{HERO_BEAR}</div>
