@@ -1,4 +1,4 @@
-Last updated: {DATE}
+Last updated: October 28, 2026
 
 The Hitherto Prayer Quilt is a public website made by GrayBear Studio. It is separate from the Hitherto app. The app keeps your prayers on your iPhone and never sends anything to the quilt. This notice covers the quilt website only.
 
@@ -10,7 +10,7 @@ The Hitherto Prayer Quilt is a public website made by GrayBear Studio. It is sep
 
 **On your device.** Your browser keeps the codes of squares you added and the knots you tied, so the quilt can show "Your square" and "You tied a knot". Clearing your browser data removes them.
 
-**Our providers.** The quilt runs on Google Firebase (Firestore and Firebase Authentication, in the United States). Google reCAPTCHA helps keep automated spam out. These services process technical information such as your IP address and browser details to deliver and protect the site, under Google's own terms and privacy policy. We do not store IP addresses ourselves.
+**Our providers.** The quilt runs on Google Firebase (Firestore and Firebase Authentication, in the United States). Google reCAPTCHA helps keep automated spam out. These services process technical information such as your IP address and browser details to deliver and protect the site, under Google's own terms and privacy policy. We do not store IP addresses ourselves. Google's published terms for these services commit it to protecting this information at least as strongly as this notice does, so it receives the same or equal protection; if that ever stops being true, we will stop using the service and update this notice.
 
 **What we don't do.** No accounts for visitors. No advertising, no analytics and no tracking across sites. We do not sell or share information for advertising.
 

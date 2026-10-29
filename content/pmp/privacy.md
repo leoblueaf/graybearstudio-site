@@ -1,4 +1,4 @@
-Last updated: October 13, 2026
+Last updated: October 28, 2026
 
 This policy explains what PMP Reasoning collects, why it collects it, and what you can do about it. It applies to the PMP Reasoning app and nothing else. The app is published by GrayBear Studio, which can be reached at [pmp@graybearstudio.com](mailto:pmp@graybearstudio.com).
 
@@ -29,6 +29,8 @@ Three companies handle data on our behalf, each under their own privacy terms.
 - **Apple** processes all payments and provides the App Store and TestFlight.
 
 No one else receives your data. It is disclosed outside these providers only if the law requires it.
+
+**Protection by these providers.** Each receives only what it needs to do its job. Before we use a provider, we check that its published terms commit it to protecting what we send at least as strongly as this policy does: encrypted transmission, use only to provide its service to us, no sale of your data, and a stated retention and deletion practice. In other words, each provides the same or equal protection of your data as this policy. We will not use a provider that offers less, and if one changes its terms so that it does, we will stop using it and update this page.
 
 ## Notifications
 

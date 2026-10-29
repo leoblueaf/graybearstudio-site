@@ -1,4 +1,4 @@
-Last updated: October 15, 2026
+Last updated: October 28, 2026
 
 Little Compass is made by GrayBear Studio. This policy explains what the app collects, what it does not, and where information goes.
 
@@ -56,6 +56,8 @@ Little Compass is designed for parents, not children. It is not directed at chil
 - **Google Firebase** hosts our server functions and the anonymous data described above.
 - **Anthropic** generates AI answers from the question text and age you send. Anthropic does not receive your baby's name or your identifier.
 - **CPSC, FDA and NHTSA** receive the product or ZIP code details you type when you use those features. These are US government databases.
+
+**Protection by these providers.** Each receives only what it needs to do its job. Before we use a provider, we check that its published terms commit it to protecting what we send at least as strongly as this policy does: encrypted transmission, use only to provide its service to us, no sale of your data, and a stated retention and deletion practice. In other words, each provides the same or equal protection of your data as this policy. We will not use a provider that offers less, and if one changes its terms so that it does, we will stop using it and update this page. The government databases receive only the product details or ZIP code you type, never your baby's name, your identifier or anything else that identifies you.
 
 ## How long information is kept
 

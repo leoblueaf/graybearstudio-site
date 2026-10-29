@@ -1,4 +1,4 @@
-Last updated: October 15, 2026
+Last updated: October 28, 2026
 
 FoodWise is made by GrayBear Studio. This policy explains what the app collects, why, where it goes, and how to delete it. Questions: [privacy@graybearstudio.com](mailto:privacy@graybearstudio.com).
 
@@ -52,6 +52,10 @@ FoodWise uses your camera or photo library only when you choose to photograph or
 To identify packaged foods and supplements, FoodWise looks up public databases: Open Food Facts, the USDA FoodData Central database, the NIH Dietary Supplement Label Database, and openFDA recall and adverse event records. These lookups send a barcode or a product name, never your account details. Open Food Facts and the NIH database are queried directly from your device, so, as with any website, they can see your device's IP address.
 
 Results for a scanned product are cached on our server so the next person who scans the same package gets an instant answer. That cache holds product information only, with nothing linking it to you, and is refreshed every 180 days.
+
+## Protection by our providers
+
+Anthropic and Google Firebase are the only companies that receive your meals or your account data, and each receives only what it needs to do its job. Before we use a provider, we check that its published terms commit it to protecting what we send at least as strongly as this policy does: encrypted transmission, use only to provide its service to us, no sale of your data, and a stated retention and deletion practice. In other words, each provides the same or equal protection of your data as this policy. We will not use a provider that offers less, and if one changes its terms so that it does, we will stop using it and update this page. The public food and product databases receive only a barcode or a product name, never your account details.
 
 ## What we do not do
 

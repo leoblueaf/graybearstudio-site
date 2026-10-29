@@ -1,4 +1,4 @@
-Last updated: October 17, 2026
+Last updated: October 28, 2026
 
 This notice covers the GrayBear Studio websites: graybearstudio.com and research.graybearstudio.com, the site of the Hidden Structure Research Group. Each app has its own privacy policy, linked from that app's page.
 
@@ -11,7 +11,7 @@ This website does not use cookies, analytics, advertising or tracking of any kin
 Like every website, pages are delivered by servers that see basic technical information about the request, such as your IP address, browser type and the page asked for.
 
 - **Hosting.** The site is hosted on GitHub Pages. GitHub may record visitors' IP addresses for security and to keep the service running, as described in the GitHub Privacy Statement.
-- **Fonts.** The site's fonts load from Google Fonts, so your browser contacts Google's servers, which receive your IP address and browser details. Google's handling of this is described in the Google Privacy Policy.
+- **Fonts.** The site's fonts load from Google Fonts, so your browser contacts Google's servers, which receive your IP address and browser details. Google's handling of this is described in the Google Privacy Policy. Both receive only what any website receives (your IP address and browser details), and both publish terms that protect it at least as strongly as this notice does, so it receives the same or equal protection.
 
 We do not receive or keep these records ourselves.
 

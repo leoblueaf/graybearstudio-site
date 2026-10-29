@@ -1,4 +1,4 @@
-Last updated: October 15, 2026
+Last updated: October 28, 2026
 
 DomiLedger is published by GrayBear Studio. This policy explains what happens to your information when you use the DomiLedger app for iPhone.
 
@@ -25,6 +25,8 @@ DomiLedger does not request or use your location.
 ## Safety recall checks
 
 To check your appliances for recalls, the app sends the brand name you entered for each appliance to the U.S. Consumer Product Safety Commission's public recall service at saferproducts.gov. Only the brand name is sent. As with any request on the internet, that service receives your device's IP address. The Commission's own privacy policy governs that service. Results are saved on your device.
+
+**Protection by that service.** The recall check is the only time DomiLedger sends anything to a third party, and it sends only a brand name, which does not identify you. The Commission is a U.S. government agency bound by federal privacy law and its own published privacy policy, so that request receives the same or equal protection as this policy provides. If we ever add another service that receives your information, it must offer the same or equal protection, and we will update this page before it does.
 
 ## Purchases
 
