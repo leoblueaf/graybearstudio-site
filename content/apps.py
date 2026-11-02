@@ -68,8 +68,9 @@ APPS = [
         "tagline": "The permanent record of your home, whether you own it or rent it.",
         "accent": ("#2F5D50", "#86BBA9"),
         "accent2": ("#9A7238", "#C59A5A"),
-        "status": "soon",
-        "status_label": "Coming soon",
+        "status": "live",
+        "status_label": "On the App Store",
+        "store_url": "https://apps.apple.com/app/id6814018958",
         "pages": True,
         "email": "domiledger@graybearstudio.com",
         "description": [
