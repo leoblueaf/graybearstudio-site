@@ -3,7 +3,7 @@
 Built at /demo/pulse/ in the studio frame. noindex, not in the sitemap, linked from nowhere.
 To take it down: set PULSE_DEMO = False (the source stays here for later).
 """
-PULSE_DEMO = True
+PULSE_DEMO = False
 HERE = "demo/pulse"
 ACCENT = {"accent": ("#2F5A8C", "#8DB3E0")}
 
