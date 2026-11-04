@@ -12,7 +12,7 @@ import markdown
 
 E = html.escape
 # Flip to True at the Hitherto app launch: removes noindex and adds the quilt to the sitemap.
-QUILT_PUBLIC = False
+QUILT_PUBLIC = True  # Hitherto launched 4 Nov 2026
 PUBLISH_DATE = "October 17, 2026"
 FONTS = ("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500"
          "&family=Manrope:wght@400;500;600&display=swap")

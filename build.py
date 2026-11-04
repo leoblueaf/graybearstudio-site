@@ -223,6 +223,8 @@ def build_app(a):
     store = (f'<a class="btn" href="{E(a["store_url"])}" target="_blank" rel="noopener">View on the App Store ↗</a>'
              if a.get("store_url") else "")
     chip = f'<span class="chip">{E(a["status_label"])}</span>'
+    pl = a.get("page_link")  # optional extra card in "Help and policies", e.g. the Prayer Quilt
+    extra = f'<a href="{href(here, pl[0])}"><b>{E(pl[1])}</b><span>{E(pl[2])}</span></a>\n' if pl else ""
     body = f"""<section class="hero"><div class="wrap col">
 <div class="row">{tile(a, here)}<p class="eyebrow" style="margin:0">{E(a["category"])} · {E(a["platform"])}</p></div>
 <h1>{E(a["full_name"])}</h1>
@@ -234,7 +236,7 @@ def build_app(a):
 <section class="section"><div class="wrap col"><h2>Price</h2><p>{E(a["price_intro"])}</p>{plus}{table}{note}{disc}</div></section>
 <section class="section"><div class="wrap col"><h2>Help and policies</h2>
 <div class="links">
-<a href="{href(here, s + '/support')}"><b>Support</b><span>Questions and contact</span></a>
+{extra}<a href="{href(here, s + '/support')}"><b>Support</b><span>Questions and contact</span></a>
 <a href="{href(here, s + '/privacy')}"><b>Privacy</b><span>What the app keeps and sends</span></a>
 <a href="{href(here, s + '/terms')}"><b>Terms</b><span>License and disclaimers</span></a>
 </div></div></section>"""
