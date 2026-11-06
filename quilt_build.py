@@ -88,7 +88,7 @@ MAIN = """
 <header>
 <h1 id="title">Today's quilt</h1>
 <p class="date" id="date"></p>
-<p class="sub">Every square is a prayer someone added today. Zoom out to see the whole quilt and the pattern stitched across it. Zoom in to read a square and tie a knot when you pray for it.</p>
+<p class="sub">Every square is a prayer someone added on this day. Zoom out to see the whole quilt and the pattern stitched across it. Zoom in to read a square and tie a knot when you pray for it.</p>
 <div class="stats" id="stats" aria-live="polite"></div>
 </header>
 
