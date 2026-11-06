@@ -23,8 +23,9 @@ APPS = [
         "tagline": "A quiet place to pray each day, and to remember how God has met you along the way.",
         "accent": ("#6B2F3A", "#D89AA6"),
         "accent2": ("#8A6718", "#D6B25E"),
-        "status": "soon",
-        "status_label": "Coming this Advent",
+        "status": "live",
+        "status_label": "On the App Store",
+        "store_url": "https://apps.apple.com/app/id6819012177",
         "pages": True,
         "email": "hitherto@graybearstudio.com",
         "description": [
