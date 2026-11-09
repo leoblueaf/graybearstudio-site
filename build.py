@@ -204,7 +204,10 @@ def build_home():
 def build_app(a):
     s = a["slug"]
     here = s
-    feats = "".join(f"<li><div><h3>{E(t)}</h3><p>{E(d)}</p></div></li>" for t, d in a["features"])
+    fl = a.get("feature_links", {})  # optional {feature title: (path, link text)}
+    feats = "".join(f"<li><div><h3>{E(t)}</h3><p>{E(d)}"
+                    + (f' <a href="{href(here, fl[t][0])}">{E(fl[t][1])}</a>' if t in fl else "")
+                    + "</p></div></li>" for t, d in a["features"])
     desc = "".join(f"<p>{E(p)}</p>" for p in a["description"])
     quote = ""
     if a.get("quote"):
@@ -327,9 +330,15 @@ def main():
     shutil.copytree(os.path.join(ROOT, "assets"), os.path.join(DIST, "assets"))
     build_home()
     build_studio_privacy()
+    import advent_build
+    if advent_build.ADVENT_PUBLIC:
+        for a in APPS:
+            if a["slug"] == "hitherto":
+                a.setdefault("feature_links", {})["Advent"] = ("hitherto/advent", "Advent with Hitherto")
     for a in APPS:
         if a.get("pages"):
             build_app(a)
+    advent_urls = advent_build.build_advent(page, write, href, accent_css, APPS)
     from quilt_build import build_quilt
     quilt_urls = build_quilt(DIST, ROOT)
     import demo_pulse
@@ -348,7 +357,7 @@ def main():
         for a_ in APPS:
             if a_.get("pages"):
                 urls += [f"https://graybearstudio.com/{a_['slug']}/{x}" for x in ("", "privacy/", "support/", "terms/")]
-        urls += quilt_urls
+        urls += quilt_urls + advent_urls
         with open(os.path.join(DIST, "sitemap.xml"), "w") as f:
             f.write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
                     + "".join(f"  <url><loc>{u}</loc></url>\n" for u in urls) + "</urlset>\n")
