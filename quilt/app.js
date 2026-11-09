@@ -10,6 +10,9 @@ const DEEP_SQ = (params.get("sq") || "").toUpperCase();
 (() => { const r = (params.get("ref") || "").toLowerCase().replace(/[^a-z0-9-]/g, "").slice(0, 30); if (r) try { sessionStorage.setItem("hq.ref", r); } catch { } })();
 const REF = (() => { try { return sessionStorage.getItem("hq.ref") || ""; } catch { return ""; } })();
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+// Look: "fabric" (default) or "glass" (rose window). ?look=glass previews it.
+const LOOK_DEFAULT = "fabric";
+Q.setLook(params.get("look") || LOOK_DEFAULT);
 
 let squares = [], counters = { knots: {}, reports: {}, refs: {}, kept: {} }, counts = {};
 let L = Q.layout(DAY, 0), loaded = false, selected = -1, query = "", listView = false;
@@ -43,6 +46,7 @@ let theme = {};
 function readTheme() {
   theme = { muslin: Q.cssVar("--muslin"), seam: Q.cssVar("--seam"), gold: Q.cssVar("--gold-thread"),
             ink: Q.cssVar("--ink"), binding: Q.cssVar("--binding") };
+  if (Q.LOOK === "glass") { theme.muslin = Q.LEAD; theme.seam = Q.LEAD; }
   overview = null; dirty = true;
 }
 function resize() {
@@ -98,7 +102,7 @@ function buildOverview() {
     else { x.fillStyle = cell.base; x.fillRect(X, Y, px, px); }
   });
   x.globalAlpha = 1;
-  if (px >= 6) { x.strokeStyle = theme.seam; x.lineWidth = Math.max(.5, px * .05); x.beginPath();
+  if (px >= 6) { x.strokeStyle = theme.seam; x.lineWidth = Math.max(.5, px * (Q.LOOK === "glass" ? .1 : .05)); x.beginPath();
     for (let k = 0; k <= n; k++) { x.moveTo(k * px, 0); x.lineTo(k * px, n * px); x.moveTo(0, k * px); x.lineTo(n * px, k * px); } x.stroke(); }
   overview = { canvas: c, px, query, sel: selected };
 }
@@ -154,7 +158,7 @@ function draw() {
       ctx.globalAlpha = matches(i) ? 1 : .18;
       if (hidden) { ctx.fillStyle = theme.muslin; ctx.fillRect(px, py, size, size); }
       else ctx.drawImage(Q.fabricTile(sq.fabric || 0, c.base, c.seed), px, py, size, size);
-      if (size > 40 && !hidden) {
+      if (size > 40 && !hidden && Q.LOOK !== "glass") {
         if (!c.stitch) c.stitch = Q.shade(c.base, .45);
         ctx.setLineDash([size * .06, size * .05]); ctx.strokeStyle = c.stitch; ctx.globalAlpha *= .55;
         ctx.lineWidth = Math.max(.8, size * .012); const m = size * .07; ctx.strokeRect(px + m, py + m, size - 2 * m, size - 2 * m); ctx.setLineDash([]);
@@ -169,7 +173,7 @@ function draw() {
     });
     ctx.globalAlpha = 1;
     // seams as one path
-    ctx.strokeStyle = theme.seam; ctx.lineWidth = Math.max(.6, size * .03); ctx.beginPath();
+    ctx.strokeStyle = theme.seam; ctx.lineWidth = Math.max(.6, size * (Q.LOOK === "glass" ? .08 : .03)); ctx.beginPath();
     for (let g = g0x - 1; g <= g1x; g++) { const X = ox + (g * CELL + CELL / 2) * s; if (g >= -R - 1 && g <= R) { ctx.moveTo(X, Math.max(qy, 0)); ctx.lineTo(X, Math.min(qy + side, H)); } }
     for (let g = g0y - 1; g <= g1y; g++) { const Y = oy + (g * CELL + CELL / 2) * s; if (g >= -R - 1 && g <= R) { ctx.moveTo(Math.max(qx, 0), Y); ctx.lineTo(Math.min(qx + side, W), Y); } }
     ctx.stroke();

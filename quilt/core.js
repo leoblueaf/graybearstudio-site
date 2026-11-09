@@ -139,6 +139,14 @@ export function isHidden(code, c) { return (c.reports[code] || 0) >= REPORT_LIMI
 // ---------------------------------------------------------------- fabrics and renderer
 const DEEP = ["#6B2F3A", "#3D4A6B", "#5F6B4E", "#7A5A3A", "#4A3A4F", "#8A4B3A", "#2F4B4B"];
 const LIGHT = ["#EFE6D2", "#E8D9B5", "#F2E9DC", "#E3D3C0", "#D9C9A3", "#EDE1C8"];
+// "glass" look: a rose window. Jewel colours by wedge around the center, rings alternating light and
+// dark, the cross or star in pale gold "light", dark lead between pieces. Colours are computed when the
+// quilt is drawn, never stored, so switching looks changes nothing in the database.
+export let LOOK = "fabric";
+export function setLook(l) { LOOK = l === "glass" ? "glass" : "fabric"; fabricCache.clear(); }
+export const LEAD = "#1B1714";
+const JEWEL = ["#9B1B30", "#1E3F8F", "#1E6B47", "#B8741A", "#5E2A7A", "#136B73", "#B0402A", "#233A7A"];
+const GLOW = ["#F6E7B0", "#F9EFCF", "#F1D98C", "#FBF4DE", "#EFD27A", "#F4E1A0"];
 function hash(n) { n = (n ^ 61) ^ (n >>> 16); n = n + (n << 3); n = n ^ (n >>> 4); n = Math.imul(n, 0x27d4eb2d); return (n ^ (n >>> 15)) >>> 0; }
 function rnd(seed) { let s = hash(seed) || 1; return () => { s ^= s << 13; s ^= s >>> 17; s ^= s << 5; return ((s >>> 0) % 10000) / 10000; }; }
 function dayNum(day) { return Math.floor(dateFromStr(day).getTime() / 864e5); }
@@ -146,6 +154,11 @@ export function shade(hex, f) {
   const n = parseInt(hex.slice(1), 16); let r = n >> 16, g = (n >> 8) & 255, b = n & 255;
   const t = f < 0 ? 0 : 255, p = Math.abs(f); r = Math.round((t - r) * p + r); g = Math.round((t - g) * p + g); b = Math.round((t - b) * p + b);
   return `rgb(${r},${g},${b})`;
+}
+function shadeHex(hex, f) {
+  const n = parseInt(hex.slice(1), 16); let r = n >> 16, g = (n >> 8) & 255, b = n & 255;
+  const t = f < 0 ? 0 : 255, p = Math.abs(f); r = Math.round((t - r) * p + r); g = Math.round((t - g) * p + g); b = Math.round((t - b) * p + b);
+  return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
 }
 export function spiral(n) {
   const out = [[0, 0]]; let r = 1;
@@ -186,8 +199,21 @@ export function layout(day, count) {
   const cells = pos.slice(0, count).map(([gx, gy], i) => {
     const r = rnd(dn * 7919 + i * 31 + 1);
     const u = (gx + R + .5) / (2 * R + 1), v = (gy + R + .5) / (2 * R + 1);
-    const light = inPoly(u, v, poly) ? true : r() < .06;
-    const base = light ? LIGHT[Math.floor(r() * LIGHT.length)] : DEEP[Math.floor(r() * DEEP.length)];
+    const inside = inPoly(u, v, poly);
+    let base;
+    if (LOOK === "glass") {
+      const ring = Math.max(Math.abs(gx), Math.abs(gy));
+      // mirror left/right like a window, 6 petals per side, colour bands every 3 rings
+      const ang = Math.atan2(gy, Math.abs(gx)) + Math.PI / 2;            // 0..PI
+      const petal = Math.min(5, Math.floor(ang / Math.PI * 6));
+      const band = Math.floor(ring / 3);
+      const j = JEWEL[(petal * 3 + band * 5) % JEWEL.length];
+      const edge = ring % 3 === 2 ? -.18 : (ring % 3 === 0 ? .06 : 0);
+      base = inside ? GLOW[Math.floor(r() * GLOW.length)] : (ring === 0 ? GLOW[0] : shadeHex(j, edge + (r() - .5) * .1));
+    } else {
+      const light = inside ? true : r() < .06;
+      base = light ? LIGHT[Math.floor(r() * LIGHT.length)] : DEEP[Math.floor(r() * DEEP.length)];
+    }
     return { gx, gy, base, seed: dn * 100003 + i };
   });
   return { R, cells, poly };
@@ -195,10 +221,19 @@ export function layout(day, count) {
 const TILE = 128;
 const fabricCache = new Map();
 export function fabricTile(kind, base, seed) {
-  const key = kind + base + (seed % 5);
+  const key = LOOK + kind + base + (seed % 5);
   if (fabricCache.has(key)) return fabricCache.get(key);
   const r = rnd(seed % 5 + 7), c = document.createElement("canvas"); c.width = c.height = TILE; const x = c.getContext("2d");
   x.fillStyle = base; x.fillRect(0, 0, TILE, TILE);
+  if (LOOK === "glass") { // light passing through: bright middle, darker edges, faint ripples and one streak
+    const g = x.createRadialGradient(TILE * .45, TILE * .4, 4, TILE / 2, TILE / 2, TILE * .75);
+    g.addColorStop(0, shade(base, .35)); g.addColorStop(.6, base); g.addColorStop(1, shade(base, -.35));
+    x.fillStyle = g; x.fillRect(0, 0, TILE, TILE);
+    x.globalAlpha = .08; x.strokeStyle = "#fff"; x.lineWidth = 2;
+    for (let k = 0; k < 5; k++) { x.beginPath(); const y0 = r() * TILE; x.moveTo(0, y0); x.bezierCurveTo(TILE * .3, y0 + (r() - .5) * 30, TILE * .7, y0 + (r() - .5) * 30, TILE, y0 + (r() - .5) * 20); x.stroke(); }
+    x.globalAlpha = .14; x.fillStyle = "#fff"; x.beginPath(); x.moveTo(TILE * .1, TILE * .05); x.lineTo(TILE * .3, TILE * .05); x.lineTo(TILE * .05, TILE * .45); x.lineTo(TILE * .05, TILE * .25); x.closePath(); x.fill();
+    x.globalAlpha = 1; fabricCache.set(key, c); return c;
+  }
   const hi = shade(base, .28), lo = shade(base, -.22);
   if (kind === 0) { for (let i = 0; i < TILE; i += 2) { x.fillStyle = i % 4 ? hi : lo; x.globalAlpha = .12; x.fillRect(0, i, TILE, 1); x.fillRect(i, 0, 1, TILE); } }
   if (kind === 1) { const s = 10; x.globalAlpha = .35; x.fillStyle = hi; for (let i = 0; i < TILE; i += s * 2) { x.fillRect(i, 0, s, TILE); x.fillRect(0, i, TILE, s); } }
@@ -227,12 +262,13 @@ export function cssVar(n) { return getComputedStyle(document.documentElement).ge
 // Draw a whole quilt flat (thumbnails, saved images). `squares` may be null (count only).
 export function drawFlat(ctx, day, count, squares, x0, y0, side, opts = {}) {
   const L = layout(day, count), n = 2 * L.R + 1, cs = side / n;
-  ctx.fillStyle = opts.muslin || cssVar("--muslin"); ctx.fillRect(x0, y0, side, side);
+  const glass = LOOK === "glass";
+  ctx.fillStyle = glass ? LEAD : (opts.muslin || cssVar("--muslin")); ctx.fillRect(x0, y0, side, side);
   L.cells.forEach((c, i) => {
     const px = x0 + (c.gx + L.R) * cs, py = y0 + (c.gy + L.R) * cs;
     if (squares && squares[i] && cs > 10) ctx.drawImage(fabricTile(squares[i].fabric || 0, c.base, c.seed), px, py, cs + .4, cs + .4);
     else { ctx.fillStyle = c.base; ctx.fillRect(px, py, cs + .4, cs + .4); }
-    if (cs > 6) { ctx.strokeStyle = opts.seam || "#FBF7EE"; ctx.lineWidth = Math.max(.4, cs * .03); ctx.strokeRect(px, py, cs, cs); }
+    if (cs > 6 || glass) { ctx.strokeStyle = glass ? LEAD : (opts.seam || "#FBF7EE"); ctx.lineWidth = glass ? Math.max(.6, cs * .09) : Math.max(.4, cs * .03); ctx.strokeRect(px, py, cs, cs); }
   });
   if (count > 0) {
     ctx.save(); ctx.strokeStyle = opts.gold || "#8A6718"; ctx.globalAlpha = .55; ctx.lineWidth = Math.max(1, side * .004);
