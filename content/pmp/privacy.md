@@ -1,4 +1,4 @@
-Last updated: October 28, 2026
+Last updated: November 8, 2026
 
 This policy explains what PMP Reasoning collects, why it collects it, and what you can do about it. It applies to the PMP Reasoning app and nothing else. The app is published by GrayBear Studio, which can be reached at [pmp@graybearstudio.com](mailto:pmp@graybearstudio.com).
 
