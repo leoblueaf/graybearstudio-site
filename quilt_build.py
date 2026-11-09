@@ -114,6 +114,17 @@ MAIN = """
 </div>
 <div id="list" hidden aria-live="polite"></div>
 
+<section class="examples" id="examples" hidden aria-label="Example squares">
+<p class="ex-lead">Today's quilt is waiting for its first square. Here is what a square can look like.</p>
+<ul class="ex-list">
+<li><span class="ex-tag">Example</span><p>For my sister as she starts a new job this week.</p><span class="ex-by">R.</span></li>
+<li><span class="ex-tag">Example</span><p>Thank you for a quiet morning and a full table.</p></li>
+<li><span class="ex-tag">Example</span><p>For everyone waiting on hard news today. Give them peace while they wait.</p><span class="ex-by">M. K.</span></li>
+</ul>
+<p class="ex-note">These are examples, not real prayers. They disappear when the first square is sewn.</p>
+<p class="ex-recent" id="ex-recent" hidden></p>
+</section>
+
 <section class="card" id="card" hidden aria-live="polite" aria-label="The selected square">
 <svg class="knot-anim" id="knot-anim" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M4 30 C14 30 12 10 22 12 C30 14 28 26 20 24 C14 22 18 14 26 14 C32 14 34 20 36 22"/><circle cx="21" cy="19" r="3.2" fill="currentColor" stroke="none"/></svg>
 <span class="eyebrow" id="c-label">A square</span>

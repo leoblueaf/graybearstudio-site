@@ -523,6 +523,24 @@ function renderDays() {
   });
 }
 
+// ---------------------------------------------------------------- example squares (empty today only)
+// Shown only while today's quilt has no squares. Plainly labelled "Example"; never written to the
+// database, never counted, never drawn on the quilt. They disappear when the first real square arrives.
+function renderExamples() {
+  const box = $("examples"); if (!box) return;
+  const show = IS_TODAY && loaded && !PREVIEW && squares.length === 0;
+  box.hidden = !show; if (!show) return;
+  const past = Object.keys(counts).filter(d => Q.isDateStr(d) && d < TODAY && counts[d] > 0).sort().reverse();
+  const r = $("ex-recent");
+  if (past.length) {
+    const d = past[0], n = counts[d];
+    const y = new Date(TODAY + "T12:00:00Z"); y.setUTCDate(y.getUTCDate() - 1);
+    const label = d === y.toISOString().slice(0, 10) ? "Yesterday's quilt" : "The quilt for " + Q.esc(Q.longDate(d));
+    r.innerHTML = `${label} has <b>${n.toLocaleString()}</b> prayer${n === 1 ? "" : "s"}. <a href="./?day=${d}">Read it and tie a knot</a>`;
+    r.hidden = false;
+  } else r.hidden = true;
+}
+
 // ---------------------------------------------------------------- loading
 function setState(t) { $("state").textContent = t || ""; $("state").hidden = !t; }
 async function refresh() {
@@ -534,6 +552,7 @@ async function refresh() {
   const m = Q.mine.get(DAY);
   $("mine").hidden = !(m && squares.some(s => s.code === m.code));
   if (selected >= 0 && squares[selected]) select(selected);
+  renderExamples();
 }
 // Private preview: graybearstudio.com/hitherto/quilt/#preview fills today's quilt with sample squares
 // in this browser only, to try navigation at scale. Nothing is read from or written to the database.
@@ -556,7 +575,7 @@ async function load() {
     counts = await Q.getDayCounts().catch(() => ({}));
     await refresh(); loaded = true;
     setState(squares.length ? "" : (IS_TODAY ? "Today's quilt is waiting for its first square." : "No squares were sewn on this day."));
-    showAll(false); renderDays();
+    showAll(false); renderDays(); renderExamples();
     if (DEEP_SQ) { const i = squares.findIndex(s => s.code === DEEP_SQ); if (i >= 0) select(i, true, 2.2); }
     const m = Q.mine.get(DAY);
     if (m && m.held && IS_TODAY) flash("Your square is being reviewed before it joins today's quilt.");
