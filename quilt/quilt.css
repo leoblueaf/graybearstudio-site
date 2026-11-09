@@ -147,3 +147,10 @@ input[type=date] { height: 40px; border: 1px solid var(--line); border-radius: 1
 .ex-by { display: block; margin-top: 6px; font-size: 12.5px; color: var(--muted); }
 .ex-note { margin: 10px 0 0; font-size: 12.5px; color: var(--muted); }
 .ex-recent { margin: 8px 0 0; font-size: 14px; }
+.ex-finished { margin: 14px 0 0; display: flex; gap: 16px; align-items: center; }
+.ex-finished canvas { width: 180px; height: 180px; flex: none; border-radius: 4px; opacity: .9; }
+.ex-finished figcaption { font-size: 14px; color: var(--muted); }
+.ex-finished figcaption b { color: var(--ink); font-weight: 600; }
+.ex-tag.static { position: static; display: inline-block; margin-right: 4px; }
+#ex-squares + .ex-finished { padding-top: 14px; border-top: 1px dashed var(--line); }
+@media (max-width: 520px) { .ex-finished { flex-direction: column; align-items: flex-start; } .ex-finished canvas { width: 100%; max-width: 300px; height: auto; } }

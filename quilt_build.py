@@ -114,7 +114,8 @@ MAIN = """
 </div>
 <div id="list" hidden aria-live="polite"></div>
 
-<section class="examples" id="examples" hidden aria-label="Example squares">
+<section class="examples" id="examples" hidden aria-label="Examples">
+<div id="ex-squares" hidden>
 <p class="ex-lead">Today's quilt is waiting for its first square. Here is what a square can look like.</p>
 <ul class="ex-list">
 <li><span class="ex-tag">Example</span><p>For my sister as she starts a new job this week.</p><span class="ex-by">R.</span></li>
@@ -122,6 +123,11 @@ MAIN = """
 <li><span class="ex-tag">Example</span><p>For everyone waiting on hard news today. Give them peace while they wait.</p><span class="ex-by">M. K.</span></li>
 </ul>
 <p class="ex-note">These are examples, not real prayers. They disappear when the first square is sewn.</p>
+</div>
+<figure class="ex-finished">
+<canvas id="ex-quilt" width="640" height="640" role="img" aria-label="Example of a finished quilt: a few hundred fabric squares, with a pattern stitched in gold across the middle."></canvas>
+<figcaption><span class="ex-tag static">Example</span> <b>What a full day can look like.</b> Each square is one prayer, sewn from the center outward. As the quilt grows, the lighter squares form <span id="ex-motif">a cross</span>, stitched in gold. <a href="./?sample=1#preview">Explore a sample quilt</a></figcaption>
+</figure>
 <p class="ex-recent" id="ex-recent" hidden></p>
 </section>
 

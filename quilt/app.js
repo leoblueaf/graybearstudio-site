@@ -528,8 +528,17 @@ function renderDays() {
 // database, never counted, never drawn on the quilt. They disappear when the first real square arrives.
 function renderExamples() {
   const box = $("examples"); if (!box) return;
-  const show = IS_TODAY && loaded && !PREVIEW && squares.length === 0;
+  const show = IS_TODAY && loaded && !PREVIEW && squares.length < 50;
   box.hidden = !show; if (!show) return;
+  $("ex-squares").hidden = squares.length > 0;
+  const qc = $("ex-quilt");
+  if (qc && !qc.dataset.drawn) {
+    const n = 441, x = qc.getContext("2d");
+    Q.drawFlat(x, DAY, n, Array.from({ length: n }, (_, i) => ({ fabric: (i * 7) % 12 })), 8, 8, 624,
+      { muslin: Q.cssVar("--muslin"), seam: Q.cssVar("--seam"), gold: Q.cssVar("--gold-thread"), oxblood: Q.cssVar("--binding") });
+    qc.dataset.drawn = "1";
+  }
+  const m = $("ex-motif"); if (m) m.textContent = Q.isAdvent(DAY) ? "a star" : "a cross";
   const past = Object.keys(counts).filter(d => Q.isDateStr(d) && d < TODAY && counts[d] > 0).sort().reverse();
   const r = $("ex-recent");
   if (past.length) {
