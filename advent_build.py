@@ -1,12 +1,12 @@
 """Hitherto Advent landing page: /hitherto/advent/ (requested by the Hitherto chat, 9 Nov 2026).
 
-ADVENT_PUBLIC = False  -> page is built but noindex and left out of the sitemap and the /hitherto/ link (preview).
+ADVENT_PUBLIC = True  -> page is built but noindex and left out of the sitemap and the /hitherto/ link (preview).
 ADVENT_PUBLIC = True   -> indexed, in the sitemap, linked from the /hitherto/ Advent feature.
 After 25 Dec set AFTER_SEASON = True to switch the lead to "Advent returns ...".
 """
 import html
 
-ADVENT_PUBLIC = False
+ADVENT_PUBLIC = True
 AFTER_SEASON = False
 
 E = html.escape
