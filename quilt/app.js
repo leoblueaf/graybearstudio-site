@@ -10,8 +10,9 @@ const DEEP_SQ = (params.get("sq") || "").toUpperCase();
 (() => { const r = (params.get("ref") || "").toLowerCase().replace(/[^a-z0-9-]/g, "").slice(0, 30); if (r) try { sessionStorage.setItem("hq.ref", r); } catch { } })();
 const REF = (() => { try { return sessionStorage.getItem("hq.ref") || ""; } catch { return ""; } })();
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-// Look: "fabric" (default) or "glass" (rose window). ?look=glass previews it.
-const LOOK_DEFAULT = "fabric";
+// Look (David, 9 Nov): stained glass from the start of Advent through Epiphany (6 Jan), fabric the rest of
+// the year. Follows the day being viewed. ?look=glass or ?look=fabric overrides it for previews.
+const LOOK_DEFAULT = (Q.isAdvent(DAY) || DAY.slice(5) >= "12-25" || DAY.slice(5) <= "01-06") ? "glass" : "fabric";
 Q.setLook(params.get("look") || LOOK_DEFAULT);
 
 let squares = [], counters = { knots: {}, reports: {}, refs: {}, kept: {} }, counts = {};
