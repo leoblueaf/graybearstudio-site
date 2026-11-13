@@ -1,4 +1,4 @@
-Last updated: November 4, 2026
+Last updated: November 12, 2026
 
 Glass it up is published by GrayBear Studio. This policy explains what happens to your information when you use the Glass it up app for iPhone. Questions: [privacy@graybearstudio.com](mailto:privacy@graybearstudio.com).
 
@@ -9,13 +9,19 @@ We do not collect your data. Glass it up has no account, no sign-in, no analytic
 When you choose a photo, the app uses it on your device to make your glass object. The photo is not uploaded anywhere and is not kept by the app after you close it. If you take a new photo through the photo picker, the camera is used only for that photo.
 
 ## Saving to Photos
-When you tap Save to Photos, the app asks for permission to add pictures to your photo library and saves only the picture you froze. It does not read the rest of your library.
+When you save a picture or record a short clip, the app asks for permission to add to your photo library and saves only the picture or clip you made. Clips record what is on the screen and the app's own sounds; the microphone is never used. The app does not read the rest of your library.
 
 ## Settings on your device
 The app remembers a few settings on your device, such as 2D or 3D view and whether to show the frame rate. They are not sent to us.
 
 ## Sound and vibration
 Sounds and vibrations are made on your device. The app does not use the microphone.
+
+## Purchases
+The Full Unlock is a one-time purchase handled entirely by Apple through the App Store. We do not receive your name, email address or payment details. The app asks Apple's StoreKit on your iPhone whether you own the Full Unlock and remembers the answer on your device. Apple's handling of purchases is covered by Apple's privacy policy.
+
+## Motion
+In the Grains toy, the grains pour when you tilt your iPhone, scatter when you shake it and swirl when you turn it. To do this, the app reads the phone's motion sensors (accelerometer and gyroscope) only while that toy is open. The readings are used on your device to move the grains; they are never stored or sent anywhere. The app does not use motion data for anything else.
 
 ## Location and notifications
 Glass it up does not request or use your location and does not send notifications.

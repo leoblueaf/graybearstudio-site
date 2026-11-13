@@ -28,5 +28,11 @@ Low Power Mode limits how smoothly iPhones draw animations. Turn it off in Setti
 ### Does Glass it up need the internet?
 No. Everything happens on your iPhone, and nothing is uploaded.
 
+### What does the Full Unlock include?
+All eleven light toys, Jelly glass, the Bloom tool, 3D glass and 4K saves, for one payment. No subscription. You can try any locked toy for 20 seconds first.
+
+### I bought the Full Unlock. How do I get it back on a new iPhone?
+Open Settings in the app (the sliders button), tap Unlock, then Restore, signed in with the same Apple Account you bought with.
+
 ### How do I contact support?
 Email [support@graybearstudio.com](mailto:support@graybearstudio.com). Include your iPhone model and iOS version if something is not working.

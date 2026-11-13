@@ -281,6 +281,8 @@ def build_app(a):
     if a.get("has_subscription"):
         sub = ("<h2>Purchases and subscriptions</h2><p>Purchases are made through Apple's App Store and are subject to "
                "Apple's terms. " + E(a["subscription_disclosure"]) + " Refund requests are handled by Apple.</p>")
+    if a.get("purchases_terms"):
+        sub += "<h2>Purchases</h2><p>" + E(a["purchases_terms"]) + "</p>"
     discl = "".join(f"<h2>{E(t)}</h2><p>{E(d)}</p>" for t, d in a["disclaimers"])
     body = f"""<article class="doc"><div class="wrap col">
 <h1>Terms of Use</h1><p class="sub">{E(a["full_name"])} · Last updated {PUBLISH_DATE}</p>
