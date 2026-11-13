@@ -165,8 +165,9 @@ APPS = [
         "category": "Finance",
         "tagline": "See what life after service actually pays, before you decide.",
         "accent": ("#9A6416", "#EDB86A"),
-        "status": "soon",
-        "status_label": "Coming soon",
+        "status": "live",
+        "status_label": "On the App Store",
+        "store_url": "https://apps.apple.com/app/id6811111142",
         "pages": True,
         "email": "creditable@graybearstudio.com",
         "description": [
