@@ -180,6 +180,40 @@ dialog > div { padding: 1.3rem; display: grid; gap: 0.8rem; max-height: 85vh; ov
 }
 @media (prefers-reduced-motion: reduce) { .dot.on { animation: none; } }
 [hidden] { display: none !important; }
+.pk-opts { display: grid; gap: 0.35rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr)); }
+.pk-opts label { display: flex; gap: 0.5rem; align-items: center; min-height: 40px; font-size: 0.95rem; }
+.pk-opts input { width: 1.1rem; height: 1.1rem; accent-color: var(--app); }
+#pk-wrap { position: fixed; inset: 0; z-index: 50; background: #E9E6E0; overflow: auto; }
+.pk-bar { position: sticky; top: 0; display: flex; justify-content: space-between; align-items: center; gap: 0.6rem; padding: 0.6rem 16px; background: var(--surface); border-bottom: 1px solid var(--line); color: var(--ink); }
+#packet { background: #fff; color: #111; max-width: 8.5in; margin: 1rem auto 2rem; padding: 0.7in 0.75in; box-shadow: 0 2px 14px rgba(0,0,0,.15); font: 11.5pt/1.45 Georgia, "Source Serif 4", serif; }
+@media (max-width: 720px) { #packet { margin: 0; padding: 1.1rem 16px 2rem; box-shadow: none; font-size: 11pt; } }
+#packet h1 { font: 700 17pt/1.2 Georgia, serif; margin: 0; text-align: center; letter-spacing: 0.02em; }
+#packet .pk-sub { text-align: center; margin: 0.25rem 0 0; }
+#packet .pk-when { text-align: center; font-weight: 700; margin: 0.4rem 0 1rem; padding-bottom: 0.7rem; border-bottom: 2px solid #111; }
+#packet h2 { font: 700 12.5pt Georgia, serif; text-transform: uppercase; letter-spacing: 0.06em; margin: 1.3rem 0 0.45rem; padding-bottom: 0.2rem; border-bottom: 1px solid #999; }
+#packet ol.pk-agenda { margin: 0; padding-left: 1.6rem; }
+#packet ol.pk-agenda li { margin: 0.18rem 0; }
+#packet ol.pk-agenda ul { margin: 0.15rem 0 0.25rem; padding-left: 1.2rem; list-style: "\2610  "; }
+#packet table { width: 100%; border-collapse: collapse; font-size: 10.5pt; }
+#packet th, #packet td { border: 1px solid #999; padding: 0.25rem 0.45rem; text-align: left; vertical-align: top; }
+#packet th { background: #eee; }
+#packet .pk-min { white-space: pre-wrap; border: 1px solid #bbb; padding: 0.6rem 0.8rem; }
+#packet .pk-note { font-size: 9.5pt; color: #444; margin: 0.3rem 0 0; }
+#packet .pk-sign td { height: 1.55rem; }
+#packet .pk-motion { margin-top: 0.6rem; font-size: 10.5pt; }
+#packet .pk-foot { margin-top: 1.6rem; padding-top: 0.4rem; border-top: 1px solid #999; font-size: 9pt; color: #444; display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+#packet .pk-break { break-before: page; }
+@media print {
+  @page { size: letter; margin: 0.6in; }
+  body { background: #fff !important; }
+  body > *:not(#pk-wrap) { display: none !important; }
+  #pk-wrap { position: static; display: block !important; background: #fff; overflow: visible; }
+  .pk-bar { display: none !important; }
+  #packet { box-shadow: none; margin: 0; padding: 0; max-width: none; }
+  #packet h2 { break-after: avoid; }
+  #packet tr, #packet li, #packet .pk-keep { break-inside: avoid; }
+  #packet thead { display: table-header-group; }
+}
 .demo-set summary { cursor: pointer; font-weight: 600; color: var(--app); min-height: 36px; display: flex; align-items: center; }
 @media (min-width: 721px) { .demo-set summary { display: none; } }
 @media (max-width: 720px) {
@@ -277,6 +311,26 @@ dialog > div { padding: 1.3rem; display: grid; gap: 0.8rem; max-height: 85vh; ov
 <div><label class="f" for="mt-note">Note (optional)</label><input type="text" id="mt-note" placeholder="Election of officers. Bring dues cards."></div>
 <div class="row"><button class="btn" type="submit">Add meeting</button><p class="ok" id="mt-ok" role="status"></p></div>
 </form>
+<div class="card" id="pk-card" style="margin-top:1.4rem;border-top:4px solid var(--gold)">
+<h3>Meeting packet</h3>
+<p class="hint" style="margin:0.3rem 0 0.8rem">One printout for the meeting: the agenda in your order of business, the last meeting's minutes to be read and approved, and the post's numbers. Hand it to the officers or put it on the table.</p>
+<form class="form" id="pk-form" novalidate>
+<div><label class="f" for="pk-meet">Meeting</label><select id="pk-meet"></select></div>
+<div><label class="f" for="pk-old">Old business (one item per line)</label><textarea id="pk-old" placeholder="Fish fry: final count of workers&#10;Flag replacement at the cemetery"></textarea></div>
+<div><label class="f" for="pk-new">New business (one item per line)</label><textarea id="pk-new" placeholder="Wreaths Across America sponsorship&#10;Nominating committee for officers"></textarea></div>
+<fieldset style="border:0;padding:0;margin:0"><legend class="f" style="font-weight:600;margin-bottom:0.3rem">Include</legend>
+<div class="pk-opts">
+<label><input type="checkbox" id="pk-min" checked> Last meeting's minutes</label>
+<label><input type="checkbox" id="pk-dues" checked> Membership and dues</label>
+<label><input type="checkbox" id="pk-unpaid" checked> Names not yet paid</label>
+<label><input type="checkbox" id="pk-ev" checked> Upcoming events and open jobs</label>
+<label><input type="checkbox" id="pk-sick" checked> Sick call</label>
+<label><input type="checkbox" id="pk-att" checked> Last meeting's attendance</label>
+<label><input type="checkbox" id="pk-sign"> Sign-in sheet</label>
+</div></fieldset>
+<div class="row"><button class="btn" type="submit">Preview and print</button><p class="ok" id="pk-ok" role="status"></p></div>
+</form>
+</div>
 </div>
 </div>
 </div></section>
@@ -421,6 +475,10 @@ dialog > div { padding: 1.3rem; display: grid; gap: 0.8rem; max-height: 85vh; ov
 <p>A prototype for Post 778 to try out before anything is built for real. In the real version members sign in, the roster and dues are visible only to members, and only officers can change dues, meetings, events and minutes. What you type here stays in this browser and "Reset demo" clears it.</p>
 </div></section>
 
+<div id="pk-wrap" hidden>
+<div class="pk-bar"><b>Meeting packet preview</b><span class="row" style="gap:0.5rem"><button type="button" class="btn small" id="pk-print">Print</button><button type="button" class="btn small ghost" id="pk-close">Close</button></span></div>
+<article id="packet"></article>
+</div>
 <dialog id="dlg" aria-labelledby="dlg-t"><div>
 <h3 id="dlg-t"></h3>
 <div id="dlg-b"></div>
@@ -470,6 +528,8 @@ dialog > div { padding: 1.3rem; display: grid; gap: 0.8rem; max-height: 85vh; ov
     }));
     const md = meetingDates();
     const meetings = md.map((d, i) => ({ id: i + 1, d, t: "19:00", w: "Post home, Trenton (sample address)", k: "Regular post meeting", note: i === 4 ? "Nomination of officers" : "" }));
+    const nx = meetings.find(m => parse(m.d) >= today);
+    if (nx) { nx.old = "Fish fry: confirm kitchen and cleanup crews\nCemetery flag replacement: quote from the hardware store"; nx.neu = "Wreaths Across America: sponsor a wreath for each member\nAppoint the nominating committee for next year's officers"; }
     meetings.push({ id: 99, d: plusDays(9), t: "18:30", w: "Post home, Trenton (sample address)", k: "Officers' meeting", note: "Plan the fish fry" });
     const att = {};
     const pastIds = meetings.filter(m => parse(m.d) < today).map(m => m.id);
@@ -721,7 +781,78 @@ dialog > div { padding: 1.3rem; display: grid; gap: 0.8rem; max-height: 85vh; ov
   $("role").onchange = () => { S.role = $("role").value; save(); renderAll(); };
   $("reset").onclick = () => { try { localStorage.removeItem(KEY); } catch { } S = seed(); T = TITLES[S.org]; $("org").value = S.org; $("role").value = S.role; $("draft-box").hidden = true; $("rec-audio").hidden = true; renderAll(); };
 
-  function renderAll() { renderHome(); renderMeetings(); renderEvents(); renderBoard(); renderMembers(); renderAttendance(); renderMinutes(); applyRole(); }
+  // ---- meeting packet: agenda + last minutes + post numbers, printable
+  const ORDER = o => o === "legion"
+    ? ["Call to order", "Opening ceremonies: prayer by the Chaplain, Pledge of Allegiance, POW/MIA empty chair", "Roll call of officers", "Reading and approval of the minutes of the last meeting", "FIN report and bills to be paid", "Membership report", "Committee reports", "Sick call and relief", "SVC report", "Old business", "New business", "Good of The American Legion", "Closing ceremonies", "Adjournment"]
+    : ["Call to order", "Opening ceremonies: prayer by the Chaplain, Pledge of Allegiance", "Roll call of officers", "Reading and approval of the minutes of the last meeting", "FIN report and bills to be paid", "Membership report", "Committee reports", "Sick call and relief", "SVC report", "Old business", "New business", "Good of the Order", "Closing ceremonies", "Adjournment"];
+  function packetMeetings() {
+    const sel = $("pk-meet"), cur = sel.value;
+    const list = S.meetings.slice().sort((a, b) => a.d.localeCompare(b.d)).filter(m => parse(m.d) >= today).concat(regular().filter(m => parse(m.d) < today).slice(0, 2));
+    sel.innerHTML = list.map(m => `<option value="${m.id}">${esc(fmtShort(m.d))}: ${esc(m.k)}${parse(m.d) < today ? " (past)" : ""}</option>`).join("");
+    if (cur && list.some(m => String(m.id) === cur)) sel.value = cur;
+    else { const r = list.find(m => m.k === "Regular post meeting"); if (r) sel.value = r.id; }
+    loadItems();
+  }
+  function loadItems() { const m = S.meetings.find(x => x.id === +$("pk-meet").value); $("pk-old").value = (m && m.old) || ""; $("pk-new").value = (m && m.neu) || ""; }
+  $("pk-meet").onchange = loadItems;
+  const lines = v => v.split("\n").map(x => x.trim()).filter(Boolean);
+  function buildPacket(m) {
+    const prev = S.meetings.filter(x => x.k === "Regular post meeting" && x.d < m.d).sort((a, b) => b.d.localeCompare(a.d))[0];
+    const mins = prev && S.minutes.filter(x => x.mid === prev.id).sort((a, b) => (b.st === "approved") - (a.st === "approved") || b.id - a.id)[0];
+    const old = lines($("pk-old").value), neu = lines($("pk-new").value), on = id => $(id).checked;
+    const sub = t => t.replace("FIN", T.fin + "'s").replace("SVC", T.svc + "'s");
+    const agenda = ORDER(S.org).map(t => {
+      const items = t === "Old business" ? old : t === "New business" ? neu : [];
+      const extra = t.startsWith("Reading and approval") && prev ? ` (${fmtShort(prev.d)}; see attached)` : "";
+      return `<li>${esc(sub(t))}${esc(extra)}${items.length ? `<ul>${items.map(i => `<li>${esc(i)}</li>`).join("")}</ul>` : ""}</li>`;
+    }).join("");
+    let h = `<h1>${esc(T.name)} Post 778</h1><p class="pk-sub">Trenton, Illinois</p>
+      <p class="pk-when">${esc(m.k)} · ${esc(fmtDay(m.d))}, ${esc(fmtTime(m.t))}<br><span style="font-weight:400">${esc(m.w)}</span></p>
+      <h2>Agenda</h2><ol class="pk-agenda">${agenda}</ol>`;
+    if (on("pk-dues")) {
+      const cur = S.members.filter(x => x.d !== "no"), life = S.members.filter(x => x.d === "life").length, unpaid = S.members.filter(x => x.d === "no");
+      h += `<div class="pk-keep"><h2>Membership and dues</h2><table><tr><th>Members on the roster</th><td>${S.members.length}</td></tr><tr><th>${duesYear} dues current</th><td>${cur.length} (${Math.round(100 * cur.length / Math.max(1, S.members.length))}%), including ${life} life members</td></tr><tr><th>Not yet paid</th><td>${unpaid.length}${on("pk-unpaid") && unpaid.length ? ": " + unpaid.map(x => esc(x.n)).join(", ") : ""}</td></tr></table></div>`;
+    }
+    if (on("pk-att") && prev) {
+      const n = (S.att[prev.id] || []).length;
+      h += `<h2>Last meeting's attendance</h2><p style="margin:0">${esc(fmtDay(prev.d))}: ${n} present${n >= S.quorum ? ", quorum met" : `, quorum (${S.quorum}) not met`}.</p>`;
+    }
+    if (on("pk-ev")) {
+      const end = new Date(parse(m.d)); end.setDate(end.getDate() + 75);
+      const evs = S.events.filter(e => parse(e.d) >= parse(m.d) && parse(e.d) <= end).sort((a, b) => a.d.localeCompare(b.d));
+      h += `<div class="pk-keep"><h2>Upcoming events and open jobs</h2>` + (evs.length ? `<table><thead><tr><th>Date</th><th>Event</th><th>Still needed</th></tr></thead>${evs.map(e => {
+        const gaps = e.shifts.filter(s => s[2].length < s[1]).map(s => `${s[0]}: ${s[1] - s[2].length}`);
+        return `<tr><td>${esc(fmtShort(e.d))}, ${esc(e.time)}</td><td>${esc(e.t)}<br><span class="pk-note">${esc(e.w)}</span></td><td>${gaps.length ? esc(gaps.join("; ")) : "Fully staffed"}</td></tr>`; }).join("")}</table>` : `<p style="margin:0">No events in the next 75 days.</p>`) + `</div>`;
+    }
+    if (on("pk-sick")) {
+      const since = new Date(parse(m.d)); since.setDate(since.getDate() - 45);
+      const sick = S.posts.filter(p => p.k === "Sick call" && parse(p.d) >= since);
+      h += `<h2>Sick call</h2>` + (sick.length ? `<ul style="margin:0;padding-left:1.2rem">${sick.map(p => `<li>${esc(p.t)}: ${esc(p.x)}</li>`).join("")}</ul>` : `<p style="margin:0">None reported on the message board.</p>`);
+    }
+    if (on("pk-min")) {
+      h += `<h2 class="pk-break">Minutes of the last meeting${prev ? ", " + esc(fmtDay(prev.d)) : ""}</h2>`;
+      if (!prev) h += `<p>No earlier meeting on file.</p>`;
+      else if (!mins) h += `<p>No minutes on file for this meeting yet.</p>`;
+      else if (mins.text) h += `<p class="pk-note" style="margin-bottom:0.5rem">${mins.st === "approved" ? "Approved by the post." : "Draft, to be read and approved at this meeting."}</p><div class="pk-min">${esc(mins.text)}</div>
+        <p class="pk-motion">Motion to approve: ____________ Second: ____________ &nbsp; Carried ☐ &nbsp; Amended ☐</p>`;
+      else h += `<p>Minutes are on file as an uploaded document (${esc(mins.file)}). Print it and attach it here.</p>`;
+    }
+    if (on("pk-sign")) {
+      h += `<h2 class="pk-break">Sign-in sheet</h2><table class="pk-sign"><tr><th style="width:55%">Name</th><th>Signature</th></tr>${Array.from({ length: 30 }, () => "<tr><td></td><td></td></tr>").join("")}</table>`;
+    }
+    h += `<div class="pk-foot"><span>Prepared by the ${esc(T.adj)} for the ${esc(fmtShort(m.d))} meeting</span><span>Printed ${esc(today.toLocaleDateString("en-US"))}</span></div>`;
+    return h;
+  }
+  $("pk-form").addEventListener("submit", e => {
+    e.preventDefault(); const m = S.meetings.find(x => x.id === +$("pk-meet").value);
+    if (!m) { $("pk-ok").className = "ok bad"; $("pk-ok").textContent = "Pick a meeting first."; return; }
+    m.old = $("pk-old").value; m.neu = $("pk-new").value; save();
+    $("packet").innerHTML = buildPacket(m); $("pk-wrap").hidden = false; document.body.style.overflow = "hidden"; $("pk-wrap").scrollTop = 0;
+  });
+  $("pk-print").onclick = () => window.print();
+  $("pk-close").onclick = () => { $("pk-wrap").hidden = true; document.body.style.overflow = ""; };
+
+  function renderAll() { renderHome(); renderMeetings(); renderEvents(); renderBoard(); renderMembers(); renderAttendance(); renderMinutes(); packetMeetings(); applyRole(); }
 
   // ---- phone layout: home tiles, one section per screen
   const NAMES = { meetings: "Meetings", events: "Events", board: "Message board", members: "Members", attendance: "Attendance", minutes: "Minutes" };
