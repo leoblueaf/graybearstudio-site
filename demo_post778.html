@@ -180,6 +180,47 @@ dialog > div { padding: 1.3rem; display: grid; gap: 0.8rem; max-height: 85vh; ov
 }
 @media (prefers-reduced-motion: reduce) { .dot.on { animation: none; } }
 [hidden] { display: none !important; }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; margin-bottom: 1rem; background: var(--surface); }
+.seg button { font: 600 0.95rem var(--body); border: 0; background: none; color: var(--ink); padding: 0.5rem 1.1rem; min-height: 42px; cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--app); color: var(--paper); }
+.cal-head { display: flex; justify-content: space-between; align-items: center; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.6rem; }
+.cal-head h3 { min-width: 9.5rem; text-align: center; font-size: 1.3rem; }
+.cal-legend { display: flex; flex-wrap: wrap; gap: 0.3rem 1rem; font-size: 0.85rem; color: var(--muted); margin-bottom: 0.6rem; }
+.cal-legend i { display: inline-block; width: 0.7rem; height: 0.7rem; border-radius: 3px; margin-right: 0.35rem; vertical-align: -1px; }
+:root { --k-Meeting: #1F3A5F; --k-Ceremony: #8C2F2F; --k-Fundraiser: #9A6412; --k-Community: #2F6B45; --k-Miscellaneous: #5B4A8A; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --k-Meeting: #8FB2DD; --k-Ceremony: #E58A7F; --k-Fundraiser: #DDAA55; --k-Community: #7CC495; --k-Miscellaneous: #B5A6E6; } }
+.k-Meeting { background: var(--k-Meeting); } .k-Ceremony { background: var(--k-Ceremony); } .k-Fundraiser { background: var(--k-Fundraiser); } .k-Community { background: var(--k-Community); } .k-Miscellaneous { background: var(--k-Miscellaneous); }
+.cal { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: var(--surface); }
+.cal .dow { font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); padding: 0.45rem 0.5rem; background: var(--paper); border-bottom: 1px solid var(--line); text-align: center; }
+.cal .day { min-height: 6.6rem; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 0.3rem 0.35rem; display: flex; flex-direction: column; gap: 0.2rem; text-align: left; font: inherit; color: var(--ink); background: none; border-top: 0; border-left: 0; cursor: pointer; min-width: 0; }
+.cal .day:nth-child(7n+7) { border-right: 0; }
+.cal .day.out { background: color-mix(in srgb, var(--paper) 70%, transparent); color: var(--muted); }
+.cal .day .n { font-size: 0.85rem; font-weight: 600; }
+.cal .day.today .n { background: var(--app); color: var(--paper); border-radius: 99px; padding: 0 0.42rem; align-self: flex-start; }
+.cal .day.sel { box-shadow: inset 0 0 0 2px var(--gold); }
+.cal .it { display: block; font-size: 0.74rem; line-height: 1.25; color: #fff; border-radius: 4px; padding: 0.1rem 0.3rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cal .dots { display: none; gap: 3px; flex-wrap: wrap; }
+.cal .dots i { width: 7px; height: 7px; border-radius: 50%; }
+.cal-day { margin-top: 0.9rem; }
+.cal-day h4 { font: 600 1.1rem var(--display); margin: 0 0 0.5rem; }
+.cal-entry { display: grid; grid-template-columns: 0.35rem 1fr; gap: 0.7rem; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 0.65rem 0.8rem; margin-bottom: 0.5rem; }
+.cal-entry > i { border-radius: 99px; }
+.cal-entry p { margin: 0; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .cal .it { color: #12161C; } }
+@media (max-width: 720px) {
+  .cal .day { min-height: 3.4rem; align-items: center; padding: 0.3rem 0.1rem; }
+  .cal .it { display: none; }
+  .cal .dots { display: flex; justify-content: center; }
+  .cal .dow { padding-inline: 0; font-size: 0.7rem; }
+  .cal-head h3 { min-width: 0; font-size: 1.15rem; }
+}
+#packet .pcal { width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 8.5pt; }
+#packet .pcal th { background: #eee; text-align: center; padding: 0.2rem; }
+#packet .pcal td { height: 0.95in; vertical-align: top; padding: 0.15rem 0.2rem; }
+#packet .pcal td.out { color: #999; background: #fafafa; }
+#packet .pcal b { display: block; font-size: 9pt; }
+#packet .pcal span { display: block; margin-top: 0.1rem; line-height: 1.2; padding-left: 0.25rem; border-left: 3px solid #555; }
+#packet .pcal-list { margin: 0.6rem 0 0; padding-left: 1.1rem; font-size: 10pt; }
 .pk-opts { display: grid; gap: 0.35rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr)); }
 .pk-opts label { display: flex; gap: 0.5rem; align-items: center; min-height: 40px; font-size: 0.95rem; }
 .pk-opts input { width: 1.1rem; height: 1.1rem; accent-color: var(--app); }
@@ -345,6 +386,19 @@ dialog > div { padding: 1.3rem; display: grid; gap: 0.8rem; max-height: 85vh; ov
 <button type="button" class="chip" aria-pressed="false" data-k="Fundraiser">Fundraisers</button>
 <button type="button" class="chip" aria-pressed="false" data-k="Community">Community</button>
 <button type="button" class="chip" aria-pressed="false" data-k="Miscellaneous">Miscellaneous</button>
+<button type="button" class="chip" aria-pressed="false" data-k="Meeting">Meetings</button>
+</div>
+<div class="seg" role="group" aria-label="View">
+<button type="button" aria-pressed="false" data-v="list">List</button><button type="button" aria-pressed="true" data-v="cal">Calendar</button>
+</div>
+<div id="cal-view">
+<div class="cal-head">
+<div class="row" style="gap:0.4rem"><button type="button" class="btn small ghost" id="cal-prev" aria-label="Previous month">&lsaquo;</button><h3 id="cal-title" aria-live="polite"></h3><button type="button" class="btn small ghost" id="cal-next" aria-label="Next month">&rsaquo;</button></div>
+<div class="row" style="gap:0.4rem"><button type="button" class="btn small ghost" id="cal-today">This month</button><button type="button" class="btn small" id="cal-print">Print month</button></div>
+</div>
+<div class="cal-legend"><span><i class="k-Meeting"></i>Meetings</span><span><i class="k-Ceremony"></i>Ceremonies</span><span><i class="k-Fundraiser"></i>Fundraisers</span><span><i class="k-Community"></i>Community</span><span><i class="k-Miscellaneous"></i>Miscellaneous</span></div>
+<div class="cal" id="cal" role="grid" aria-label="Month calendar"></div>
+<div class="cal-day" id="cal-day" aria-live="polite"></div>
 </div>
 <p class="hint" id="me-line" style="margin:-0.3rem 0 1rem"></p>
 <details class="composer" data-officer><summary>Add an event</summary>
@@ -476,7 +530,7 @@ dialog > div { padding: 1.3rem; display: grid; gap: 0.8rem; max-height: 85vh; ov
 </div></section>
 
 <div id="pk-wrap" hidden>
-<div class="pk-bar"><b>Meeting packet preview</b><span class="row" style="gap:0.5rem"><button type="button" class="btn small" id="pk-print">Print</button><button type="button" class="btn small ghost" id="pk-close">Close</button></span></div>
+<div class="pk-bar"><b id="pk-title">Print preview</b><span class="row" style="gap:0.5rem"><button type="button" class="btn small" id="pk-print">Print</button><button type="button" class="btn small ghost" id="pk-close">Close</button></span></div>
 <article id="packet"></article>
 </div>
 <dialog id="dlg" aria-labelledby="dlg-t"><div>
@@ -605,7 +659,57 @@ dialog > div { padding: 1.3rem; display: grid; gap: 0.8rem; max-height: 85vh; ov
 
   // ---- events and who's working them
   let evK = "all";
+  // ---- monthly calendar of events and meetings
+  let evView = "cal", calY = today.getFullYear(), calM = today.getMonth(), calSel = iso(today);
+  const items = () => S.events.filter(e => evK === "all" || e.k === evK).map(e => ({ d: e.d, k: e.k, t: e.t, when: e.time, w: e.w, e }))
+    .concat(evK === "all" || evK === "Meeting" ? S.meetings.map(m => ({ d: m.d, k: "Meeting", t: m.k, when: fmtTime(m.t), w: m.w, note: m.note })) : [])
+    .sort((a, b) => a.d.localeCompare(b.d) || (a.k === "Meeting") - (b.k === "Meeting"));
+  const monthName = (y, m) => new Date(y, m, 1).toLocaleDateString("en-US", { month: "long", year: "numeric" });
+  function gridDays(y, m) { const first = new Date(y, m, 1), start = new Date(y, m, 1 - first.getDay()), out = [];
+    const weeks = Math.ceil((first.getDay() + new Date(y, m + 1, 0).getDate()) / 7);
+    for (let i = 0; i < weeks * 7; i++) { const d = new Date(start); d.setDate(start.getDate() + i); out.push(d); } return out; }
+  function renderCal() {
+    $("cal-view").hidden = evView !== "cal"; $("ev-list").hidden = evView === "cal"; $("me-line").hidden = evView === "cal";
+    if (evView !== "cal") return;
+    $("cal-title").textContent = monthName(calY, calM);
+    const all = items(), by = {}; all.forEach(x => (by[x.d] = by[x.d] || []).push(x));
+    const DOW = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    $("cal").innerHTML = DOW.map(d => `<div class="dow" role="columnheader">${d}</div>`).join("") + gridDays(calY, calM).map(d => {
+      const k = iso(d), list = by[k] || [];
+      return `<button type="button" class="day${d.getMonth() !== calM ? " out" : ""}${k === iso(today) ? " today" : ""}${k === calSel ? " sel" : ""}" data-d="${k}" aria-label="${esc(fmtDay(k))}, ${list.length} item${list.length === 1 ? "" : "s"}">
+        <span class="n">${d.getDate()}</span>${list.slice(0, 3).map(x => `<span class="it k-${x.k}">${esc(x.t)}</span>`).join("")}${list.length > 3 ? `<span class="hint" style="font-size:0.72rem">+${list.length - 3} more</span>` : ""}
+        <span class="dots">${list.map(x => `<i class="k-${x.k}"></i>`).join("")}</span></button>`;
+    }).join("");
+    $("cal").querySelectorAll(".day").forEach(b => b.onclick = () => { calSel = b.dataset.d; const d = parse(calSel); if (d.getMonth() !== calM) { calY = d.getFullYear(); calM = d.getMonth(); } renderCal(); });
+    const sel = by[calSel] || [], inMonth = all.filter(x => { const d = parse(x.d); return d.getMonth() === calM && d.getFullYear() === calY; });
+    const entry = x => { const gaps = x.e ? x.e.shifts.reduce((a, s) => a + Math.max(0, s[1] - s[2].length), 0) : 0;
+      return `<div class="cal-entry"><i class="k-${x.k}"></i><div><span class="tag">${esc(x.k)}</span><p><b>${esc(x.t)}</b></p><p class="hint">${esc(fmtShort(x.d))}, ${esc(x.when)}. ${esc(x.w)}.${x.note ? " " + esc(x.note) + "." : ""}</p>${x.e && parse(x.d) >= today ? `<p class="hint">${gaps ? `${gaps} spot${gaps === 1 ? "" : "s"} still open. ` : "Fully staffed. "}<button type="button" class="link" data-jobs="${x.e.id}">See jobs</button></p>` : ""}</div></div>`; };
+    $("cal-day").innerHTML = sel.length ? `<h4>${esc(fmtDay(calSel))}</h4>` + sel.map(entry).join("")
+      : `<h4>${inMonth.length ? `All of ${esc(monthName(calY, calM))}` : `Nothing on the calendar in ${esc(monthName(calY, calM))}`}</h4>` + inMonth.map(entry).join("");
+    $("cal-day").querySelectorAll("[data-jobs]").forEach(b => b.onclick = () => { evView = "list"; setSeg(); renderEvents(); const el = $("ev-list"); el.scrollIntoView({ block: "start" }); });
+  }
+  function setSeg() { document.querySelectorAll(".seg button").forEach(x => x.setAttribute("aria-pressed", x.dataset.v === evView)); renderCal(); }
+  document.querySelectorAll(".seg button").forEach(b => b.onclick = () => { evView = b.dataset.v; setSeg(); });
+  const shiftMonth = n => { const d = new Date(calY, calM + n, 1); calY = d.getFullYear(); calM = d.getMonth(); calSel = ""; renderCal(); };
+  $("cal-prev").onclick = () => shiftMonth(-1); $("cal-next").onclick = () => shiftMonth(1);
+  $("cal-today").onclick = () => { calY = today.getFullYear(); calM = today.getMonth(); calSel = iso(today); renderCal(); };
+  const shortTime = w => { const m = (w || "").match(/^(\d{1,2})(?::(\d\d))?\s*(AM|PM)?/i); if (!m) return "";
+    const ap = m[3] || ((w.match(/(AM|PM)/i) || [])[1] || ""); return `${m[1]}${m[2] && m[2] !== "00" ? ":" + m[2] : ""} ${ap}`.trim() + " "; };
+  $("cal-print").onclick = () => {
+    const all = items(), by = {}; all.forEach(x => (by[x.d] = by[x.d] || []).push(x));
+    const days = gridDays(calY, calM), rows = [];
+    for (let i = 0; i < days.length; i += 7) rows.push(`<tr>${days.slice(i, i + 7).map(d => { const k = iso(d), out = d.getMonth() !== calM;
+      return `<td class="${out ? "out" : ""}"><b>${d.getDate()}</b>${out ? "" : (by[k] || []).map(x => `<span>${esc(shortTime(x.when))}${esc(x.t)}</span>`).join("")}</td>`; }).join("")}</tr>`);
+    const inMonth = all.filter(x => { const d = parse(x.d); return d.getMonth() === calM && d.getFullYear() === calY; });
+    $("packet").innerHTML = `<h1>${esc(T.name)} Post 778</h1><p class="pk-sub">Trenton, Illinois</p><p class="pk-when">${esc(monthName(calY, calM))}</p>
+      <table class="pcal"><thead><tr>${["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"].map(d => `<th>${d}</th>`).join("")}</tr></thead><tbody>${rows.join("")}</tbody></table>
+      <h2>Details</h2>${inMonth.length ? `<ul class="pcal-list">${inMonth.map(x => `<li><b>${esc(fmtShort(x.d))}</b>, ${esc(x.when)}: ${esc(x.t)}. ${esc(x.w)}.${x.e ? (() => { const g = x.e.shifts.filter(s => s[2].length < s[1]).map(s => `${s[0]} ${s[1] - s[2].length}`); return g.length ? " Still needed: " + esc(g.join(", ")) + "." : ""; })() : ""}</li>`).join("")}</ul>` : "<p>Nothing scheduled.</p>"}
+      <div class="pk-foot"><span>Sign up to work events on the post website or at the next meeting</span><span>Printed ${esc(today.toLocaleDateString("en-US"))}</span></div>`;
+    $("pk-title").textContent = "Calendar preview"; $("pk-wrap").hidden = false; document.body.style.overflow = "hidden"; $("pk-wrap").scrollTop = 0;
+  };
+
   function renderEvents() {
+    renderCal();
     $("me-line").innerHTML = `Signing up as <b>${esc(memberName(S.me))}</b> (in the real version, whoever is signed in).`;
     const list = S.events.filter(e => evK === "all" || e.k === evK).sort((a, b) => a.d.localeCompare(b.d));
     const up = list.filter(e => parse(e.d) >= today), past = list.filter(e => parse(e.d) < today);
@@ -847,7 +951,7 @@ dialog > div { padding: 1.3rem; display: grid; gap: 0.8rem; max-height: 85vh; ov
     e.preventDefault(); const m = S.meetings.find(x => x.id === +$("pk-meet").value);
     if (!m) { $("pk-ok").className = "ok bad"; $("pk-ok").textContent = "Pick a meeting first."; return; }
     m.old = $("pk-old").value; m.neu = $("pk-new").value; save();
-    $("packet").innerHTML = buildPacket(m); $("pk-wrap").hidden = false; document.body.style.overflow = "hidden"; $("pk-wrap").scrollTop = 0;
+    $("packet").innerHTML = buildPacket(m); $("pk-title").textContent = "Meeting packet preview"; $("pk-wrap").hidden = false; document.body.style.overflow = "hidden"; $("pk-wrap").scrollTop = 0;
   });
   $("pk-print").onclick = () => window.print();
   $("pk-close").onclick = () => { $("pk-wrap").hidden = true; document.body.style.overflow = ""; };
