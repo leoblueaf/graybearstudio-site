@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Post 778 Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper: #F7F4EE; --surface: #FFFFFF; --ink: #1B2430; --muted: #5B6573; --line: #DDD6C9;
+  --app: #1F3A5F; --gold: #9A6F1E; --ok: #2F6B45; --bad: #A33A2F; --warn: #9A6412;
+  --display: "Source Serif 4", Georgia, serif; --body: "Source Sans 3", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --paper: #12161C; --surface: #1A2029; --ink: #E9ECEF; --muted: #A3ACB8; --line: #2E3744;
+  --app: #8FB2DD; --gold: #D7AE5E; --ok: #7CC495; --bad: #E58A7F; --warn: #DDAA55; color-scheme: dark; } }
+:root[data-theme="dark"] { --paper: #12161C; --surface: #1A2029; --ink: #E9ECEF; --muted: #A3ACB8; --line: #2E3744;
+  --app: #8FB2DD; --gold: #D7AE5E; --ok: #7CC495; --bad: #E58A7F; --warn: #DDAA55; color-scheme: dark; }
+* { box-sizing: border-box; }
+html { font-size: 17px; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 400 1rem/1.55 var(--body); -webkit-text-size-adjust: 100%; }
+h1, h2, h3 { font-family: var(--display); font-weight: 600; line-height: 1.2; margin: 0; }
+h2 { font-size: 1.75rem; }
+h3 { font-size: 1.2rem; }
+a { color: var(--app); }
+.wrap { max-width: 1120px; margin: 0 auto; padding-inline: 16px; }
+.section { padding-block: 2.6rem; border-bottom: 1px solid var(--line); }
+.lead { color: var(--muted); margin: 0.35rem 0 1.3rem; max-width: 64ch; }
+.hint { font-size: 0.9rem; color: var(--muted); margin: 0; }
+.btn { font: 600 1rem var(--body); background: var(--app); color: var(--paper); border: 0; border-radius: 10px; padding: 0.6rem 1.05rem; cursor: pointer; min-height: 44px; }
+.btn.ghost { background: transparent; color: var(--app); box-shadow: inset 0 0 0 1.5px var(--app); }
+.btn.small { padding: 0.35rem 0.75rem; min-height: 36px; font-size: 0.92rem; }
+.btn:disabled { opacity: 0.5; cursor: default; }
+.link { font: 600 0.95rem var(--body); background: none; border: 0; color: var(--app); cursor: pointer; padding: 0.3rem 0; text-decoration: underline; }
+.row { display: flex; gap: 0.7rem; align-items: center; flex-wrap: wrap; }
+.ok { color: var(--ok); font-size: 0.95rem; margin: 0; }
+.ok.bad { color: var(--bad); }
+input[type=text], input[type=search], input[type=date], input[type=time], input[type=number], textarea, select {
+  width: 100%; font: 1rem/1.4 var(--body); color: var(--ink); background: var(--paper); border: 1px solid var(--line); border-radius: 8px; padding: 0.6rem 0.75rem; min-height: 44px; }
+textarea { min-height: 90px; resize: vertical; }
+label.f { display: block; font-weight: 600; font-size: 0.95rem; margin-bottom: 0.25rem; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 1.1rem 1.2rem; }
+.grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr)); }
+.two { display: grid; gap: 1.6rem; }
+@media (min-width: 900px) { .two { grid-template-columns: 1.15fr 0.85fr; } }
+.form { display: grid; gap: 0.9rem; }
+.pair { display: grid; gap: 0.9rem; }
+@media (min-width: 560px) { .pair { grid-template-columns: 1fr 1fr; } }
+.chips { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-bottom: 1rem; }
+.chip { font: 600 0.92rem var(--body); color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 99px; padding: 0.45rem 0.9rem; cursor: pointer; min-height: 40px; }
+.chip[aria-pressed="true"] { background: var(--app); border-color: var(--app); color: var(--paper); }
+.tag { display: inline-block; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--gold); }
+.pill { display: inline-block; font-size: 0.8rem; font-weight: 600; padding: 0.12rem 0.55rem; border-radius: 99px; }
+.pill.yes { background: color-mix(in srgb, var(--ok) 18%, transparent); color: var(--ok); }
+.pill.no { background: color-mix(in srgb, var(--bad) 16%, transparent); color: var(--bad); }
+.pill.life { background: color-mix(in srgb, var(--gold) 20%, transparent); color: var(--gold); }
+.pill.off { background: color-mix(in srgb, var(--app) 14%, transparent); color: var(--app); }
+
+/* banner, nav, hero */
+.banner { background: var(--surface); border-bottom: 1px solid var(--line); font-size: 0.92rem; color: var(--muted); }
+.banner .wrap { display: flex; gap: 0.6rem 1rem; align-items: center; justify-content: space-between; padding-block: 0.55rem; flex-wrap: wrap; }
+.banner b { color: var(--ink); }
+.banner select { width: auto; min-height: 36px; padding: 0.25rem 0.5rem; font-size: 0.92rem; }
+.subnav { position: sticky; top: 0; z-index: 5; background: var(--paper); border-bottom: 1px solid var(--line); }
+.subnav .wrap { display: flex; gap: 0.2rem 1.3rem; overflow-x: auto; padding-block: 0.6rem; scrollbar-width: none; }
+.subnav a { color: var(--muted); text-decoration: none; white-space: nowrap; font-weight: 600; font-size: 0.95rem; border-bottom: 2px solid transparent; }
+.subnav a:hover { color: var(--ink); border-color: var(--app); }
+.hero { padding-block: 2.6rem 2.2rem; border-bottom: 1px solid var(--line); }
+.hero-grid { display: grid; gap: 2rem; align-items: start; }
+@media (min-width: 900px) { .hero-grid { grid-template-columns: 1fr 1fr; } }
+.hero h1 { font-size: clamp(2.2rem, 5vw, 3.2rem); }
+.hero .sub { font: 500 1.2rem/1.4 var(--display); font-style: italic; color: var(--gold); margin: 0.5rem 0 0; }
+.next { border-top: 4px solid var(--app); }
+.next .big { font: 600 1.5rem/1.25 var(--display); margin: 0.3rem 0 0.2rem; }
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); margin-top: 1rem; }
+.stat { padding: 0.8rem 0.9rem; border-right: 1px solid var(--line); }
+.stat:last-child { border-right: 0; }
+.stat b { display: block; font: 600 1.8rem/1 var(--display); color: var(--app); font-variant-numeric: tabular-nums; }
+.stat span { font-size: 0.85rem; color: var(--muted); }
+
+/* members */
+.toolbar { display: grid; gap: 0.7rem; margin-bottom: 1rem; }
+@media (min-width: 720px) { .toolbar { grid-template-columns: 1fr auto; align-items: center; } }
+.table { width: 100%; border-collapse: collapse; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.table th, .table td { text-align: left; padding: 0.65rem 0.8rem; border-bottom: 1px solid var(--line); vertical-align: middle; }
+.table th { font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); background: var(--paper); }
+.table tr:last-child td { border-bottom: 0; }
+.table td small { display: block; color: var(--muted); }
+@media (max-width: 640px) {
+  .table thead { display: none; }
+  .table, .table tbody, .table tr, .table td { display: block; width: 100%; }
+  .table tr { border-bottom: 1px solid var(--line); padding: 0.6rem 0.8rem; }
+  .table td { border: 0; padding: 0.1rem 0; }
+  .table td.act { padding-top: 0.4rem; }
+}
+.officer-only { border-left: 3px solid var(--gold); padding-left: 0.6rem; }
+
+/* board */
+.post { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 1rem 1.15rem; }
+.post.pinned { border-left: 4px solid var(--app); }
+.post h3 { margin: 0.2rem 0 0.3rem; }
+.post p.x { margin: 0; }
+.post .meta { font-size: 0.85rem; color: var(--muted); margin: 0; }
+.posts { display: grid; gap: 0.9rem; }
+.reply { border-top: 1px solid var(--line); margin-top: 0.7rem; padding-top: 0.6rem; font-size: 0.95rem; }
+.reply b { font-weight: 600; }
+details.composer { background: var(--surface); border: 1px dashed var(--line); border-radius: 12px; padding: 0.8rem 1rem; margin-bottom: 1.1rem; }
+details.composer summary { cursor: pointer; font-weight: 600; min-height: 32px; }
+
+/* events */
+.event { display: flex; flex-direction: column; gap: 0.35rem; }
+.event .when { font-weight: 600; }
+.shifts { display: grid; gap: 0.5rem; margin-top: 0.5rem; }
+.shift { border: 1px solid var(--line); border-radius: 10px; padding: 0.55rem 0.7rem; background: var(--paper); }
+.shift .row { justify-content: space-between; }
+.bar { height: 8px; border-radius: 99px; background: color-mix(in srgb, var(--app) 14%, transparent); overflow: hidden; margin: 0.35rem 0; }
+.bar i { display: block; height: 100%; background: var(--app); }
+.bar.full i { background: var(--ok); }
+.names { font-size: 0.88rem; color: var(--muted); }
+
+/* meetings, attendance */
+.mlist { display: grid; gap: 0.6rem; }
+.mitem { display: grid; grid-template-columns: 4.2rem 1fr; gap: 0.8rem; align-items: center; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 0.7rem 0.9rem; }
+.date { text-align: center; border-right: 1px solid var(--line); padding-right: 0.7rem; }
+.date b { display: block; font: 600 1.6rem/1 var(--display); color: var(--app); }
+.date span { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+.checklist { display: grid; gap: 0.35rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr)); max-height: 26rem; overflow: auto; padding: 0.2rem; }
+.checklist label { display: flex; gap: 0.55rem; align-items: center; border: 1px solid var(--line); border-radius: 10px; padding: 0.5rem 0.7rem; background: var(--paper); cursor: pointer; min-height: 44px; }
+.checklist label:has(input:checked) { border-color: var(--ok); background: color-mix(in srgb, var(--ok) 9%, var(--paper)); }
+.checklist input { width: 1.15rem; height: 1.15rem; accent-color: var(--ok); }
+.quorum { font-weight: 600; }
+.quorum.met { color: var(--ok); } .quorum.not { color: var(--warn); }
+
+/* minutes */
+.steps { list-style: none; padding: 0; margin: 0 0 1rem; display: grid; gap: 0.6rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr)); counter-reset: s; }
+.steps li { counter-increment: s; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 0.7rem 0.85rem; font-size: 0.93rem; }
+.steps li::before { content: "Step " counter(s); display: block; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--gold); }
+.rec { display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap; }
+.dot { width: 14px; height: 14px; border-radius: 50%; background: var(--line); }
+.dot.on { background: #C8372D; animation: pulse 1.2s infinite; }
+@keyframes pulse { 50% { opacity: 0.35; } }
+.timer { font: 600 1.3rem var(--display); font-variant-numeric: tabular-nums; }
+.draft { white-space: pre-wrap; font: 0.98rem/1.6 var(--body); background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 0.9rem 1rem; min-height: 16rem; width: 100%; }
+.mins { display: grid; gap: 0.6rem; }
+.min { display: flex; justify-content: space-between; gap: 0.8rem; align-items: center; flex-wrap: wrap; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 0.75rem 0.95rem; }
+
+/* dialog */
+dialog { border: 1px solid var(--line); border-radius: 14px; padding: 0; max-width: 40rem; width: calc(100% - 2rem); background: var(--surface); color: var(--ink); }
+dialog::backdrop { background: rgba(15, 20, 28, 0.55); }
+dialog > div { padding: 1.3rem; display: grid; gap: 0.8rem; max-height: 85vh; overflow: auto; }
+
+.close { padding-block: 2.4rem; text-align: center; }
+.close p { color: var(--muted); max-width: 64ch; margin: 0.5rem auto 0; }
+
+/* phone: home screen of tiles, one section per screen */
+.tiles, .back { display: none; }
+@media (max-width: 720px) {
+  .app .subnav, .app .hero .intro-lede { display: none; }
+  .app .tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; margin-top: 1.2rem; }
+  .tile { position: relative; display: flex; flex-direction: column; gap: 0.6rem; min-height: 6.6rem; padding: 0.9rem; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); color: var(--ink); text-decoration: none; -webkit-tap-highlight-color: transparent; }
+  .tile:active { transform: scale(0.97); border-color: var(--app); }
+  .tile b { font-size: 1.02rem; line-height: 1.25; }
+  .tile small { display: block; font-weight: 400; font-size: 0.82rem; color: var(--muted); margin-top: 0.15rem; }
+  .tile .ic { width: 2.3rem; height: 2.3rem; border-radius: 50%; display: grid; place-items: center; background: color-mix(in srgb, var(--app) 14%, transparent); color: var(--app); }
+  .tile .ic svg { width: 1.25rem; height: 1.25rem; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .tile .badge { position: absolute; top: 0.75rem; right: 0.75rem; font-size: 0.74rem; font-weight: 600; padding: 0.1rem 0.5rem; border-radius: 99px; background: color-mix(in srgb, var(--gold) 20%, transparent); color: var(--gold); }
+  .tile .badge:empty { display: none; }
+  .app [data-screen]:not(.on) { display: none; }
+  .app:not([data-view="home"]) .home-only { display: none; }
+  .app:not([data-view="home"]) .back { display: block; position: sticky; top: 0; z-index: 6; background: var(--paper); border-bottom: 1px solid var(--line); }
+  .back .wrap { display: flex; align-items: center; gap: 0.6rem; padding-block: 0.5rem; }
+  .back button { font: 600 1rem var(--body); color: var(--app); background: none; border: 0; padding: 0.45rem 0.2rem; cursor: pointer; min-height: 44px; }
+  .back span { color: var(--muted); font-size: 0.92rem; margin-left: auto; }
+  .app .section[data-screen] { padding-block: 1.2rem 2rem; }
+  .stat b { font-size: 1.45rem; }
+}
+@media (prefers-reduced-motion: reduce) { .dot.on { animation: none; } }
+[hidden] { display: none !important; }
+</style>
+</head>
+<body>
+
+<div class="banner"><div class="wrap">
+<span><b>Prototype.</b> Every name, date and number here is sample data. Not an official American Legion or VFW website.</span>
+<span class="row" style="gap:0.5rem">
+<label for="org" class="hint" style="font-size:0.9rem">Show titles for</label>
+<select id="org"><option value="legion">American Legion</option><option value="vfw">VFW</option></select>
+<label for="role" class="hint" style="font-size:0.9rem">Viewing as</label>
+<select id="role"><option value="officer">Post officer</option><option value="member">Member</option></select>
+<button type="button" class="link" id="reset">Reset demo</button>
+</span>
+</div></div>
+
+<nav class="subnav" aria-label="Sections"><div class="wrap">
+<a href="#meetings">Meetings</a><a href="#events">Events</a><a href="#board">Message board</a><a href="#members">Members</a><a href="#attendance">Attendance</a><a href="#minutes">Minutes</a>
+</div></nav>
+<div class="back"><div class="wrap"><button type="button" id="home-btn">&larr; Home</button><span id="where"></span></div></div>
+
+<section class="hero home-only"><div class="wrap hero-grid">
+<div>
+<p class="tag" id="org-line">American Legion</p>
+<h1>Post 778</h1>
+<p class="sub">Trenton, Illinois</p>
+<p class="lead intro-lede">Everything the post needs in one place: who's a member, who's paid up, what's coming, who's working it, and what was decided at the last meeting.</p>
+<nav class="tiles" aria-label="Sections">
+<a class="tile" href="#/meetings"><span class="ic"><svg viewBox="0 0 24 24"><path d="M4 6h16v14H4zM4 10h16M8 3v5M16 3v5"/></svg></span><b>Meetings<small>Next date, time and place</small></b></a>
+<a class="tile" href="#/events"><span class="ic"><svg viewBox="0 0 24 24"><path d="M4 21V4M4 4h12l-2 4 2 4H4"/></svg></span><span class="badge" id="t-events"></span><b>Events<small>Schedule and who's working</small></b></a>
+<a class="tile" href="#/board"><span class="ic"><svg viewBox="0 0 24 24"><path d="M4 5h16v10H9l-5 4zM8 9h8M8 12h5"/></svg></span><b>Message board<small>News from the post</small></b></a>
+<a class="tile" href="#/members"><span class="ic"><svg viewBox="0 0 24 24"><path d="M9 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 6.5M18 14.5a6.5 6.5 0 0 1 3.5 5.5"/></svg></span><b>Members<small>Roster and dues</small></b></a>
+<a class="tile" href="#/attendance"><span class="ic"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><b>Attendance<small>Who came, quorum</small></b></a>
+<a class="tile" href="#/minutes"><span class="ic"><svg viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5zM8 10h8M8 14h8M8 18h5"/></svg></span><b>Minutes<small>Record or upload</small></b></a>
+</nav>
+</div>
+<div class="home-side">
+<div class="card next">
+<span class="tag">Next post meeting</span>
+<p class="big" id="next-when"></p>
+<p class="hint" id="next-where"></p>
+<div class="row" style="margin-top:0.7rem"><a class="btn small ghost" href="#meetings" data-go="meetings">All meetings</a></div>
+</div>
+<div class="stats" aria-label="Post at a glance">
+<div class="stat"><b id="s-members">0</b><span>members</span></div>
+<div class="stat"><b id="s-dues">0%</b><span>dues current</span></div>
+<div class="stat"><b id="s-events">0</b><span>events coming up</span></div>
+</div>
+</div>
+</div></section>
+
+<!-- MEETINGS -->
+<section class="section" id="meetings" data-screen="meetings"><div class="wrap">
+<h2>Meetings</h2>
+<p class="lead">Regular post meetings, plus officer and special meetings. The adjutant keeps this current.</p>
+<div class="two">
+<div>
+<div class="card next" style="margin-bottom:1rem">
+<span class="tag">Regular schedule</span>
+<p class="big" id="sched-line">Second Tuesday of each month, 7:00 PM</p>
+<p class="hint" id="sched-where">Post home, Trenton (sample address)</p>
+</div>
+<div class="mlist" id="meeting-list"></div>
+</div>
+<div class="officer-only" data-officer>
+<h3>Add a meeting</h3>
+<form class="form" id="meet-form" novalidate style="margin-top:0.7rem">
+<div><label class="f" for="mt-kind">Type</label><select id="mt-kind"><option>Regular post meeting</option><option>Officers' meeting</option><option>Special meeting</option><option>Joint meeting with Auxiliary</option></select></div>
+<div class="pair"><div><label class="f" for="mt-date">Date</label><input type="date" id="mt-date"></div><div><label class="f" for="mt-time">Time</label><input type="time" id="mt-time" value="19:00"></div></div>
+<div><label class="f" for="mt-where">Location</label><input type="text" id="mt-where" value="Post home, Trenton (sample address)"></div>
+<div><label class="f" for="mt-note">Note (optional)</label><input type="text" id="mt-note" placeholder="Election of officers. Bring dues cards."></div>
+<div class="row"><button class="btn" type="submit">Add meeting</button><p class="ok" id="mt-ok" role="status"></p></div>
+</form>
+</div>
+</div>
+</div></section>
+
+<!-- EVENTS -->
+<section class="section" id="events" data-screen="events"><div class="wrap">
+<h2>Events</h2>
+<p class="lead">Ceremonies, fundraisers and everything else. Each event shows the jobs that need people and who has signed up to work them.</p>
+<div class="chips" role="group" aria-label="Filter events" id="ev-chips">
+<button type="button" class="chip" aria-pressed="true" data-k="all">All</button>
+<button type="button" class="chip" aria-pressed="false" data-k="Ceremony">Ceremonies</button>
+<button type="button" class="chip" aria-pressed="false" data-k="Fundraiser">Fundraisers</button>
+<button type="button" class="chip" aria-pressed="false" data-k="Community">Community</button>
+<button type="button" class="chip" aria-pressed="false" data-k="Miscellaneous">Miscellaneous</button>
+</div>
+<p class="hint" id="me-line" style="margin:-0.3rem 0 1rem"></p>
+<details class="composer" data-officer><summary>Add an event</summary>
+<form class="form" id="ev-form" novalidate style="margin-top:0.8rem">
+<div><label class="f" for="ev-title">Event</label><input type="text" id="ev-title" maxlength="80" placeholder="Pancake breakfast"></div>
+<div class="pair"><div><label class="f" for="ev-kind">Kind</label><select id="ev-kind"><option>Ceremony</option><option>Fundraiser</option><option>Community</option><option>Miscellaneous</option></select></div>
+<div><label class="f" for="ev-date">Date</label><input type="date" id="ev-date"></div></div>
+<div class="pair"><div><label class="f" for="ev-time">Time</label><input type="text" id="ev-time" placeholder="7:00 to 11:00 AM"></div><div><label class="f" for="ev-where">Where</label><input type="text" id="ev-where" placeholder="Post home"></div></div>
+<div><label class="f" for="ev-shifts">Jobs that need people (one per line: job, how many)</label><textarea id="ev-shifts" placeholder="Kitchen, 4&#10;Serving, 3&#10;Cleanup, 2"></textarea></div>
+<div class="row"><button class="btn" type="submit">Add event</button><p class="ok" id="ev-ok" role="status"></p></div>
+</form></details>
+<div class="grid" id="ev-list"></div>
+</div></section>
+
+<!-- BOARD -->
+<section class="section" id="board" data-screen="board"><div class="wrap">
+<h2>Message board</h2>
+<p class="lead">Announcements from the officers and notes between members. Members only in the real version.</p>
+<div class="chips" role="group" aria-label="Filter posts" id="bd-chips">
+<button type="button" class="chip" aria-pressed="true" data-k="all">All</button>
+<button type="button" class="chip" aria-pressed="false" data-k="Announcement">Announcements</button>
+<button type="button" class="chip" aria-pressed="false" data-k="Sick call">Sick call and prayers</button>
+<button type="button" class="chip" aria-pressed="false" data-k="General">General</button>
+</div>
+<details class="composer"><summary>Write a post</summary>
+<form class="form" id="bd-form" novalidate style="margin-top:0.8rem">
+<div><label class="f" for="bd-title">Subject</label><input type="text" id="bd-title" maxlength="90" placeholder="Flags for the cemetery on Saturday"></div>
+<div><label class="f" for="bd-body">Message</label><textarea id="bd-body" maxlength="800"></textarea></div>
+<div class="pair"><div><label class="f" for="bd-kind">Kind</label><select id="bd-kind"><option>General</option><option>Announcement</option><option>Sick call</option></select></div>
+<div data-officer><label class="f">&nbsp;</label><label class="row" style="min-height:44px"><input type="checkbox" id="bd-pin" style="width:1.1rem;height:1.1rem"> Pin to the top</label></div></div>
+<div class="row"><button class="btn" type="submit">Post</button><p class="ok" id="bd-ok" role="status"></p></div>
+</form></details>
+<div class="posts" id="bd-list"></div>
+</div></section>
+
+<!-- MEMBERS -->
+<section class="section" id="members" data-screen="members"><div class="wrap">
+<h2>Members</h2>
+<p class="lead" id="mem-lead">The post roster. Dues show Yes when this year's dues are paid. Only officers can change dues status.</p>
+<div class="toolbar">
+<input type="search" id="mem-q" placeholder="Search by name or service branch" aria-label="Search members">
+<div class="chips" role="group" aria-label="Filter by dues" id="mem-chips" style="margin:0">
+<button type="button" class="chip" aria-pressed="true" data-k="all">Everyone</button>
+<button type="button" class="chip" aria-pressed="false" data-k="yes">Dues current</button>
+<button type="button" class="chip" aria-pressed="false" data-k="no">Not yet paid</button>
+<button type="button" class="chip" aria-pressed="false" data-k="off">Officers</button>
+</div>
+</div>
+<table class="table" aria-label="Members">
+<thead><tr><th>Name</th><th>Service</th><th>Position</th><th id="dues-h">2027 dues current?</th><th class="act" data-officer></th></tr></thead>
+<tbody id="mem-list"></tbody>
+</table>
+<p class="hint" id="mem-count" style="margin-top:0.6rem"></p>
+<details class="composer" data-officer style="margin-top:1rem"><summary>Add a member</summary>
+<form class="form" id="mem-form" novalidate style="margin-top:0.8rem">
+<div class="pair"><div><label class="f" for="mf-name">Name</label><input type="text" id="mf-name" maxlength="60"></div>
+<div><label class="f" for="mf-branch">Service</label><select id="mf-branch"><option>Army</option><option>Navy</option><option>Air Force</option><option>Marine Corps</option><option>Coast Guard</option><option>Space Force</option></select></div></div>
+<div class="pair"><div><label class="f" for="mf-era">Era (optional)</label><input type="text" id="mf-era" placeholder="Vietnam, Gulf War, OIF..."></div>
+<div><label class="f" for="mf-dues">Dues</label><select id="mf-dues"><option value="yes">Paid this year</option><option value="no">Not yet</option><option value="life">Life member</option></select></div></div>
+<div class="row"><button class="btn" type="submit">Add member</button><p class="ok" id="mf-ok" role="status"></p></div>
+</form></details>
+</div></section>
+
+<!-- ATTENDANCE -->
+<section class="section" id="attendance" data-screen="attendance"><div class="wrap">
+<h2>Attendance</h2>
+<p class="lead">Check people in at the door or during roll call. The count and quorum update as you go.</p>
+<div class="two">
+<div>
+<div class="pair" style="margin-bottom:0.9rem">
+<div><label class="f" for="at-meet">Meeting</label><select id="at-meet"></select></div>
+<div><label class="f" for="at-q">Quorum (from your by-laws)</label><input type="number" id="at-q" min="1" value="7"></div>
+</div>
+<div class="row" style="justify-content:space-between;margin-bottom:0.6rem"><p class="quorum" id="at-count" role="status"></p><input type="search" id="at-search" placeholder="Find a name" aria-label="Find a name" style="max-width:14rem"></div>
+<div class="checklist" id="at-list"></div>
+<p class="hint" style="margin-top:0.6rem">Members only see their own attendance in the real version. Officers see everyone.</p>
+</div>
+<div>
+<h3>Attendance history</h3>
+<div class="mins" id="at-hist" style="margin-top:0.7rem"></div>
+</div>
+</div>
+</div></section>
+
+<!-- MINUTES -->
+<section class="section" id="minutes" data-screen="minutes"><div class="wrap">
+<h2>Minutes</h2>
+<p class="lead">Record the meeting on a phone and get a first draft of the minutes, or upload minutes the adjutant already wrote. Nothing is official until the post approves it at the next meeting.</p>
+<ol class="steps">
+<li>Announce at the start that the meeting is being recorded for the minutes.</li>
+<li>Press Record and set the phone on the table.</li>
+<li>After the meeting, a draft is written in the post's order of business.</li>
+<li>The adjutant fixes names, motions and votes.</li>
+<li>The post approves the minutes; the recording is deleted.</li>
+</ol>
+<div class="two">
+<div class="card" data-officer>
+<h3>Record a meeting</h3>
+<div class="rec" style="margin:0.8rem 0">
+<span class="dot" id="rec-dot" aria-hidden="true"></span><span class="timer" id="rec-time">00:00</span>
+<button type="button" class="btn" id="rec-btn">Record</button>
+<button type="button" class="btn ghost" id="sample-btn">Use a sample meeting</button>
+</div>
+<p class="hint" id="rec-note">In this prototype the recording stays on this device and is not sent anywhere. The draft below is built from a sample meeting.</p>
+<audio id="rec-audio" controls hidden style="width:100%;margin-top:0.6rem"></audio>
+<div id="draft-box" hidden style="margin-top:1rem">
+<label class="f" for="draft">Draft minutes (edit before saving)</label>
+<textarea class="draft" id="draft"></textarea>
+<div class="row" style="margin-top:0.7rem"><button type="button" class="btn" id="draft-save">Save as draft for approval</button><p class="ok" id="draft-ok" role="status"></p></div>
+</div>
+</div>
+<div>
+<div class="card" data-officer style="margin-bottom:1rem">
+<h3>Upload minutes</h3>
+<form class="form" id="up-form" novalidate style="margin-top:0.7rem">
+<div><label class="f" for="up-meet">For the meeting on</label><select id="up-meet"></select></div>
+<div><label class="f" for="up-file">File (PDF, Word, photo of handwritten minutes)</label><input type="file" id="up-file" accept=".pdf,.doc,.docx,.txt,image/*"></div>
+<div class="row"><button class="btn" type="submit">Upload</button><p class="ok" id="up-ok" role="status"></p></div>
+</form>
+</div>
+<h3>Minutes on file</h3>
+<div class="mins" id="min-list" style="margin-top:0.7rem"></div>
+</div>
+</div>
+</div></section>
+
+<section class="close home-only"><div class="wrap">
+<p>A prototype for Post 778 to try out before anything is built for real. In the real version members sign in, the roster and dues are visible only to members, and only officers can change dues, meetings, events and minutes. What you type here stays in this browser and "Reset demo" clears it.</p>
+</div></section>
+
+<dialog id="dlg" aria-labelledby="dlg-t"><div>
+<h3 id="dlg-t"></h3>
+<div id="dlg-b"></div>
+<div class="row" style="justify-content:flex-end"><button class="btn" type="button" id="dlg-close">Close</button></div>
+</div></dialog>
+
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const KEY = "post778-demo.v1";
+  const load = () => { try { return JSON.parse(localStorage.getItem(KEY)); } catch { return null; } };
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch { } };
+
+  // ---- dates relative to today so the demo never goes stale
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const iso = d => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+  const parse = s => { const [y, m, d] = s.split("-").map(Number); return new Date(y, m - 1, d); };
+  const secondTuesday = (y, m) => { const d = new Date(y, m, 1); const add = (2 - d.getDay() + 7) % 7; return new Date(y, m, 1 + add + 7); };
+  const plusDays = n => { const d = new Date(today); d.setDate(d.getDate() + n); return iso(d); };
+  const meetingDates = () => {
+    const out = [];
+    for (let k = -3; k <= 3; k++) { const d = secondTuesday(today.getFullYear(), today.getMonth() + k); out.push(iso(d)); }
+    return out;
+  };
+  const fmtDay = s => parse(s).toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric" });
+  const fmtShort = s => parse(s).toLocaleDateString("en-US", { month: "short", day: "numeric" });
+  const fmtTime = t => { if (!t) return ""; const [h, m] = t.split(":").map(Number); return `${((h + 11) % 12) + 1}:${String(m).padStart(2, "0")} ${h < 12 ? "AM" : "PM"}`; };
+  const duesYear = today.getMonth() >= 8 ? today.getFullYear() + 1 : today.getFullYear(); // renewals open in the fall
+
+  // ---- titles differ between the two organizations
+  const TITLES = {
+    legion: { name: "American Legion", cmdr: "Commander", v1: "1st Vice Commander", v2: "2nd Vice Commander", adj: "Adjutant", fin: "Finance Officer", chap: "Chaplain", sgt: "Sergeant-at-Arms", svc: "Service Officer", hist: "Historian", aux: "Auxiliary" },
+    vfw: { name: "VFW", cmdr: "Commander", v1: "Senior Vice Commander", v2: "Junior Vice Commander", adj: "Adjutant", fin: "Quartermaster", chap: "Chaplain", sgt: "Officer of the Day", svc: "Service Officer", hist: "Historian", aux: "Auxiliary" },
+  };
+
+  // ---- sample data (all invented)
+  const FIRST = ["Gary", "Dale", "Ron", "Linda", "Jim", "Kevin", "Mark", "Carol", "Tom", "Steve", "Paul", "Rick", "Dennis", "Jeff", "Brian", "Denise", "Larry", "Mike", "Terry", "Dan", "Joe", "Ken", "Bob", "Karen", "Scott", "Wayne", "Doug", "Rita"];
+  const LAST = ["Albers", "Becker", "Deiters", "Fuehne", "Gerdes", "Haar", "Huelsmann", "Jansen", "Kampwerth", "Koenig", "Lampe", "Meier", "Nordhaus", "Ohlendorf", "Pingsterhaus", "Rakers", "Schaefer", "Schulte", "Timpe", "Voss", "Wessel", "Winkeler", "Zurliene", "Brinkmann", "Hemann", "Lager", "Moll", "Rensing"];
+  const BR = ["Army", "Army", "Army", "Navy", "Air Force", "Marine Corps", "Army", "Navy", "Air Force", "Coast Guard"];
+  const ERA = ["Vietnam", "Vietnam", "Cold War", "Gulf War", "OIF/OEF", "Korea", "Cold War", "Vietnam", "OIF/OEF", "Gulf War"];
+  const POS = { 0: "cmdr", 1: "v1", 2: "v2", 3: "adj", 4: "fin", 5: "chap", 6: "sgt", 7: "svc", 8: "hist" };
+  function seed() {
+    const members = FIRST.map((f, i) => ({
+      id: i + 1, n: `${f} ${LAST[i]}`, b: BR[i % BR.length], e: ERA[(i * 3) % ERA.length], pos: POS[i] || "",
+      d: i % 9 === 4 || i % 7 === 6 ? "no" : (i % 5 === 2 ? "life" : "yes"),
+    }));
+    const md = meetingDates();
+    const meetings = md.map((d, i) => ({ id: i + 1, d, t: "19:00", w: "Post home, Trenton (sample address)", k: "Regular post meeting", note: i === 4 ? "Nomination of officers" : "" }));
+    meetings.push({ id: 99, d: plusDays(9), t: "18:30", w: "Post home, Trenton (sample address)", k: "Officers' meeting", note: "Plan the fish fry" });
+    const att = {};
+    const pastIds = meetings.filter(m => parse(m.d) < today).map(m => m.id);
+    pastIds.forEach((id, i) => { att[id] = members.filter((m, j) => (j + i) % 3 !== 0).map(m => m.id).slice(0, 11 + i * 2); });
+    const lastId = pastIds[pastIds.length - 1] || 1, prevId = pastIds[pastIds.length - 2] || 1, prev2 = pastIds[pastIds.length - 3] || 1;
+    const events = [
+      { id: 1, k: "Ceremony", t: "Veterans Day ceremony", d: plusDays(-3), time: "11:00 AM", w: "Town square", shifts: [["Color guard", 6, [1, 7, 9, 12]], ["Rifle squad", 7, [2, 4, 14]], ["Set up chairs", 3, [5, 11, 18]]] },
+      { id: 2, k: "Fundraiser", t: "Fish fry", d: plusDays(19), time: "4:00 to 7:30 PM", w: "Post home", shifts: [["Kitchen", 5, [3, 10]], ["Serving line", 4, [8]], ["Cash table", 2, [5]], ["Cleanup", 3, []]] },
+      { id: 3, k: "Community", t: "Wreaths Across America", d: plusDays(27), time: "11:00 AM", w: "Town cemetery", shifts: [["Wreath placement", 10, [1, 2, 6, 9, 13, 16, 20]], ["Parking", 2, [17]]] },
+      { id: 4, k: "Miscellaneous", t: "Christmas party for members and families", d: plusDays(35), time: "6:00 PM", w: "Post home", shifts: [["Decorating", 4, [12, 22]], ["Potluck table", 2, []]] },
+      { id: 5, k: "Fundraiser", t: "Poppy distribution", d: plusDays(160), time: "All day", w: "Grocery store entrances", shifts: [["Morning table", 4, []], ["Afternoon table", 4, []]] },
+      { id: 6, k: "Ceremony", t: "Memorial Day service", d: plusDays(195), time: "10:00 AM", w: "Town cemetery", shifts: [["Color guard", 6, []], ["Rifle squad", 7, []], ["Program handouts", 2, []]] },
+      { id: 7, k: "Miscellaneous", t: "Hall rental: wedding reception (bar staff)", d: plusDays(48), time: "5:00 to 11:00 PM", w: "Post home", shifts: [["Bar", 3, [7]]] },
+    ];
+    const posts = [
+      { id: 1, k: "Announcement", t: "Dues for the new year are due", x: "Dues cards are in. Pay at the next meeting or mail a check to the post. Members who are paid show Yes on the roster.", by: "officer:fin", d: plusDays(-6), pin: true, r: [] },
+      { id: 2, k: "Sick call", t: "Keep Dale in your prayers", x: "Dale had surgery Monday and is home recovering. Cards welcome at the post.", by: "officer:chap", d: plusDays(-2), r: [["Ron Deiters", "Will stop by Saturday with a few of the guys."]] },
+      { id: 3, k: "General", t: "Thank you for Veterans Day", x: "Good turnout at the square. Thanks to the color guard and everyone who set up and tore down.", by: "officer:cmdr", d: plusDays(-2), r: [] },
+      { id: 4, k: "General", t: "Need two more for the fish fry kitchen", x: "Sign up on the Events page. Shifts are about three hours.", by: "Kevin Haar", d: plusDays(-1), r: [] },
+    ];
+    const minutes = [
+      { id: 1, mid: prevId, st: "approved", how: "Typed by the adjutant", text: SAMPLE_MIN("approved") },
+      { id: 2, mid: lastId, st: "draft", how: "Drafted from recording", text: SAMPLE_MIN("draft") },
+      { id: 3, mid: prev2, st: "approved", how: "Uploaded (photo of handwritten minutes)", file: "minutes-scan.jpg" },
+    ];
+    return { members, meetings, att, events, posts, minutes, me: 4, org: "legion", role: "officer", quorum: 7 };
+  }
+  function SAMPLE_MIN(kind) {
+    return `Called to order at 7:00 PM by the Commander. Opening prayer by the Chaplain. Pledge of Allegiance.\nRoll call of officers: all present except the Historian (excused).\nMinutes of the last meeting read and approved as read.\nFinance report: balance reported; bills read and approved for payment.\nService Officer: two members helped with VA claims this month.\nOld business: Veterans Day ceremony plans confirmed.\nNew business: Motion to hold the fish fry on the date set, made and seconded. Carried.\nGood of the order: members asked to sign up for Wreaths Across America.\nClosing prayer. Adjourned at 8:05 PM.${kind === "draft" ? "\n\n[Draft written from the recording. Adjutant to check names and vote counts.]" : ""}`;
+  }
+
+  let S = load(); if (!S || !S.members) S = seed();
+  let T = TITLES[S.org];
+  const isOfficer = () => S.role === "officer";
+  const posName = p => p ? T[p] : "";
+  const memberName = id => (S.members.find(m => m.id === id) || {}).n || "Someone";
+  const byLine = b => b.startsWith("officer:") ? T[b.slice(8)] : b;
+
+  // ---- generic dialog
+  function dialog(title, html) { $("dlg-t").textContent = title; $("dlg-b").innerHTML = html; $("dlg").showModal(); }
+  $("dlg-close").onclick = () => $("dlg").close();
+  $("dlg").addEventListener("click", e => { if (e.target === $("dlg")) $("dlg").close(); });
+
+  // ---- home
+  function upcoming() { return S.meetings.filter(m => parse(m.d) >= today).sort((a, b) => a.d.localeCompare(b.d)); }
+  function renderHome() {
+    const reg = upcoming().find(m => m.k === "Regular post meeting") || upcoming()[0];
+    $("next-when").textContent = reg ? `${fmtDay(reg.d)}, ${fmtTime(reg.t)}` : "No meeting scheduled";
+    $("next-where").textContent = reg ? reg.w + (reg.note ? `. ${reg.note}.` : "") : "";
+    $("s-members").textContent = S.members.length;
+    const cur = S.members.filter(m => m.d !== "no").length;
+    $("s-dues").textContent = Math.round(100 * cur / Math.max(1, S.members.length)) + "%";
+    const evs = S.events.filter(e => parse(e.d) >= today).length;
+    $("s-events").textContent = evs; $("t-events").textContent = evs ? evs + " coming" : "";
+    $("org-line").textContent = T.name;
+  }
+
+  // ---- meetings
+  function renderMeetings() {
+    const all = S.meetings.slice().sort((a, b) => a.d.localeCompare(b.d));
+    const up = all.filter(m => parse(m.d) >= today), past = all.filter(m => parse(m.d) < today).reverse().slice(0, 3);
+    const item = m => { const d = parse(m.d); return `<div class="mitem"><div class="date"><b>${d.getDate()}</b><span>${d.toLocaleDateString("en-US", { month: "short" })}</span></div><div><b>${esc(m.k)}</b><p class="hint">${esc(fmtDay(m.d))}, ${esc(fmtTime(m.t))}. ${esc(m.w)}.</p>${m.note ? `<p class="hint" style="color:var(--ink)">${esc(m.note)}</p>` : ""}</div></div>`; };
+    $("meeting-list").innerHTML = `<h3 style="margin:0.2rem 0 0.4rem">Coming up</h3>` + (up.map(item).join("") || `<p class="hint">Nothing scheduled.</p>`) +
+      `<h3 style="margin:1.2rem 0 0.4rem">Recent</h3>` + past.map(item).join("");
+  }
+  $("meet-form").addEventListener("submit", e => {
+    e.preventDefault(); const ok = $("mt-ok");
+    if (!$("mt-date").value) { ok.className = "ok bad"; ok.textContent = "Pick a date."; return; }
+    S.meetings.push({ id: Date.now(), d: $("mt-date").value, t: $("mt-time").value || "19:00", w: $("mt-where").value.trim() || "Post home", k: $("mt-kind").value, note: $("mt-note").value.trim() });
+    save(); renderAll(); ok.className = "ok"; ok.textContent = "Added. Members would get a reminder the day before.";
+    $("mt-note").value = ""; $("mt-date").value = "";
+  });
+
+  // ---- events and who's working them
+  let evK = "all";
+  function renderEvents() {
+    $("me-line").innerHTML = `Signing up as <b>${esc(memberName(S.me))}</b> (in the real version, whoever is signed in).`;
+    const list = S.events.filter(e => evK === "all" || e.k === evK).sort((a, b) => a.d.localeCompare(b.d));
+    const up = list.filter(e => parse(e.d) >= today), past = list.filter(e => parse(e.d) < today);
+    const card = e => {
+      const done = parse(e.d) < today;
+      const shifts = e.shifts.map(([job, need, ids], si) => {
+        const mine = ids.includes(S.me), full = ids.length >= need;
+        return `<div class="shift"><div class="row"><b>${esc(job)}</b><span class="hint">${ids.length} of ${need}</span></div>
+          <div class="bar${full ? " full" : ""}"><i style="width:${Math.min(100, 100 * ids.length / need)}%"></i></div>
+          <p class="names">${ids.length ? ids.map(memberName).map(esc).join(", ") : "Nobody yet"}</p>
+          ${done ? "" : `<div class="row" style="margin-top:0.35rem"><button type="button" class="btn small ${mine ? "" : "ghost"}" data-ev="${e.id}" data-si="${si}" ${!mine && full ? "disabled" : ""}>${mine ? "I'm working this (tap to drop)" : full ? "Full" : "I'll work this"}</button></div>`}</div>`;
+      }).join("");
+      const need = e.shifts.reduce((a, s) => a + s[1], 0), have = e.shifts.reduce((a, s) => a + Math.min(s[1], s[2].length), 0);
+      return `<article class="card event"${done ? ' style="opacity:0.72"' : ""}><span class="tag">${esc(e.k)}${done ? " · done" : ""}</span><h3>${esc(e.t)}</h3>
+        <p class="when">${esc(fmtDay(e.d))}, ${esc(e.time)}</p><p class="hint">${esc(e.w)}. ${have} of ${need} spots filled.</p><div class="shifts">${shifts}</div></article>`;
+    };
+    $("ev-list").innerHTML = up.map(card).join("") + past.map(card).join("") || `<p class="hint">No events of this kind.</p>`;
+    $("ev-list").querySelectorAll("[data-ev]").forEach(b => b.onclick = () => {
+      const ev = S.events.find(x => x.id === +b.dataset.ev), ids = ev.shifts[+b.dataset.si][2];
+      const i = ids.indexOf(S.me); if (i >= 0) ids.splice(i, 1); else ids.push(S.me);
+      save(); renderEvents(); renderHome();
+    });
+  }
+  document.querySelectorAll("#ev-chips .chip").forEach(b => b.onclick = () => { evK = b.dataset.k; document.querySelectorAll("#ev-chips .chip").forEach(x => x.setAttribute("aria-pressed", x === b)); renderEvents(); });
+  $("ev-form").addEventListener("submit", e => {
+    e.preventDefault(); const ok = $("ev-ok"), t = $("ev-title").value.trim();
+    if (t.length < 3 || !$("ev-date").value) { ok.className = "ok bad"; ok.textContent = "Add a name and a date."; return; }
+    const shifts = $("ev-shifts").value.split("\n").map(l => l.split(",")).filter(p => p[0].trim()).map(([j, n]) => [j.trim(), Math.max(1, parseInt(n, 10) || 1), []]);
+    S.events.push({ id: Date.now(), k: $("ev-kind").value, t, d: $("ev-date").value, time: $("ev-time").value.trim() || "Time to be set", w: $("ev-where").value.trim() || "Post home", shifts: shifts.length ? shifts : [["Helpers", 2, []]] });
+    save(); renderAll(); $("ev-form").reset(); ok.className = "ok"; ok.textContent = "Added. Members can sign up now.";
+  });
+
+  // ---- message board
+  let bdK = "all";
+  function renderBoard() {
+    const list = S.posts.filter(p => bdK === "all" || p.k === bdK).sort((a, b) => ((b.pin ? 1 : 0) - (a.pin ? 1 : 0)) || b.d.localeCompare(a.d) || b.id - a.id);
+    $("bd-list").innerHTML = list.map(p => `<article class="post${p.pin ? " pinned" : ""}"><p class="meta">${p.pin ? "Pinned · " : ""}${esc(p.k)} · ${esc(byLine(p.by))} · ${esc(fmtShort(p.d))}</p><h3>${esc(p.t)}</h3><p class="x">${esc(p.x)}</p>
+      ${p.r.map(([n, x]) => `<div class="reply"><b>${esc(n)}:</b> ${esc(x)}</div>`).join("")}
+      <form class="row reply-f" data-p="${p.id}" style="margin-top:0.7rem"><input type="text" placeholder="Reply" aria-label="Reply" style="flex:1 1 12rem"><button class="btn small ghost" type="submit">Reply</button></form></article>`).join("") || `<p class="hint">Nothing here yet.</p>`;
+    $("bd-list").querySelectorAll(".reply-f").forEach(f => f.onsubmit = e => {
+      e.preventDefault(); const v = f.querySelector("input").value.trim(); if (!v) return;
+      S.posts.find(p => p.id === +f.dataset.p).r.push([memberName(S.me), v]); save(); renderBoard();
+    });
+  }
+  document.querySelectorAll("#bd-chips .chip").forEach(b => b.onclick = () => { bdK = b.dataset.k; document.querySelectorAll("#bd-chips .chip").forEach(x => x.setAttribute("aria-pressed", x === b)); renderBoard(); });
+  $("bd-form").addEventListener("submit", e => {
+    e.preventDefault(); const ok = $("bd-ok"), t = $("bd-title").value.trim(), x = $("bd-body").value.trim();
+    if (t.length < 3 || x.length < 3) { ok.className = "ok bad"; ok.textContent = "Add a subject and a message."; return; }
+    S.posts.push({ id: Date.now(), k: $("bd-kind").value, t, x, by: isOfficer() && $("bd-kind").value === "Announcement" ? "officer:adj" : memberName(S.me), d: iso(today), pin: isOfficer() && $("bd-pin").checked, r: [] });
+    save(); renderBoard(); $("bd-form").reset(); ok.className = "ok"; ok.textContent = "Posted.";
+  });
+
+  // ---- members and dues
+  let memK = "all";
+  const duesPill = d => d === "life" ? `<span class="pill life">Yes · Life member</span>` : d === "yes" ? `<span class="pill yes">Yes</span>` : `<span class="pill no">No</span>`;
+  function renderMembers() {
+    $("dues-h").textContent = `${duesYear} dues current?`;
+    const q = $("mem-q").value.trim().toLowerCase();
+    const rank = m => m.pos ? Object.keys(POS).find(k => POS[k] === m.pos) * 1 : 99;
+    const list = S.members.filter(m => (!q || (m.n + " " + m.b + " " + m.e).toLowerCase().includes(q)) &&
+      (memK === "all" || (memK === "yes" && m.d !== "no") || (memK === "no" && m.d === "no") || (memK === "off" && m.pos)))
+      .sort((a, b) => rank(a) - rank(b) || a.n.split(" ").pop().localeCompare(b.n.split(" ").pop()));
+    $("mem-list").innerHTML = list.map(m => `<tr><td><b>${esc(m.n)}</b>${m.id === S.me ? " <small>(you)</small>" : ""}</td><td>${esc(m.b)}<small>${esc(m.e)}</small></td>
+      <td>${m.pos ? `<span class="pill off">${esc(posName(m.pos))}</span>` : `<span class="hint">Member</span>`}</td><td>${duesPill(m.d)}</td>
+      <td class="act" data-officer>${m.d === "life" ? "" : `<button type="button" class="btn small ghost" data-dues="${m.id}">Mark ${m.d === "yes" ? "not paid" : "paid"}</button>`}</td></tr>`).join("") ||
+      `<tr><td colspan="5" class="hint">No one matches.</td></tr>`;
+    const cur = S.members.filter(m => m.d !== "no").length;
+    $("mem-count").textContent = `${S.members.length} members. ${cur} current on ${duesYear} dues, ${S.members.length - cur} not yet. Showing ${list.length}.`;
+    $("mem-list").querySelectorAll("[data-dues]").forEach(b => b.onclick = () => {
+      const m = S.members.find(x => x.id === +b.dataset.dues); m.d = m.d === "yes" ? "no" : "yes"; save(); renderMembers(); renderHome(); applyRole();
+    });
+    applyRole();
+  }
+  $("mem-q").oninput = renderMembers;
+  document.querySelectorAll("#mem-chips .chip").forEach(b => b.onclick = () => { memK = b.dataset.k; document.querySelectorAll("#mem-chips .chip").forEach(x => x.setAttribute("aria-pressed", x === b)); renderMembers(); });
+  $("mem-form").addEventListener("submit", e => {
+    e.preventDefault(); const ok = $("mf-ok"), n = $("mf-name").value.trim();
+    if (n.length < 3) { ok.className = "ok bad"; ok.textContent = "Add a name."; return; }
+    S.members.push({ id: Math.max(...S.members.map(m => m.id)) + 1, n, b: $("mf-branch").value, e: $("mf-era").value.trim(), pos: "", d: $("mf-dues").value });
+    save(); renderAll(); $("mem-form").reset(); ok.className = "ok"; ok.textContent = "Added to the roster.";
+  });
+
+  // ---- attendance
+  const regular = () => S.meetings.filter(m => m.k === "Regular post meeting").sort((a, b) => b.d.localeCompare(a.d));
+  function meetingOptions(sel, onlyPast) {
+    const list = regular().filter(m => !onlyPast || parse(m.d) <= today);
+    const cur = sel.value;
+    sel.innerHTML = list.map(m => `<option value="${m.id}">${esc(fmtDay(m.d))}</option>`).join("");
+    if (cur && list.some(m => String(m.id) === cur)) sel.value = cur;
+  }
+  function renderAttendance() {
+    meetingOptions($("at-meet"), false);
+    if (!$("at-meet").dataset.init) { const last = regular().find(m => parse(m.d) <= today); if (last) $("at-meet").value = last.id; $("at-meet").dataset.init = 1; }
+    $("at-q").value = S.quorum;
+    const mid = +$("at-meet").value, here = S.att[mid] || [], q = $("at-search").value.trim().toLowerCase();
+    $("at-list").innerHTML = S.members.filter(m => !q || m.n.toLowerCase().includes(q)).sort((a, b) => a.n.split(" ").pop().localeCompare(b.n.split(" ").pop()))
+      .map(m => `<label><input type="checkbox" data-m="${m.id}" ${here.includes(m.id) ? "checked" : ""} ${isOfficer() ? "" : "disabled"}> ${esc(m.n)}</label>`).join("");
+    const met = here.length >= S.quorum;
+    $("at-count").className = "quorum " + (met ? "met" : "not");
+    $("at-count").textContent = `${here.length} present. ${met ? "Quorum met." : `Quorum is ${S.quorum}; need ${S.quorum - here.length} more.`}`;
+    $("at-list").querySelectorAll("input").forEach(c => c.onchange = () => {
+      const arr = S.att[mid] = S.att[mid] || [], id = +c.dataset.m, i = arr.indexOf(id);
+      if (c.checked && i < 0) arr.push(id); if (!c.checked && i >= 0) arr.splice(i, 1); save(); renderAttendance();
+    });
+    const hist = regular().filter(m => parse(m.d) <= today).slice(0, 6);
+    $("at-hist").innerHTML = hist.map(m => { const n = (S.att[m.id] || []).length; return `<div class="min"><span><b>${esc(fmtShort(m.d))}</b> <span class="hint">${esc(m.k)}</span></span><span>${n} present ${n >= S.quorum ? '<span class="pill yes">quorum</span>' : n ? '<span class="pill no">no quorum</span>' : ""}</span></div>`; }).join("") || `<p class="hint">No past meetings yet.</p>`;
+  }
+  $("at-meet").onchange = renderAttendance; $("at-search").oninput = renderAttendance;
+  $("at-q").onchange = () => { S.quorum = Math.max(1, parseInt($("at-q").value, 10) || 1); save(); renderAttendance(); };
+
+  // ---- minutes: record, draft, upload, approve
+  let rec = null, chunks = [], t0 = 0, tick = null;
+  const files = {}; // uploaded files live only in this page session
+  $("rec-btn").onclick = async () => {
+    if (rec && rec.state === "recording") { rec.stop(); return; }
+    if (!navigator.mediaDevices || !window.MediaRecorder) { $("rec-note").textContent = "This browser can't record here. Use \"Use a sample meeting\" to see the draft."; return; }
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      chunks = []; rec = new MediaRecorder(stream);
+      rec.ondataavailable = e => chunks.push(e.data);
+      rec.onstop = () => {
+        stream.getTracks().forEach(t => t.stop()); clearInterval(tick); $("rec-dot").classList.remove("on"); $("rec-btn").textContent = "Record";
+        const a = $("rec-audio"); a.src = URL.createObjectURL(new Blob(chunks, { type: rec.mimeType })); a.hidden = false;
+        $("rec-note").textContent = "Recorded on this device only. The real version sends it for transcription; this prototype drafts from a sample meeting instead.";
+        makeDraft();
+      };
+      rec.start(); t0 = Date.now(); $("rec-dot").classList.add("on"); $("rec-btn").textContent = "Stop";
+      tick = setInterval(() => { const s = Math.floor((Date.now() - t0) / 1000); $("rec-time").textContent = `${String(Math.floor(s / 60)).padStart(2, "0")}:${String(s % 60).padStart(2, "0")}`; }, 500);
+    } catch { $("rec-note").textContent = "Microphone permission was not given. Use \"Use a sample meeting\" to see the draft."; }
+  };
+  function makeDraft() {
+    const last = regular().find(m => parse(m.d) <= today);
+    const head = `MINUTES OF THE REGULAR MEETING\n${T.name} Post 778, Trenton, Illinois\n${last ? fmtDay(last.d) : ""}, Post home\n\n`;
+    const here = last ? (S.att[last.id] || []).length : 0;
+    const body = SAMPLE_MIN("draft").replace("Roll call of officers", `Members present: ${here}. Quorum ${here >= S.quorum ? "present" : "NOT present"}.\nRoll call of officers`)
+      .replace("Finance report", `${T.fin}'s report`).replace("Service Officer:", `${T.svc}:`);
+    $("draft").value = head + body + `\n\nRespectfully submitted,\n${T.adj}`;
+    $("draft-box").hidden = false; $("draft-ok").textContent = "";
+  }
+  $("sample-btn").onclick = makeDraft;
+  $("draft-save").onclick = () => {
+    const last = regular().find(m => parse(m.d) <= today); if (!last) return;
+    S.minutes.push({ id: Date.now(), mid: last.id, st: "draft", how: "Drafted from recording", text: $("draft").value });
+    save(); renderMinutes(); $("draft-ok").textContent = "Saved. It shows as a draft until the post approves it.";
+  };
+  $("up-form").addEventListener("submit", e => {
+    e.preventDefault(); const ok = $("up-ok"), f = $("up-file").files[0];
+    if (!f) { ok.className = "ok bad"; ok.textContent = "Choose a file first."; return; }
+    const id = Date.now(); files[id] = URL.createObjectURL(f);
+    S.minutes.push({ id, mid: +$("up-meet").value, st: "draft", how: "Uploaded", file: f.name });
+    save(); renderMinutes(); $("up-form").reset(); ok.className = "ok"; ok.textContent = "Uploaded. In this prototype the file opens only until you close the page.";
+  });
+  function renderMinutes() {
+    meetingOptions($("up-meet"), true);
+    const list = S.minutes.slice().sort((a, b) => { const ma = S.meetings.find(m => m.id === a.mid), mb = S.meetings.find(m => m.id === b.mid); return (mb ? mb.d : "").localeCompare(ma ? ma.d : "") || b.id - a.id; });
+    $("min-list").innerHTML = list.map(x => { const m = S.meetings.find(mm => mm.id === x.mid);
+      return `<div class="min"><span><b>${m ? esc(fmtShort(m.d)) : "Meeting"}</b> <span class="hint">${esc(x.how)}${x.file ? ": " + esc(x.file) : ""}</span></span>
+      <span class="row" style="gap:0.5rem">${x.st === "approved" ? '<span class="pill yes">Approved</span>' : '<span class="pill life">Draft</span>'}
+      <button type="button" class="btn small ghost" data-open="${x.id}">Open</button>${x.st === "draft" && isOfficer() ? `<button type="button" class="btn small" data-ap="${x.id}">Mark approved</button>` : ""}</span></div>`; }).join("") || `<p class="hint">No minutes yet.</p>`;
+    $("min-list").querySelectorAll("[data-open]").forEach(b => b.onclick = () => {
+      const x = S.minutes.find(y => y.id === +b.dataset.open), m = S.meetings.find(mm => mm.id === x.mid);
+      if (x.text) dialog(`Minutes, ${m ? fmtDay(m.d) : ""}`, `<p class="hint">${x.st === "approved" ? "Approved by the post." : "Draft. Not official until approved."}</p><div class="draft" style="min-height:0">${esc(x.text)}</div>`);
+      else if (files[x.id]) window.open(files[x.id], "_blank", "noopener");
+      else dialog("Uploaded minutes", `<p>${esc(x.file)}</p><p class="hint">In the real version the file opens here. In this prototype, sample uploads have no file behind them.</p>`);
+    });
+    $("min-list").querySelectorAll("[data-ap]").forEach(b => b.onclick = () => { S.minutes.find(y => y.id === +b.dataset.ap).st = "approved"; save(); renderMinutes(); });
+  }
+
+  // ---- organization and role switches
+  function applyRole() { document.querySelectorAll("[data-officer]").forEach(el => el.hidden = !isOfficer()); }
+  $("org").value = S.org; $("role").value = S.role;
+  $("org").onchange = () => { S.org = $("org").value; T = TITLES[S.org]; save(); renderAll(); };
+  $("role").onchange = () => { S.role = $("role").value; save(); renderAll(); };
+  $("reset").onclick = () => { try { localStorage.removeItem(KEY); } catch { } S = seed(); T = TITLES[S.org]; $("org").value = S.org; $("role").value = S.role; $("draft-box").hidden = true; $("rec-audio").hidden = true; renderAll(); };
+
+  function renderAll() { renderHome(); renderMeetings(); renderEvents(); renderBoard(); renderMembers(); renderAttendance(); renderMinutes(); applyRole(); }
+
+  // ---- phone layout: home tiles, one section per screen
+  const NAMES = { meetings: "Meetings", events: "Events", board: "Message board", members: "Members", attendance: "Attendance", minutes: "Minutes" };
+  const phone = matchMedia("(max-width: 720px)");
+  function route() {
+    const m = location.hash.match(/^#\/(\w+)/), v = m && NAMES[m[1]] ? m[1] : "home";
+    if (!phone.matches) { document.body.classList.remove("app"); if (v !== "home") { const el = $(v); if (el) el.scrollIntoView(); } return; }
+    document.body.classList.add("app"); document.body.dataset.view = v;
+    document.querySelectorAll("[data-screen]").forEach(s => s.classList.toggle("on", s.dataset.screen === v));
+    $("where").textContent = NAMES[v] || ""; window.scrollTo(0, 0);
+  }
+  $("home-btn").onclick = () => { if (history.length > 1 && location.hash.startsWith("#/")) history.back(); else location.hash = ""; };
+  document.querySelectorAll("[data-go]").forEach(a => a.addEventListener("click", e => { if (phone.matches) { e.preventDefault(); location.hash = "#/" + a.dataset.go; } }));
+  addEventListener("hashchange", route); phone.addEventListener("change", route);
+  renderAll(); route();
+})();
+</script>
+</body>
+</html>
