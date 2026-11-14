@@ -104,7 +104,7 @@ def page(here, title, body, app=None, description=""):
 {body}
 </main>
 <footer class="bottom"><div class="wrap">
-<span>GrayBear Studio · <a href="mailto:hello@graybearstudio.com">hello@graybearstudio.com</a></span>
+<span>© 2026 GrayBear Studio LLC · <a href="mailto:hello@graybearstudio.com">hello@graybearstudio.com</a></span>
 <nav aria-label="Footer">{app_links}<a href="{home}">All apps</a><a href="{href(here, 'privacy')}">Site privacy</a></nav>
 {notes}
 </div></footer>
