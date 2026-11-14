@@ -180,6 +180,36 @@ dialog > div { padding: 1.3rem; display: grid; gap: 0.8rem; max-height: 85vh; ov
 }
 @media (prefers-reduced-motion: reduce) { .dot.on { animation: none; } }
 [hidden] { display: none !important; }
+body:not(.bios-page) #bios { display: none; }
+.bios-page > .subnav, .bios-page .home-only, .bios-page main > *, .bios-page .section:not(#bios) { display: none !important; }
+.bios-page .back { display: block !important; position: sticky; top: 0; z-index: 6; background: var(--paper); border-bottom: 1px solid var(--line); }
+.bios-page .back .wrap { display: flex; align-items: center; gap: 0.6rem; padding-block: 0.5rem; }
+.bios-page .back button { font: 600 1rem var(--body); color: var(--app); background: none; border: 0; padding: 0.45rem 0.2rem; cursor: pointer; min-height: 44px; }
+.bios-page .back span { color: var(--muted); font-size: 0.92rem; margin-left: auto; }
+.bios-btn { display: flex; align-items: center; gap: 0.9rem; margin-top: 1.1rem; padding: 0.85rem 1rem; background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--gold); border-radius: 12px; text-decoration: none; color: var(--ink); max-width: 34rem; }
+.bios-btn:hover { border-color: var(--gold); }
+.bios-btn b { display: block; font: 600 1.1rem var(--display); }
+.bios-btn small { color: var(--muted); font-size: 0.9rem; }
+.bios-btn .arrow { margin-left: auto; font-size: 1.8rem; color: var(--gold); line-height: 1; }
+.bios-faces { display: flex; flex: none; }
+.bios-faces .av { width: 38px; height: 38px; font-size: 0.85rem; border: 2px solid var(--surface); margin-left: -10px; }
+.bios-faces .av:first-child { margin-left: 0; }
+.av { width: 72px; height: 72px; border-radius: 50%; display: grid; place-items: center; flex: none; font: 600 1.3rem var(--display); color: #fff; overflow: hidden; background: var(--app); }
+.av img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.bios { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr)); }
+.bio { text-align: left; font: inherit; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 1rem; display: grid; grid-template-columns: auto 1fr; gap: 0.4rem 0.9rem; cursor: pointer; align-content: start; }
+.bio:hover { border-color: var(--app); }
+.bio h3 { font-size: 1.15rem; }
+.bio .meta { font-size: 0.88rem; color: var(--muted); margin: 0.1rem 0 0; }
+.bio .blurb { grid-column: 1 / -1; margin: 0.2rem 0 0; font-size: 0.95rem; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.bio .blurb.empty { color: var(--muted); font-style: italic; }
+.bio-full { display: grid; grid-template-columns: auto 1fr; gap: 1rem; align-items: center; }
+.bio-full .av { width: 108px; height: 108px; font-size: 2rem; }
+.facts { display: grid; grid-template-columns: max-content 1fr; gap: 0.3rem 1rem; margin: 0; font-size: 0.95rem; }
+.facts dt { color: var(--muted); }
+.facts dd { margin: 0; }
+.photo-row { display: flex; align-items: center; gap: 0.9rem; flex-wrap: wrap; }
+@media (max-width: 720px) { .bio-full .av { width: 80px; height: 80px; font-size: 1.5rem; } .bio .av { width: 60px; height: 60px; font-size: 1.1rem; } .facts { gap: 0.25rem 0.8rem; } }
 .seg { display: inline-flex; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; margin-bottom: 1rem; background: var(--surface); }
 .seg button { font: 600 0.95rem var(--body); border: 0; background: none; color: var(--ink); padding: 0.5rem 1.1rem; min-height: 42px; cursor: pointer; }
 .seg button[aria-pressed="true"] { background: var(--app); color: var(--paper); }
@@ -296,7 +326,7 @@ dialog > div { padding: 1.3rem; display: grid; gap: 0.8rem; max-height: 85vh; ov
 </div></div>
 
 <nav class="subnav" aria-label="Sections"><div class="wrap">
-<a href="#meetings">Meetings</a><a href="#events">Events</a><a href="#board">Message board</a><a href="#members">Members</a><a href="#attendance">Attendance</a><a href="#minutes">Minutes</a>
+<a href="#meetings">Meetings</a><a href="#events">Events</a><a href="#board">Message board</a><a href="#members">Members</a><a href="#/bios">Member bios</a><a href="#attendance">Attendance</a><a href="#minutes">Minutes</a>
 </div></nav>
 <div class="back"><div class="wrap"><button type="button" id="home-btn">&larr; Home</button><span id="where"></span></div></div>
 
@@ -452,6 +482,7 @@ dialog > div { padding: 1.3rem; display: grid; gap: 0.8rem; max-height: 85vh; ov
 <tbody id="mem-list"></tbody>
 </table>
 <p class="hint" id="mem-count" style="margin-top:0.6rem"></p>
+<a class="bios-btn" href="#/bios"><span class="bios-faces" id="bios-faces" aria-hidden="true"></span><span><b>Member bios</b><small>Photos and the stories behind the names</small></span><span class="arrow" aria-hidden="true">&rsaquo;</span></a>
 <details class="composer" data-officer style="margin-top:1rem"><summary>Add a member</summary>
 <form class="form" id="mem-form" novalidate style="margin-top:0.8rem">
 <div class="pair"><div><label class="f" for="mf-name">Name</label><input type="text" id="mf-name" maxlength="60"></div>
@@ -460,6 +491,19 @@ dialog > div { padding: 1.3rem; display: grid; gap: 0.8rem; max-height: 85vh; ov
 <div><label class="f" for="mf-dues">Dues</label><select id="mf-dues"><option value="yes">Paid this year</option><option value="no">Not yet</option><option value="life">Life member</option></select></div></div>
 <div class="row"><button class="btn" type="submit">Add member</button><p class="ok" id="mf-ok" role="status"></p></div>
 </form></details>
+</div></section>
+
+<!-- BIOS (its own page) -->
+<section class="section" id="bios" data-screen="bios"><div class="wrap">
+<p class="tag" id="bios-org">American Legion Post 778</p>
+<h2>Member bios</h2>
+<p class="lead">Who we are and where we served. Every member writes their own bio and chooses what to share; nothing here is required.</p>
+<div class="toolbar">
+<input type="search" id="bio-q" placeholder="Search name, branch, hometown" aria-label="Search bios">
+<div class="chips" role="group" aria-label="Filter by branch" id="bio-chips" style="margin:0"></div>
+</div>
+<div class="row" style="margin-bottom:1rem"><button type="button" class="btn small" id="bio-mine">Edit my bio</button><span class="hint" id="bio-count"></span></div>
+<div class="bios" id="bio-list"></div>
 </div></section>
 
 <!-- ATTENDANCE -->
@@ -616,6 +660,18 @@ dialog > div { padding: 1.3rem; display: grid; gap: 0.8rem; max-height: 85vh; ov
   }
 
   let S = load(); if (!S || !S.members) S = seed();
+  // sample bios (invented). Members write their own in the real version.
+  const BIOS0 = {
+    1: { since: 1998, town: "Trenton", yrs: "1968 to 1971", rank: "Sergeant", where: "Fort Leonard Wood; Vietnam (Central Highlands)", bio: "Drafted out of high school and came home to farm the family ground east of town. Joined the post in '98 when a buddy finally talked me into it. Ask me about the fish fry recipe, not the war." },
+    2: { since: 2006, town: "Aviston", yrs: "1989 to 1993", rank: "Specialist", where: "Fort Hood; Saudi Arabia and Kuwait", bio: "Tank mechanic during Desert Storm. Retired from the railroad. Runs the color guard schedule and will find you if you skip practice." },
+    3: { since: 2011, town: "Trenton", yrs: "1975 to 1979", rank: "Sergeant", where: "Germany (Baumholder)", bio: "Spent most of my enlistment in Germany during the Cold War. Married a girl from Breese and never left the county. Grandfather of six." },
+    4: { since: 2015, town: "Carlyle", yrs: "1990 to 2010", rank: "Chief Petty Officer", where: "Great Lakes; USS ships out of Norfolk and San Diego", bio: "Twenty years as a Navy corpsman, then a nurse at the hospital in Breese. Keeps the post's records straight as adjutant." },
+    5: { since: 2019, town: "Trenton", yrs: "1962 to 1966", rank: "Airman First Class", where: "Scott AFB; Thailand", bio: "Aircraft electrician. Learned more about wiring in four years than in forty since. Handles the post's money, so pay your dues." },
+    6: { since: 2002, town: "New Baden", yrs: "1966 to 1969", rank: "Corporal", where: "Camp Lejeune; Vietnam (I Corps)", bio: "Marine. Chaplain for the post since 2010. Visits members in the hospital and the nursing home every week." },
+    8: { since: 2021, town: "Trenton", yrs: "2003 to 2011", rank: "Staff Sergeant", where: "Fort Campbell; Iraq (two tours); Afghanistan", bio: "Infantry. Came back and became a welder. Helps younger vets with VA claims and paperwork as the post's service officer." },
+    12: { since: 2009, town: "Albers", yrs: "1985 to 1989", rank: "Petty Officer Third Class", where: "Pearl Harbor; aboard a frigate in the Pacific", bio: "Signalman. Coached Little League for twenty years. Organizes the Christmas party and the kids' Easter egg hunt." },
+  };
+  if (!S.bios) { S.bios = {}; S.members.forEach(m => { if (BIOS0[m.id]) S.bios[m.id] = { ...BIOS0[m.id] }; }); }
   let T = TITLES[S.org];
   const isOfficer = () => S.role === "officer";
   const posName = p => p ? T[p] : "";
@@ -956,19 +1012,77 @@ dialog > div { padding: 1.3rem; display: grid; gap: 0.8rem; max-height: 85vh; ov
   $("pk-print").onclick = () => window.print();
   $("pk-close").onclick = () => { $("pk-wrap").hidden = true; document.body.style.overflow = ""; };
 
-  function renderAll() { renderHome(); renderMeetings(); renderEvents(); renderBoard(); renderMembers(); renderAttendance(); renderMinutes(); packetMeetings(); applyRole(); }
+  // ---- member bios page
+  const COLORS = ["#1F3A5F", "#8C2F2F", "#2F6B45", "#9A6412", "#5B4A8A", "#2D5F6B", "#6B3F2D"];
+  const initials = n => n.split(" ").map(w => w[0]).join("").slice(0, 2).toUpperCase();
+  const avatar = (m, cls = "") => { const b = S.bios[m.id] || {}; return b.photo ? `<span class="av ${cls}"><img src="${b.photo}" alt=""></span>` : `<span class="av ${cls}" style="background:${COLORS[m.id % COLORS.length]}">${esc(initials(m.n))}</span>`; };
+  let bioB = "all";
+  function renderBios() {
+    $("bios-org").textContent = `${T.name} Post 778`;
+    const withBio = S.members.filter(m => S.bios[m.id] && (S.bios[m.id].bio || S.bios[m.id].photo));
+    $("bios-faces").innerHTML = withBio.slice(0, 4).map(m => avatar(m)).join("");
+    const branches = ["all", ...new Set(S.members.map(m => m.b))];
+    $("bio-chips").innerHTML = branches.map(b => `<button type="button" class="chip" aria-pressed="${b === bioB}" data-b="${esc(b)}">${b === "all" ? "Everyone" : esc(b)}</button>`).join("");
+    $("bio-chips").querySelectorAll(".chip").forEach(c => c.onclick = () => { bioB = c.dataset.b; renderBios(); });
+    const q = $("bio-q").value.trim().toLowerCase();
+    const list = S.members.filter(m => (bioB === "all" || m.b === bioB) && (!q || `${m.n} ${m.b} ${m.e} ${(S.bios[m.id] || {}).town || ""}`.toLowerCase().includes(q)))
+      .sort((a, b) => (!!S.bios[b.id] - !!S.bios[a.id]) || a.n.split(" ").pop().localeCompare(b.n.split(" ").pop()));
+    $("bio-count").textContent = `${withBio.length} of ${S.members.length} members have shared a bio.`;
+    $("bio-list").innerHTML = list.map(m => { const b = S.bios[m.id] || {};
+      return `<button type="button" class="bio" data-id="${m.id}">${avatar(m)}<div><h3>${esc(m.n)}</h3><p class="meta">${esc(m.b)}${m.e ? " · " + esc(m.e) : ""}</p>${m.pos ? `<span class="pill off" style="margin-top:0.3rem">${esc(posName(m.pos))}</span>` : ""}</div>
+        <p class="blurb${b.bio ? "" : " empty"}">${b.bio ? esc(b.bio) : "No bio yet."}</p></button>`; }).join("") || `<p class="hint">No one matches.</p>`;
+    $("bio-list").querySelectorAll(".bio").forEach(c => c.onclick = () => showBio(+c.dataset.id));
+  }
+  $("bio-q").oninput = renderBios;
+  function showBio(id) {
+    const m = S.members.find(x => x.id === id), b = S.bios[id] || {}, canEdit = isOfficer() || id === S.me;
+    const fact = (k, v) => v ? `<dt>${k}</dt><dd>${esc(v)}</dd>` : "";
+    dialog(m.n, `<div class="bio-full">${avatar(m)}<div><p style="margin:0"><b>${esc(m.b)}</b>${m.e ? " · " + esc(m.e) : ""}</p>${m.pos ? `<span class="pill off" style="margin-top:0.35rem">${esc(posName(m.pos))}</span>` : ""}</div></div>
+      <dl class="facts">${fact("Served", b.yrs)}${fact("Rank", b.rank)}${fact("Where", b.where)}${fact("Hometown", b.town)}${fact("Member since", b.since)}</dl>
+      <p style="margin:0">${b.bio ? esc(b.bio) : '<span class="hint">No bio yet.</span>'}</p>
+      ${canEdit ? `<div class="row"><button type="button" class="btn small ghost" id="bio-edit">${id === S.me ? "Edit my bio" : "Edit bio (officer)"}</button></div>` : ""}`);
+    if (canEdit) $("bio-edit").onclick = () => editBio(id);
+  }
+  function editBio(id) {
+    const m = S.members.find(x => x.id === id), b = { ...(S.bios[id] || {}) };
+    const f = (k, label, ph) => `<div><label class="f" for="be-${k}">${label}</label><input type="text" id="be-${k}" value="${esc(b[k] || "")}" placeholder="${ph}"></div>`;
+    dialog(`Bio: ${m.n}`, `<form class="form" id="be-form" novalidate>
+      <div class="photo-row"><span id="be-av">${avatar(m)}</span><div><label class="f" for="be-photo">Photo</label><input type="file" id="be-photo" accept="image/*"><button type="button" class="link" id="be-nophoto"${b.photo ? "" : " hidden"}>Remove photo</button></div></div>
+      <div class="pair">${f("yrs", "Years served", "1968 to 1971")}${f("rank", "Rank (optional)", "Sergeant")}</div>
+      ${f("where", "Where you served", "Fort Hood; Germany; Iraq")}
+      <div class="pair">${f("town", "Hometown", "Trenton")}${f("since", "Member since", "2010")}</div>
+      <div><label class="f" for="be-bio">Your story</label><textarea id="be-bio" maxlength="900" placeholder="A few sentences: what you did, what you've done since, what you enjoy at the post.">${esc(b.bio || "")}</textarea></div>
+      <label class="row" style="min-height:44px;gap:0.5rem"><input type="checkbox" id="be-ok" ${b.bio || b.photo ? "checked" : ""} style="width:1.1rem;height:1.1rem"> ${id === S.me ? "I'm OK with members seeing this." : "The member said this can be shared."}</label>
+      <div class="row"><button class="btn" type="submit">Save</button><p class="ok" id="be-msg" role="status"></p></div></form>`);
+    $("be-photo").onchange = e => { const file = e.target.files[0]; if (!file) return; const img = new Image(), url = URL.createObjectURL(file);
+      img.onload = () => { const c = document.createElement("canvas"), n = 320, sz = Math.min(img.width, img.height); c.width = c.height = n;
+        c.getContext("2d").drawImage(img, (img.width - sz) / 2, (img.height - sz) / 2, sz, sz, 0, 0, n, n); b.photo = c.toDataURL("image/jpeg", 0.8);
+        URL.revokeObjectURL(url); $("be-av").innerHTML = `<span class="av"><img src="${b.photo}" alt=""></span>`; $("be-nophoto").hidden = false; };
+      img.src = url; };
+    $("be-nophoto").onclick = () => { delete b.photo; $("be-av").innerHTML = `<span class="av" style="background:${COLORS[m.id % COLORS.length]}">${esc(initials(m.n))}</span>`; $("be-nophoto").hidden = true; };
+    $("be-form").onsubmit = e => { e.preventDefault();
+      if (!$("be-ok").checked) { $("be-msg").className = "ok bad"; $("be-msg").textContent = "Tick the box to confirm it can be shared."; return; }
+      ["yrs", "rank", "where", "town", "since"].forEach(k => { b[k] = $("be-" + k).value.trim(); }); b.bio = $("be-bio").value.trim();
+      S.bios[id] = b; save(); renderBios(); showBio(id); };
+  }
+  $("bio-mine").onclick = () => editBio(S.me);
+
+  function renderAll() { renderHome(); renderMeetings(); renderEvents(); renderBoard(); renderMembers(); renderAttendance(); renderMinutes(); packetMeetings(); renderBios(); applyRole(); }
 
   // ---- phone layout: home tiles, one section per screen
-  const NAMES = { meetings: "Meetings", events: "Events", board: "Message board", members: "Members", attendance: "Attendance", minutes: "Minutes" };
+  const NAMES = { meetings: "Meetings", events: "Events", board: "Message board", members: "Members", attendance: "Attendance", minutes: "Minutes", bios: "Member bios" };
   const phone = matchMedia("(max-width: 720px)");
   function route() {
     const m = location.hash.match(/^#\/(\w+)/), v = m && NAMES[m[1]] ? m[1] : "home";
-    if (!phone.matches) { document.body.classList.remove("app"); if (v !== "home") { const el = $(v); if (el) el.scrollIntoView(); } return; }
+    document.body.classList.toggle("bios-page", v === "bios");
+    $("home-btn").innerHTML = v === "bios" ? "&larr; Members" : "&larr; Home";
+    if (v === "bios") { $("where").textContent = NAMES.bios; document.querySelectorAll("[data-screen]").forEach(s => s.classList.toggle("on", s.dataset.screen === v)); if (phone.matches) { document.body.classList.add("app"); document.body.dataset.view = v; } window.scrollTo(0, 0); return; }
+    if (!phone.matches) { document.body.classList.remove("app"); const plain = location.hash.match(/^#(\w+)$/), target = v !== "home" ? v : plain && plain[1]; if (target) { const el = $(target); if (el) el.scrollIntoView(); } return; }
     document.body.classList.add("app"); document.body.dataset.view = v;
     document.querySelectorAll("[data-screen]").forEach(s => s.classList.toggle("on", s.dataset.screen === v));
     $("where").textContent = NAMES[v] || ""; window.scrollTo(0, 0);
   }
-  $("home-btn").onclick = () => { if (history.length > 1 && location.hash.startsWith("#/")) history.back(); else location.hash = ""; };
+  $("home-btn").onclick = () => { if (document.body.classList.contains("bios-page")) { location.hash = phone.matches ? "#/members" : "#members"; return; } if (history.length > 1 && location.hash.startsWith("#/")) history.back(); else location.hash = ""; };
   document.querySelectorAll("[data-go]").forEach(a => a.addEventListener("click", e => { if (phone.matches) { e.preventDefault(); location.hash = "#/" + a.dataset.go; } }));
   $("demo-set").open = !phone.matches;
   addEventListener("hashchange", route); phone.addEventListener("change", route);
