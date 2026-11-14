@@ -180,19 +180,44 @@ dialog > div { padding: 1.3rem; display: grid; gap: 0.8rem; max-height: 85vh; ov
 }
 @media (prefers-reduced-motion: reduce) { .dot.on { animation: none; } }
 [hidden] { display: none !important; }
+.demo-set summary { cursor: pointer; font-weight: 600; color: var(--app); min-height: 36px; display: flex; align-items: center; }
+@media (min-width: 721px) { .demo-set summary { display: none; } }
+@media (max-width: 720px) {
+  .banner .long { display: none; }
+  .banner .wrap { padding-block: 0.35rem; }
+  .demo-set[open] .row { padding: 0.3rem 0 0.5rem; }
+  .demo-set[open] { width: 100%; }
+  .stat { padding: 0.7rem 0.6rem; }
+  .stat span { font-size: 0.8rem; display: block; line-height: 1.3; margin-top: 0.25rem; }
+  .checklist { max-height: none; overflow: visible; }
+  .app #at-bar { position: sticky; top: 60px; z-index: 4; background: var(--paper); padding: 0.45rem 0; border-bottom: 1px solid var(--line); gap: 0.35rem !important; }
+  .app #at-bar .quorum { margin: 0; font-size: 0.98rem; }
+  .app #at-search { max-width: none !important; min-height: 40px; padding-block: 0.4rem; }
+  .hero h1 { font-size: 2.1rem; }
+}
+@media (max-width: 640px) {
+  .table tr { display: grid; grid-template-columns: 1fr auto; grid-template-areas: "name pos" "svc dues" "svc act"; column-gap: 0.6rem; row-gap: 0.25rem; align-items: center; }
+  .table td:nth-child(1) { grid-area: name; }
+  .table td:nth-child(2) { grid-area: svc; font-size: 0.95rem; align-self: start; }
+  .table td:nth-child(3) { grid-area: pos; text-align: right; }
+  .table td:nth-child(4) { grid-area: dues; text-align: right; }
+  .table td.act { grid-area: act; text-align: right; padding-top: 0; }
+  .table td[colspan] { grid-column: 1 / -1; }
+  .table td:nth-child(3) .hint { display: none; }
+}
 </style>
 </head>
 <body>
 
 <div class="banner"><div class="wrap">
-<span><b>Prototype.</b> Every name, date and number here is sample data. Not an official American Legion or VFW website.</span>
-<span class="row" style="gap:0.5rem">
+<span><b>Prototype.</b> Sample data only.<span class="long"> Not an official American Legion or VFW website.</span></span>
+<details class="demo-set" id="demo-set"><summary>Demo settings</summary><span class="row" style="gap:0.5rem">
 <label for="org" class="hint" style="font-size:0.9rem">Show titles for</label>
 <select id="org"><option value="legion">American Legion</option><option value="vfw">VFW</option></select>
 <label for="role" class="hint" style="font-size:0.9rem">Viewing as</label>
 <select id="role"><option value="officer">Post officer</option><option value="member">Member</option></select>
 <button type="button" class="link" id="reset">Reset demo</button>
-</span>
+</span></details>
 </div></div>
 
 <nav class="subnav" aria-label="Sections"><div class="wrap">
@@ -224,8 +249,8 @@ dialog > div { padding: 1.3rem; display: grid; gap: 0.8rem; max-height: 85vh; ov
 </div>
 <div class="stats" aria-label="Post at a glance">
 <div class="stat"><b id="s-members">0</b><span>members</span></div>
-<div class="stat"><b id="s-dues">0%</b><span>dues current</span></div>
-<div class="stat"><b id="s-events">0</b><span>events coming up</span></div>
+<div class="stat"><b id="s-dues">0%</b><span>dues paid</span></div>
+<div class="stat"><b id="s-events">0</b><span>events ahead</span></div>
 </div>
 </div>
 </div></section>
@@ -306,7 +331,7 @@ dialog > div { padding: 1.3rem; display: grid; gap: 0.8rem; max-height: 85vh; ov
 <h2>Members</h2>
 <p class="lead" id="mem-lead">The post roster. Dues show Yes when this year's dues are paid. Only officers can change dues status.</p>
 <div class="toolbar">
-<input type="search" id="mem-q" placeholder="Search by name or service branch" aria-label="Search members">
+<input type="search" id="mem-q" placeholder="Search name or branch" aria-label="Search members">
 <div class="chips" role="group" aria-label="Filter by dues" id="mem-chips" style="margin:0">
 <button type="button" class="chip" aria-pressed="true" data-k="all">Everyone</button>
 <button type="button" class="chip" aria-pressed="false" data-k="yes">Dues current</button>
@@ -339,7 +364,7 @@ dialog > div { padding: 1.3rem; display: grid; gap: 0.8rem; max-height: 85vh; ov
 <div><label class="f" for="at-meet">Meeting</label><select id="at-meet"></select></div>
 <div><label class="f" for="at-q">Quorum (from your by-laws)</label><input type="number" id="at-q" min="1" value="7"></div>
 </div>
-<div class="row" style="justify-content:space-between;margin-bottom:0.6rem"><p class="quorum" id="at-count" role="status"></p><input type="search" id="at-search" placeholder="Find a name" aria-label="Find a name" style="max-width:14rem"></div>
+<div class="row" id="at-bar" style="justify-content:space-between;margin-bottom:0.6rem"><p class="quorum" id="at-count" role="status"></p><input type="search" id="at-search" placeholder="Find a name" aria-label="Find a name" style="max-width:14rem"></div>
 <div class="checklist" id="at-list"></div>
 <p class="hint" style="margin-top:0.6rem">Members only see their own attendance in the real version. Officers see everyone.</p>
 </div>
@@ -710,6 +735,7 @@ dialog > div { padding: 1.3rem; display: grid; gap: 0.8rem; max-height: 85vh; ov
   }
   $("home-btn").onclick = () => { if (history.length > 1 && location.hash.startsWith("#/")) history.back(); else location.hash = ""; };
   document.querySelectorAll("[data-go]").forEach(a => a.addEventListener("click", e => { if (phone.matches) { e.preventDefault(); location.hash = "#/" + a.dataset.go; } }));
+  $("demo-set").open = !phone.matches;
   addEventListener("hashchange", route); phone.addEventListener("change", route);
   renderAll(); route();
 })();
