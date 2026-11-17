@@ -353,6 +353,8 @@ def main():
     demo_makeory.build(page, write, href, accent_css, ROOT)
     import demo_post778
     demo_post778.build(page, write, href, accent_css, ROOT)
+    import demo_drafthawk
+    demo_drafthawk.build(page, write, href, accent_css, ROOT)
     if not PREVIEW:
         build_404()
         with open(os.path.join(DIST, "CNAME"), "w") as f:

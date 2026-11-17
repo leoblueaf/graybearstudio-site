@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>DraftHawk signal test</title>
+<style>
+  :root { --bg:#0D1117; --panel:#161b22; --line:#30363d; --text:#e6edf3; --dim:#8b949e;
+          --cyan:#00F5D4; --amber:#FFB703; --red:#FF0055; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text);
+         font:15px/1.4 -apple-system, system-ui, sans-serif;
+         padding:calc(12px + env(safe-area-inset-top)) 14px calc(24px + env(safe-area-inset-bottom)); }
+  h1 { font-size:20px; margin:0 0 4px; }
+  .dim { color:var(--dim); font-size:13px; }
+  .tabs { display:flex; gap:8px; margin:12px 0; }
+  .tabs button { flex:1; }
+  button { background:var(--panel); color:var(--text); border:1px solid var(--line);
+           border-radius:10px; padding:12px 10px; font-size:15px; font-weight:600; }
+  button.on { border-color:var(--cyan); color:var(--cyan); }
+  button.go { background:var(--cyan); color:#000; border:none; }
+  button.stop { background:var(--red); color:#fff; border:none; }
+  button:disabled { opacity:.4; }
+  .panel { background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:12px; margin:10px 0; }
+  .row { display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+  .row > * { flex:1; }
+  select, input { background:var(--bg); color:var(--text); border:1px solid var(--line);
+                  border-radius:8px; padding:10px; font-size:15px; width:100%; }
+  label { font-size:12px; color:var(--dim); display:block; margin-bottom:4px; }
+  .big { font-size:64px; font-weight:800; text-align:center; line-height:1; margin:6px 0; font-variant-numeric:tabular-nums; }
+  .sub { text-align:center; font-variant-numeric:tabular-nums; }
+  canvas { width:100%; display:block; background:#0a0d12; border-radius:8px; }
+  table { width:100%; border-collapse:collapse; font-size:13px; font-variant-numeric:tabular-nums; }
+  td, th { padding:6px 4px; border-bottom:1px solid var(--line); text-align:left; }
+  .warn { color:var(--amber); font-size:13px; min-height:18px; text-align:center; }
+  ol { padding-left:20px; margin:6px 0; } li { margin:4px 0; }
+  [hidden] { display:none !important; }
+</style>
+</head>
+<body>
+<h1>DraftHawk signal test</h1>
+<div class="dim">Prototype for one question: can an iPhone mic tell a gap from a sealed edge? Nothing is recorded or sent anywhere.</div>
+
+<div class="tabs">
+  <button id="tabListen" class="on">Listen (iPhone)</button>
+  <button id="tabTone">Tone (other device)</button>
+</div>
+
+<!-- LISTEN -->
+<section id="listen">
+  <div class="panel">
+    <div class="row">
+      <div><label>Mode</label>
+        <select id="mode">
+          <option value="tone">Tone: listen for a frequency</option>
+          <option value="hiss">Hiss: 3 to 9.5 kHz band</option>
+        </select></div>
+      <div id="freqWrap"><label>Tone frequency (Hz)</label>
+        <select id="freq">
+          <option>4000</option><option>8000</option><option>12000</option>
+          <option selected>16000</option><option>18000</option>
+        </select></div>
+    </div>
+    <div class="row" style="margin-top:10px">
+      <button id="startBtn" class="go">Start mic</button>
+      <button id="zeroBtn" disabled>Zero (2 s, hold still)</button>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="big" id="score">--</div>
+    <div class="sub"><span id="db">-- dB</span> &nbsp;·&nbsp; above baseline: <span id="delta">--</span></div>
+    <div class="warn" id="warn"></div>
+    <canvas id="hist" height="110"></canvas>
+    <div class="dim" style="margin-top:6px">Last 15 seconds of band level. Sweep slowly; look for a clear peak.</div>
+  </div>
+
+  <div class="panel">
+    <canvas id="spec" height="90"></canvas>
+    <div class="dim" style="margin-top:6px">Live spectrum 0 to 20 kHz. Highlighted area = band being measured.</div>
+  </div>
+
+  <div class="panel">
+    <div class="row">
+      <div><label>Reading label</label><input id="lbl" placeholder="e.g. back door, latch gap"></div>
+    </div>
+    <div class="row" style="margin-top:8px">
+      <button id="markBtn" disabled>Hold 3 s and record</button>
+    </div>
+    <table style="margin-top:10px"><thead><tr><th>Label</th><th>Avg dB</th><th>Peak dB</th><th>vs base</th></tr></thead>
+      <tbody id="rows"></tbody></table>
+    <div class="row" style="margin-top:10px">
+      <button id="copyBtn">Copy results</button>
+      <button id="clearBtn">Clear</button>
+    </div>
+    <div class="dim" id="copyMsg"></div>
+  </div>
+
+  <div class="panel dim" id="diag">Mic settings appear here after Start.</div>
+</section>
+
+<!-- TONE -->
+<section id="tone" hidden>
+  <div class="panel">
+    <div class="row">
+      <div><label>Frequency (Hz)</label>
+        <select id="tfreq">
+          <option>4000</option><option>8000</option><option>12000</option>
+          <option selected>16000</option><option>18000</option>
+        </select></div>
+      <div><label>Volume</label><input id="tvol" type="range" min="0.05" max="1" step="0.05" value="0.6"></div>
+    </div>
+    <div class="row" style="margin-top:10px">
+      <button id="toneBtn" class="go">Play tone</button>
+    </div>
+    <div class="dim" style="margin-top:8px">Play this on a laptop, tablet or second phone on the <b>outside</b> of the closed door, a foot or two from it. Use the same frequency on both devices. High tones (16 to 18 kHz) may be quiet or inaudible to you; that is normal. If the iPhone shows no peak at 16k, the speaker may not reach it: try 12k.</div>
+  </div>
+</section>
+
+<div class="panel">
+  <b>Test plan (back door)</b>
+  <ol class="dim">
+    <li>Second device outside the door: Tone tab, 16000 Hz, Play. Close the door.</li>
+    <li>iPhone inside: Listen tab, Tone mode, 16000, Start mic. Allow the microphone.</li>
+    <li>Stand in the middle of the room, tap Zero, hold still 2 s.</li>
+    <li>Hold the bottom edge of the iPhone about 1 inch from the door. Record 3 s at: the latch-side gap, the hinge side, the bottom sweep, and the solid middle of the door panel.</li>
+    <li>Repeat steps 3 and 4 at 12000 and 4000 Hz.</li>
+    <li>Optional: Hiss mode with no tone, kitchen hood and bath fans on, same spots.</li>
+    <li>Copy results and paste them into the chat.</li>
+  </ol>
+  <div class="dim"><b>Pass:</b> the gap reads at least 10 dB above the solid door at one frequency, and you can find the gap by sweeping without knowing where it is.</div>
+</div>
+
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  let ctx, analyser, stream, freqData, running = false;
+  let base = null, zeroing = null, marking = null;
+  const hist = []; const HIST_SEC = 15;
+  const readings = [];
+  let ema = null;
+
+  // Tabs
+  $('tabListen').onclick = () => { $('listen').hidden = false; $('tone').hidden = true;
+    $('tabListen').classList.add('on'); $('tabTone').classList.remove('on'); };
+  $('tabTone').onclick = () => { $('listen').hidden = true; $('tone').hidden = false;
+    $('tabTone').classList.add('on'); $('tabListen').classList.remove('on'); };
+  $('mode').onchange = () => { $('freqWrap').style.visibility = $('mode').value === 'tone' ? 'visible' : 'hidden'; base = null; ema = null; };
+  $('freq').onchange = () => { base = null; ema = null; };
+
+  function band() {
+    if ($('mode').value === 'tone') { const f = +$('freq').value; return [f - 150, f + 150]; }
+    return [3000, 9500];
+  }
+
+  // Returns band level in dB (power sum for hiss, peak bin for tone) plus low-band level.
+  function measure() {
+    analyser.getFloatFrequencyData(freqData);
+    const binHz = ctx.sampleRate / analyser.fftSize;
+    const [lo, hi] = band();
+    const i0 = Math.max(1, Math.floor(lo / binHz)), i1 = Math.min(freqData.length - 1, Math.ceil(hi / binHz));
+    let level;
+    if ($('mode').value === 'tone') {
+      level = -200; for (let i = i0; i <= i1; i++) level = Math.max(level, freqData[i]);
+    } else {
+      let p = 0; for (let i = i0; i <= i1; i++) p += Math.pow(10, freqData[i] / 10);
+      level = 10 * Math.log10(p + 1e-20);
+    }
+    let lp = 0; const l1 = Math.floor(250 / binHz);
+    for (let i = 1; i <= l1; i++) lp += Math.pow(10, freqData[i] / 10);
+    return { level, low: 10 * Math.log10(lp + 1e-20) };
+  }
+
+  async function start() {
+    if (running) { stop(); return; }
+    try {
+      stream = await navigator.mediaDevices.getUserMedia({ audio: {
+        echoCancellation: false, noiseSuppression: false, autoGainControl: false, channelCount: 1 } });
+    } catch (e) { $('warn').textContent = 'Microphone blocked: ' + e.message; return; }
+    ctx = new (window.AudioContext || window.webkitAudioContext)();
+    await ctx.resume();
+    const src = ctx.createMediaStreamSource(stream);
+    analyser = ctx.createAnalyser();
+    analyser.fftSize = 8192; analyser.smoothingTimeConstant = 0; analyser.minDecibels = -140; analyser.maxDecibels = 0;
+    src.connect(analyser);
+    freqData = new Float32Array(analyser.frequencyBinCount);
+    running = true;
+    $('startBtn').textContent = 'Stop mic'; $('startBtn').className = 'stop';
+    $('zeroBtn').disabled = false; $('markBtn').disabled = false;
+    const t = stream.getAudioTracks()[0]; const s = t.getSettings ? t.getSettings() : {};
+    $('diag').textContent = `Sample rate ${ctx.sampleRate} Hz · bin ${(ctx.sampleRate / analyser.fftSize).toFixed(1)} Hz · echoCancellation ${s.echoCancellation} · noiseSuppression ${s.noiseSuppression} · autoGainControl ${s.autoGainControl} · device "${t.label || 'unknown'}"`;
+    requestAnimationFrame(loop);
+  }
+  function stop() {
+    running = false;
+    stream && stream.getTracks().forEach(t => t.stop());
+    ctx && ctx.close();
+    $('startBtn').textContent = 'Start mic'; $('startBtn').className = 'go';
+    $('zeroBtn').disabled = true; $('markBtn').disabled = true;
+  }
+
+  function colorFor(score) { return score < 25 ? 'var(--cyan)' : score < 60 ? 'var(--amber)' : 'var(--red)'; }
+
+  function loop(now) {
+    if (!running) return;
+    const m = measure();
+    ema = ema == null ? m.level : ema + 0.25 * (m.level - ema);
+    const handling = m.low > -35;
+    $('warn').textContent = handling ? 'Handling noise: hold the phone steady, keep fingers off the bottom edge' : '';
+    $('db').textContent = ema.toFixed(1) + ' dB';
+
+    if (zeroing) {
+      zeroing.vals.push(m.level);
+      if (now - zeroing.t0 > 2000) {
+        const v = zeroing.vals, mean = v.reduce((a, b) => a + b, 0) / v.length;
+        const sd = Math.sqrt(v.reduce((a, b) => a + (b - mean) ** 2, 0) / v.length) || 0.5;
+        base = { mean, sd: Math.max(sd, 0.5) }; zeroing = null; $('zeroBtn').textContent = 'Zero (2 s, hold still)';
+      }
+    }
+    if (marking) {
+      if (!handling) { marking.vals.push(m.level); }
+      if (now - marking.t0 > 3000) {
+        const v = marking.vals.length ? marking.vals : [m.level];
+        const avg = 10 * Math.log10(v.reduce((a, b) => a + Math.pow(10, b / 10), 0) / v.length);
+        const peak = Math.max(...v);
+        readings.push({ label: marking.label, mode: $('mode').value, freq: $('mode').value === 'tone' ? +$('freq').value : null,
+          avg, peak, delta: base ? avg - base.mean : null, dropped: marking.dropped });
+        renderRows(); marking = null; $('markBtn').textContent = 'Hold 3 s and record';
+      } else if (handling) marking.dropped++;
+    }
+
+    let score = null;
+    if (base) {
+      const z = (ema - base.mean) / base.sd;
+      score = Math.max(0, Math.min(100, z * 15));
+      $('score').textContent = Math.round(score);
+      $('score').style.color = colorFor(score);
+      $('delta').textContent = (ema - base.mean >= 0 ? '+' : '') + (ema - base.mean).toFixed(1) + ' dB';
+    } else { $('score').textContent = '--'; $('score').style.color = 'var(--dim)'; $('delta').textContent = 'tap Zero'; }
+
+    hist.push({ t: now, v: ema });
+    while (hist.length && now - hist[0].t > HIST_SEC * 1000) hist.shift();
+    drawHist(now); drawSpec();
+    requestAnimationFrame(loop);
+  }
+
+  function sizeCanvas(c) { const r = devicePixelRatio || 1, w = c.clientWidth;
+    if (c.width !== w * r) { c.width = w * r; c.height = +c.getAttribute('height') * r; } return r; }
+
+  function drawHist(now) {
+    const c = $('hist'), r = sizeCanvas(c), g = c.getContext('2d'), W = c.width, H = c.height;
+    g.clearRect(0, 0, W, H);
+    if (hist.length < 2) return;
+    let lo = Math.min(...hist.map(h => h.v)), hi = Math.max(...hist.map(h => h.v));
+    if (base) { lo = Math.min(lo, base.mean - 3); hi = Math.max(hi, base.mean + 20); }
+    if (hi - lo < 10) { const mid = (hi + lo) / 2; lo = mid - 5; hi = mid + 5; }
+    const y = v => H - ((v - lo) / (hi - lo)) * (H - 8 * r) - 4 * r;
+    if (base) { g.strokeStyle = '#30363d'; g.setLineDash([4 * r, 4 * r]); g.beginPath(); g.moveTo(0, y(base.mean)); g.lineTo(W, y(base.mean)); g.stroke(); g.setLineDash([]); }
+    g.lineWidth = 2 * r; g.strokeStyle = '#00F5D4'; g.beginPath();
+    hist.forEach((h, i) => { const x = W - ((now - h.t) / (HIST_SEC * 1000)) * W; i ? g.lineTo(x, y(h.v)) : g.moveTo(x, y(h.v)); });
+    g.stroke();
+    g.fillStyle = '#8b949e'; g.font = `${11 * r}px system-ui`; g.fillText(hi.toFixed(0) + ' dB', 4 * r, 12 * r); g.fillText(lo.toFixed(0) + ' dB', 4 * r, H - 4 * r);
+  }
+
+  function drawSpec() {
+    const c = $('spec'), r = sizeCanvas(c), g = c.getContext('2d'), W = c.width, H = c.height;
+    g.clearRect(0, 0, W, H);
+    const binHz = ctx.sampleRate / analyser.fftSize, maxBin = Math.min(freqData.length, Math.floor(20000 / binHz));
+    const [lo, hi] = band();
+    g.fillStyle = 'rgba(0,245,212,0.12)'; g.fillRect((lo / 20000) * W, 0, ((hi - lo) / 20000) * W, H);
+    g.strokeStyle = '#e6edf3'; g.lineWidth = 1 * r; g.beginPath();
+    for (let x = 0; x < W; x++) {
+      const i = Math.floor((x / W) * maxBin); const v = freqData[i];
+      const yy = H - ((v + 140) / 140) * H; x ? g.lineTo(x, yy) : g.moveTo(x, yy);
+    }
+    g.stroke();
+    g.fillStyle = '#8b949e'; g.font = `${10 * r}px system-ui`;
+    [5000, 10000, 15000].forEach(f => g.fillText(f / 1000 + 'k', (f / 20000) * W, H - 3 * r));
+  }
+
+  function renderRows() {
+    $('rows').innerHTML = readings.map(x => `<tr><td>${esc(x.label)}<div class="dim">${x.mode === 'tone' ? x.freq + ' Hz' : 'hiss'}${x.dropped ? ' · noisy' : ''}</div></td><td>${x.avg.toFixed(1)}</td><td>${x.peak.toFixed(1)}</td><td>${x.delta == null ? '—' : (x.delta >= 0 ? '+' : '') + x.delta.toFixed(1)}</td></tr>`).join('');
+  }
+  function esc(s) { return String(s).replace(/[&<>"]/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch])); }
+
+  $('startBtn').onclick = start;
+  $('zeroBtn').onclick = () => { zeroing = { t0: performance.now(), vals: [] }; $('zeroBtn').textContent = 'Zeroing...'; };
+  $('markBtn').onclick = () => {
+    if (marking) return;
+    marking = { t0: performance.now(), vals: [], dropped: 0, label: $('lbl').value.trim() || ('Reading ' + (readings.length + 1)) };
+    $('markBtn').textContent = 'Recording 3 s...';
+  };
+  $('clearBtn').onclick = () => { readings.length = 0; renderRows(); };
+  $('copyBtn').onclick = async () => {
+    const lines = ['DraftHawk signal test ' + new Date().toISOString(), $('diag').textContent,
+      'label | mode | avg dB | peak dB | vs baseline | noisy frames'];
+    readings.forEach(x => lines.push([x.label, x.mode === 'tone' ? x.freq + ' Hz' : 'hiss', x.avg.toFixed(1), x.peak.toFixed(1),
+      x.delta == null ? 'n/a' : x.delta.toFixed(1), x.dropped].join(' | ')));
+    try { await navigator.clipboard.writeText(lines.join('\n')); $('copyMsg').textContent = 'Copied. Paste it into the chat.'; }
+    catch (e) { $('copyMsg').textContent = 'Copy blocked. Screenshot the table instead.'; }
+  };
+
+  // Tone generator
+  let tctx, osc, gain;
+  $('toneBtn').onclick = async () => {
+    if (osc) { gain.gain.setTargetAtTime(0, tctx.currentTime, 0.02); setTimeout(() => { osc.stop(); osc = null; }, 100);
+      $('toneBtn').textContent = 'Play tone'; $('toneBtn').className = 'go'; return; }
+    tctx = tctx || new (window.AudioContext || window.webkitAudioContext)(); await tctx.resume();
+    osc = tctx.createOscillator(); gain = tctx.createGain();
+    osc.type = 'sine'; osc.frequency.value = +$('tfreq').value;
+    gain.gain.value = 0; osc.connect(gain).connect(tctx.destination); osc.start();
+    gain.gain.setTargetAtTime(+$('tvol').value, tctx.currentTime, 0.05);
+    $('toneBtn').textContent = 'Stop tone'; $('toneBtn').className = 'stop';
+  };
+  $('tvol').oninput = () => { if (gain) gain.gain.setTargetAtTime(+$('tvol').value, tctx.currentTime, 0.05); };
+  $('tfreq').onchange = () => { if (osc) osc.frequency.setValueAtTime(+$('tfreq').value, tctx.currentTime); };
+})();
+</script>
+</body>
+</html>
